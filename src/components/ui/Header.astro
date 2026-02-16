@@ -1,11 +1,17 @@
 ---
 import { SITE_TITLE, X_URL, GITHUB_URL } from '@/consts';
 import HeaderLink from '@/components/ui/HeaderLink.astro';
+import { Icon } from 'astro-icon/components';
 ---
 
 <header>
 	<nav>
-		<h2><a href="/">{SITE_TITLE}</a></h2>
+		<h2>
+			<a href="/">
+				<Icon name="ri:terminal-fill" color="var(--main)" />
+				{SITE_TITLE}
+			</a>
+		</h2>
 		<div class="internal-links">
 			<HeaderLink href="/">Home</HeaderLink>
 			<HeaderLink href="/about">About</HeaderLink>
@@ -48,6 +54,9 @@ import HeaderLink from '@/components/ui/HeaderLink.astro';
 
 	h2 a,
 	h2 a.active {
+		display: flex;
+		align-items: center;
+		gap: 0.5em;
 		text-decoration: none;
 	}
 	nav {
