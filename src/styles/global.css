@@ -10,8 +10,8 @@
 
 	:root {
 		--main: #509efe;
-		--accent: #2337ff;
-		--accent-dark: #000d8a;
+		--accent: #2382ff;
+		--accent-dark: #005dd8;
 		--black: 15, 18, 25;
 		--gray: 96, 115, 159;
 		--gray-light: 229, 233, 240;
@@ -80,7 +80,7 @@
 	}
 
 	a:hover {
-		@apply text-[var(--accent)];
+		@apply text-[var(--accent-dark)];
 	}
 
 	p {

@@ -1,7 +1,7 @@
 ---
 import { Image } from 'astro:assets';
 import BaseLayout from '@/layouts/BaseLayout.astro';
-import { SITE_DESCRIPTION, SITE_TITLE } from '@/consts';
+import { SITE_DESCRIPTION, SITE_TITLE, LINKS } from '@/consts';
 import { Icon } from 'astro-icon/components';
 
 import iconImage from '@/assets/icon.jpg';
@@ -22,6 +22,21 @@ import iconImage from '@/assets/icon.jpg';
 		About Me
 		<Icon name="ri:arrow-right-line" size={24} />
 	</a>
+
+	<hr />
+
+	<h2>Links</h2>
+	<ul class="links">
+		{LINKS.map((link) => (
+			<li class="link-item">
+				<Icon name={link.icon ?? 'ri:link'} size={24} />
+				{link.service}:&nbsp;
+				<a href={link.url} target="_blank">
+					<span class="link-name">{link.name}</span>
+				</a>
+			</li>
+		))}
+	</ul>
 </BaseLayout>
 
 <style>
@@ -37,9 +52,16 @@ import iconImage from '@/assets/icon.jpg';
 		color: rgb(var(--gray));
 	}
 	.about-link {
-		@apply inline-flex items-center gap-1 text-lg font-bold text-blue-500 border-b-2 border-blue-500;
+		@apply inline-flex items-center gap-1 text-lg font-bold border-b-2 border-[var(--accent)];
+		line-height: 0.5em;
 	}
 	.about-link:hover {
-		@apply text-blue-600 border-blue-600;
+		@apply border-[var(--accent-dark)];
+	}
+	.link-item {
+		@apply flex items-center gap-2;
+	}
+	.link-name {
+		@apply underline;
 	}
 </style>
