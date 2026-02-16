@@ -124,7 +124,7 @@
 	}
 
 	hr {
-		@apply border-0 border-t border-[rgb(var(--gray-light))];
+		@apply border-0 border-t border-[rgb(var(--gray-light))] my-8;
 	}
 
 	@media (max-width: 720px) {
