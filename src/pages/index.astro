@@ -2,6 +2,7 @@
 import { Image } from 'astro:assets';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import { SITE_DESCRIPTION, SITE_TITLE } from '@/consts';
+import { Icon } from 'astro-icon/components';
 
 import iconImage from '@/assets/icon.jpg';
 ---
@@ -16,6 +17,11 @@ import iconImage from '@/assets/icon.jpg';
 	<h1>itojum</h1>
 	<p class="occupation">student / junior developer</p>
 	<p>情報系の学生やってます。Web技術、AIエージェント、Minecraftなどに興味があります。</p>
+
+	<a href="/about" class="about-link">
+		About Me
+		<Icon name="ri:arrow-right-line" size={24} />
+	</a>
 </BaseLayout>
 
 <style>
@@ -29,5 +35,11 @@ import iconImage from '@/assets/icon.jpg';
 	.occupation {
 		@apply text-2xl font-bold;
 		color: rgb(var(--gray));
+	}
+	.about-link {
+		@apply inline-flex items-center gap-1 text-lg font-bold text-blue-500 border-b-2 border-blue-500;
+	}
+	.about-link:hover {
+		@apply text-blue-600 border-blue-600;
 	}
 </style>
