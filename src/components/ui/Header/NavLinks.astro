@@ -1,0 +1,23 @@
+---
+import HeaderLink from "@/components/ui/HeaderLink.astro";
+---
+
+<div class="nav-links">
+  <div class="internal-links">
+    <HeaderLink href="/">Home</HeaderLink>
+    <HeaderLink href="/about">About</HeaderLink>
+    <HeaderLink href="/blog">Blog</HeaderLink>
+    <HeaderLink href="/contact">Contact</HeaderLink>
+  </div>
+</div>
+
+<style>
+  .nav-links {
+    @apply flex items-center gap-4;
+  }
+
+  .internal-links {
+    @apply hidden md:flex;
+  }
+</style>
+

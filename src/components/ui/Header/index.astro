@@ -1,0 +1,42 @@
+---
+import Logo from "./Logo.astro";
+import NavLinks from "./NavLinks.astro";
+import Actions from "./Actions.astro";
+import MobileNav from "./MobileNav.astro";
+---
+
+<header>
+  <nav>
+    <Logo />
+    <div class="header-content">
+      <NavLinks />
+      <Actions />
+      <MobileNav />
+    </div>
+  </nav>
+</header>
+<style>
+  header {
+    @apply m-0 px-4 bg-white;
+    box-shadow: 0 2px 8px rgba(var(--black), 5%);
+  }
+
+  nav {
+    @apply flex items-center justify-between py-2;
+  }
+
+  h1 {
+    @apply m-0 text-[1em];
+  }
+
+  h1 a,
+  h1 a.active {
+    @apply flex items-center gap-2 no-underline;
+  }
+
+  .header-content {
+    @apply flex items-center gap-4 ml-auto;
+  }
+
+  /* 右側コンテンツをまとめてロゴの右に寄せる */
+</style>

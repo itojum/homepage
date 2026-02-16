@@ -18,10 +18,11 @@ const isActive = href === pathname || href === "/" + (subpath?.[0] || "");
 </a>
 <style>
   .header-link {
-    @apply inline-block no-underline;
+    @apply inline-block py-4 px-2 text-[rgb(var(--black))] border-b-4 border-transparent no-underline;
   }
 
   .header-link.active {
-    @apply font-extrabold underline;
+    @apply font-extrabold;
+    border-bottom-color: var(--accent);
   }
 </style>

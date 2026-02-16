@@ -1,0 +1,25 @@
+---
+import { Icon } from "astro-icon/components";
+---
+
+<div class="header-actions">
+  <a href="#">
+    <span class="sr-only">Search</span>
+    <Icon name="ri:search-line" size={24} />
+  </a>
+  <a href="#">
+    <span class="sr-only">Toggle dark mode</span>
+    <Icon name="ri:sun-line" size={24} />
+  </a>
+</div>
+
+<style>
+  .header-actions {
+    @apply flex items-center gap-4;
+  }
+
+  .header-actions a {
+    @apply flex items-center justify-center text-[rgb(var(--gray-dark))] no-underline;
+  }
+</style>
+

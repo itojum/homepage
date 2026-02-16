@@ -1,0 +1,57 @@
+---
+import HeaderLink from "@/components/ui/HeaderLink.astro";
+import MenuToggle from "./MenuToggle.astro";
+---
+
+<div class="mobile-nav">
+  <input id="nav-toggle" type="checkbox" class="nav-toggle" aria-label="メニューを開閉" />
+  <MenuToggle />
+  <div class="mobile-menu">
+    <HeaderLink href="/" class="mobile-link">
+      Home
+    </HeaderLink>
+    <HeaderLink href="/about" class="mobile-link">
+      About
+    </HeaderLink>
+    <HeaderLink href="/blog" class="mobile-link">
+      Blog
+    </HeaderLink>
+    <HeaderLink href="/contact" class="mobile-link">
+      Contact
+    </HeaderLink>
+  </div>
+</div>
+
+<style>
+  .mobile-nav {
+    @apply flex md:hidden items-center;
+  }
+
+  .nav-toggle {
+    display: none;
+  }
+
+  .mobile-link {
+    @apply block py-3 px-4 text-[1.05rem] font-medium text-[rgb(var(--gray-dark))] no-underline text-center rounded-lg mx-4;
+    transition: background-color 150ms ease-out, transform 150ms ease-out;
+  }
+
+  .mobile-link:hover {
+    @apply bg-[rgb(var(--gray-light))];
+    transform: translateY(-1px);
+  }
+
+  .mobile-menu {
+    @apply hidden md:hidden;
+  }
+
+  .nav-toggle:checked ~ .mobile-menu {
+    @apply flex flex-col gap-4;
+    position: fixed;
+    inset: 64px 0 0 0;
+    @apply bg-white/90 border-t border-[rgb(var(--gray-light))] pt-6 pb-10 px-0 shadow-lg;
+    backdrop-filter: blur(12px);
+    overflow-y: auto;
+  }
+</style>
+
