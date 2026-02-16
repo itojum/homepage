@@ -3,6 +3,11 @@
 @tailwind utilities;
 
 @layer base {
+	html,
+	body {
+		height: 100%;
+	}
+
 	:root {
 		--main: #509efe;
 		--accent: #2337ff;
@@ -26,14 +31,14 @@
 	}
 
 	body {
-		@apply m-0 p-0 text-left break-words text-[rgb(var(--gray-dark))] text-[20px] leading-[1.7];
+		@apply m-0 p-0 text-left break-words text-[rgb(var(--gray-dark))] text-[20px] leading-[1.7] flex flex-col min-h-screen;
 		font-family: 'MPLUS1Code', sans-serif;
 		background: linear-gradient(var(--gray-gradient)) no-repeat;
 		background-size: 100% 600px;
 	}
 
 	main {
-		@apply w-[720px] max-w-[calc(100%-2em)] mx-auto py-12 px-4;
+		@apply w-[720px] max-w-[calc(100%-2em)] mx-auto py-12 px-4 flex-1;
 	}
 
 	h1,
