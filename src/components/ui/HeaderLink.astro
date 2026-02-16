@@ -19,6 +19,7 @@ const isActive = href === pathname || href === "/" + (subpath?.[0] || "");
 <style>
   .header-link {
     @apply inline-block py-4 px-2 text-[rgb(var(--black))] border-b-4 border-transparent no-underline;
+    user-select: none;
   }
 
   .header-link.active {
