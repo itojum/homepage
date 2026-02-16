@@ -1,8 +1,32 @@
 ---
+import { Image } from 'astro:assets';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import { SITE_DESCRIPTION, SITE_TITLE } from '@/consts';
+
+import iconImage from '@/assets/icon.jpg';
 ---
 
 <BaseLayout title={SITE_TITLE} description={SITE_DESCRIPTION}>
+	<Image 
+		src={iconImage} 
+		class="icon-image" 
+		alt="いとじゅんのicon" 
+		width={1000} height={1000}
+	/>
 	<h1>itojum</h1>
+	<p class="occupation">student / junior developer</p>
 </BaseLayout>
+
+<style>
+	.icon-image {
+		@apply object-cover object-center rounded-full shadow-md;
+		width: 300px;
+		height: 300px;
+		max-width: 80vw;
+		max-height: 80vw;
+	}
+	.occupation {
+		@apply text-2xl font-bold;
+		color: rgb(var(--gray));
+	}
+</style>
