@@ -1,12 +1,18 @@
 ---
+
 import { Image } from 'astro:assets';
-import type { CollectionEntry } from 'astro:content';
 import FormattedDate from '@/components/ui/FormattedDate.astro';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 
-type Props = CollectionEntry<'blog'>['data'];
+interface Props {
+	title: string;
+	description: string;
+	pubDate: Date | string;
+	updatedDate?: Date | string;
+	heroImage?: string;
+}
 
-const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
+const { title, description, pubDate, updatedDate, heroImage } = Astro.props as Props;
 ---
 
 <BaseLayout title={title} description={description} image={heroImage}>
@@ -58,11 +64,11 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 		<div class="prose">
 			<div class="title">
 				<div class="date">
-					<FormattedDate date={pubDate} />
+					<FormattedDate date={new Date(pubDate)} />
 					{
 						updatedDate && (
 							<div class="last-updated-on">
-								Last updated on <FormattedDate date={updatedDate} />
+								Last updated on <FormattedDate date={new Date(updatedDate)} />
 							</div>
 						)
 					}
