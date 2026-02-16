@@ -1,0 +1,72 @@
+---
+import { Icon } from "astro-icon/components";
+---
+
+<button type="button" class="theme-toggle" aria-label="テーマを切り替え">
+  <span class="sr-only">Toggle dark mode</span>
+  <span class="theme-icon theme-icon-sun">
+    <Icon name="ri:sun-line" size={24} />
+  </span>
+  <span class="theme-icon theme-icon-moon">
+    <Icon name="ri:moon-line" size={24} />
+  </span>
+</button>
+
+<style>
+  .theme-toggle {
+    @apply flex items-center justify-center text-[rgb(var(--gray-dark))] cursor-pointer bg-transparent border-none p-0;
+  }
+
+  .theme-icon {
+    @apply inline-flex items-center justify-center;
+  }
+
+  .theme-icon-moon {
+    display: none;
+  }
+</style>
+
+<script is:inline>
+  const storageKey = "theme";
+  const root = document.documentElement;
+
+  const getPreferredTheme = () => {
+    const stored = window.localStorage.getItem(storageKey);
+    if (stored === "light" || stored === "dark") return stored;
+    return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+  };
+
+  const applyTheme = (theme) => {
+    root.dataset.theme = theme;
+    if (theme === "dark") {
+      root.classList.add("dark");
+    } else {
+      root.classList.remove("dark");
+    }
+    window.localStorage.setItem(storageKey, theme);
+
+    const sun = document.querySelector(".theme-icon-sun");
+    const moon = document.querySelector(".theme-icon-moon");
+    if (sun && moon) {
+      if (theme === "dark") {
+        sun.style.display = "none";
+        moon.style.display = "inline-flex";
+      } else {
+        sun.style.display = "inline-flex";
+        moon.style.display = "none";
+      }
+    }
+  };
+
+  const current = getPreferredTheme();
+  applyTheme(current);
+
+  const toggleBtn = document.querySelector(".theme-toggle");
+  if (toggleBtn) {
+    toggleBtn.addEventListener("click", () => {
+      const next = root.dataset.theme === "dark" ? "light" : "dark";
+      applyTheme(next);
+    });
+  }
+</script>
+

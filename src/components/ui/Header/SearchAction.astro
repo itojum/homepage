@@ -1,0 +1,15 @@
+---
+import { Icon } from "astro-icon/components";
+---
+
+<button type="button" class="search-action" aria-label="検索">
+  <span class="sr-only">Search</span>
+  <Icon name="ri:search-line" size={24} />
+</button>
+
+<style>
+  .search-action {
+    @apply flex items-center justify-center text-[rgb(var(--gray-dark))] cursor-pointer bg-transparent border-none p-0;
+  }
+</style>
+
