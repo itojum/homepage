@@ -1,85 +1,77 @@
 ---
-import { SITE_TITLE, X_URL, GITHUB_URL } from '@/consts';
-import HeaderLink from '@/components/ui/HeaderLink.astro';
-import { Icon } from 'astro-icon/components';
+import { SITE_TITLE, X_URL, GITHUB_URL } from "@/consts";
+import HeaderLink from "@/components/ui/HeaderLink.astro";
+import { Icon } from "astro-icon/components";
 ---
 
 <header>
-	<nav>
-		<h1>
-			<a href="/">
-				<Icon name="ri:terminal-fill" color="var(--main)" />
-				{SITE_TITLE}
-			</a>
-		</h1>
-		<div class="header-content">
-			<div class="internal-links">
-				<HeaderLink href="/">Home</HeaderLink>
-				<HeaderLink href="/about">About</HeaderLink>
-				<HeaderLink href="/blog">Blog</HeaderLink>
-				<HeaderLink href="/contact">Contact</HeaderLink>
-			</div>
-			<div class="social-links">
-				<a href={X_URL} target="_blank">
-					<span class="sr-only">Follow itojum1230 on X</span>
-					<Icon name="ri:twitter-x-line" size={24} />
-				</a>
-				<a href={GITHUB_URL} target="_blank">
-					<span class="sr-only">Go to Astro's GitHub repo</span>
-					<Icon name="ri:github-fill" size={24} />
-				</a>
-			</div>
-		</div>
-	</nav>
+  <nav>
+    <h1>
+      <a href="/">
+        <Icon name="ri:terminal-fill" color="var(--main)" />
+        {SITE_TITLE}
+      </a>
+    </h1>
+    <div class="header-content">
+      <div class="internal-links">
+        <HeaderLink href="/">Home</HeaderLink>
+        <HeaderLink href="/about">About</HeaderLink>
+        <HeaderLink href="/blog">Blog</HeaderLink>
+        <HeaderLink href="/contact">Contact</HeaderLink>
+      </div>
+      <div class="social-links">
+        <a href={X_URL} target="_blank">
+          <span class="sr-only">Follow itojum1230 on X</span>
+          <Icon name="ri:twitter-x-line" size={24} />
+        </a>
+        <a href={GITHUB_URL} target="_blank">
+          <span class="sr-only">Go to Astro's GitHub repo</span>
+          <Icon name="ri:github-fill" size={24} />
+        </a>
+      </div>
+    </div>
+  </nav>
 </header>
 <style>
-	header {
-		margin: 0;
-		padding: 0 1em;
-		background: white;
-		box-shadow: 0 2px 8px rgba(var(--black), 5%);
-	}
-	h1 {
-		margin: 0;
-		font-size: 1em;
-	}
+  header {
+    @apply m-0 px-4 bg-white;
+    box-shadow: 0 2px 8px rgba(var(--black), 5%);
+  }
 
-	h1 a,
-	h1 a.active {
-		display: flex;
-		align-items: center;
-		gap: 0.5em;
-		text-decoration: none;
-	}
-	nav {
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-	}
-	nav a {
-		padding: 1em 0.5em;
-		color: var(--black);
-		border-bottom: 4px solid transparent;
-		text-decoration: none;
-	}
-	nav a.active {
-		text-decoration: none;
-		border-bottom-color: var(--accent);
-	}
-	.social-links,
-	.social-links a {
-		display: flex;
-	}
-	@media (max-width: 720px) {
-		.social-links {
-			display: none;
-		}
-	}
+  h1 {
+    @apply m-0 text-[1em];
+  }
 
-	.header-content {
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		gap: 1em;
-	}
+  h1 a,
+  h1 a.active {
+    @apply flex items-center gap-2 no-underline;
+  }
+
+  nav {
+    @apply flex items-center justify-between;
+  }
+
+  nav a {
+    @apply py-4 px-2 text-[rgb(var(--black))] border-b-4 border-transparent no-underline;
+  }
+
+  nav a.active {
+    text-decoration: none;
+    border-bottom-color: var(--accent);
+  }
+
+  .header-content {
+    @apply flex items-center justify-between gap-4;
+  }
+
+  .social-links,
+  .social-links a {
+    @apply flex;
+  }
+
+  @media (max-width: 720px) {
+    .social-links {
+      @apply hidden;
+    }
+  }
 </style>

@@ -1,43 +1,39 @@
 ---
 import { X_URL, GITHUB_URL } from "@/consts";
-import { Icon } from 'astro-icon/components';
+import { Icon } from "astro-icon/components";
 const today = new Date();
 ---
 
 <footer>
-	&copy; {today.getFullYear()} itojum. All rights reserved.
-	<div class="social-links">
-		<a href={X_URL} target="_blank">
-			<span class="sr-only">Follow itojum1230 on X</span>
-			<Icon name="ri:twitter-x-line" size={32} />
-		</a>
-		<a href={GITHUB_URL} target="_blank">
-			<span class="sr-only">Go to itojum's GitHub repo</span>
-			<Icon name="ri:github-fill" size={32} />
-		</a>
-	</div>
+  &copy; {today.getFullYear()} itojum. All rights reserved.
+  <div class="social-links">
+    <a href={X_URL} target="_blank">
+      <span class="sr-only">Follow itojum1230 on X</span>
+      <Icon name="ri:twitter-x-line" size={32} />
+    </a>
+    <a href={GITHUB_URL} target="_blank">
+      <span class="sr-only">Go to itojum's GitHub repo</span>
+      <Icon name="ri:github-fill" size={32} />
+    </a>
+  </div>
 </footer>
 <style>
-	footer {
-		padding: 2em 1em 6em;
-		background: linear-gradient(var(--gray-gradient)) no-repeat;
-		color: rgb(var(--gray));
+  footer {
+    @apply py-8 px-4 pb-24 flex items-center justify-between;
+    background: linear-gradient(var(--gray-gradient)) no-repeat;
+    color: rgb(var(--gray));
+  }
 
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-	}
-	.social-links {
-		display: flex;
-		justify-content: center;
-		gap: 1em;
-		margin-top: 1em;
-	}
-	.social-links a {
-		text-decoration: none;
-		color: rgb(var(--gray));
-	}
-	.social-links a:hover {
-		color: rgb(var(--gray-dark));
-	}
+  .social-links {
+    @apply flex justify-center gap-4 mt-4;
+  }
+
+  .social-links a {
+    @apply no-underline;
+    color: rgb(var(--gray));
+  }
+
+  .social-links a:hover {
+    color: rgb(var(--gray-dark));
+  }
 </style>
