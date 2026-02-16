@@ -1,0 +1,84 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import FormattedDate from "@/components/ui/FormattedDate.astro";
+import { getBlogs, getBlogDetail } from "@/libs/microcms";
+import { SITE_TITLE } from "@/consts";
+
+export async function getStaticPaths() {
+  const response = await getBlogs({ fields: ["id"] });
+  return response.contents.map((content) => ({
+    params: { slug: content.id },
+  }));
+}
+
+const slug = Astro.params.slug;
+const blogId = Array.isArray(slug) ? slug[0] : (slug ?? "");
+const blog = await getBlogDetail(blogId);
+---
+
+<BaseLayout title={`${blog.title} | ${SITE_TITLE}`} description={blog.title}>
+  <main>
+    <article>
+      <div class="meta">
+        <time class="date">
+          <FormattedDate date={new Date(blog.publishedAt ?? blog.createdAt)} />
+        </time>
+        {
+          blog.revisedAt && (
+            <p class="revised">
+              更新: <FormattedDate date={new Date(blog.revisedAt)} />
+            </p>
+          )
+        }
+      </div>
+      <h1 class="title">{blog.title}</h1>
+      <div class="post" set:html={blog.content} />
+    </article>
+  </main>
+</BaseLayout>
+
+<style>
+  main {
+    width: calc(100% - 2em);
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 1em;
+    color: rgb(var(--gray-dark));
+  }
+  .meta {
+    margin-bottom: 0.5em;
+    color: rgb(var(--gray));
+  }
+  .revised {
+    margin: 0;
+    font-size: 0.9em;
+  }
+  .title {
+    margin: 0 0 1em 0;
+    padding-bottom: 0.5em;
+    line-height: 1.2;
+    color: rgb(var(--black));
+  }
+  .post {
+    line-height: 1.7;
+  }
+  .post :global(h2) {
+    margin: 1.5em 0 0.5em;
+    font-size: 1.25rem;
+  }
+  .post :global(h3) {
+    margin: 1.25em 0 0.5em;
+    font-size: 1.1rem;
+  }
+  .post :global(p) {
+    margin: 0.75em 0;
+  }
+  .post :global(ul),
+  .post :global(ol) {
+    margin: 0.75em 0;
+    padding-left: 1.5em;
+  }
+  .post :global(a) {
+    color: rgb(var(--accent));
+  }
+</style>
