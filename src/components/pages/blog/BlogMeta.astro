@@ -1,0 +1,94 @@
+---
+import FormattedDate from "@/components/ui/FormattedDate.astro";
+import type { Blog } from "@/types/blog";
+
+interface Props {
+	blog: Blog;
+}
+
+const { blog } = Astro.props;
+---
+
+<div class="meta">
+  <time class="date" data-pagefind-meta="date">
+    <FormattedDate date={new Date(blog.publishedAt ?? blog.createdAt)} />
+  </time>
+  {
+    blog.revisedAt && (
+      <p class="revised">
+        更新: <FormattedDate date={new Date(blog.revisedAt)} />
+      </p>
+    )
+  }
+  {(blog.category || (blog.tags && blog.tags.length > 0)) && (
+    <div class="taxonomies">
+      {blog.category && (
+        <span class="taxonomy-item">
+          <span class="taxonomy-label">カテゴリ:</span>
+          <span class="category" data-pagefind-filter="category">{blog.category.name}</span>
+        </span>
+      )}
+      {blog.tags && blog.tags.length > 0 && (
+        <div class="taxonomy-item">
+          <span class="taxonomy-label">タグ:</span>
+          <ul class="tags" aria-label="タグ">
+            {blog.tags.map((tag) => (
+              <li><span data-pagefind-filter="tag">{tag.name}</span></li>
+            ))}
+          </ul>
+        </div>
+      )}
+    </div>
+  )}
+</div>
+
+<style>
+  .meta {
+    margin-bottom: 0.5em;
+    color: rgb(var(--gray));
+  }
+  .revised {
+    margin: 0;
+    font-size: 0.9em;
+  }
+  .taxonomies {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5em 1em;
+    margin-top: 0.75em;
+    font-size: 0.9em;
+  }
+  .taxonomy-item {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.35em;
+  }
+  .taxonomy-label {
+    color: rgb(var(--gray));
+    font-size: 0.9em;
+  }
+  .category {
+    color: rgb(var(--accent));
+    font-weight: 500;
+  }
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35em;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .tags li span {
+    display: inline-block;
+    padding: 0.2em 0.6em;
+    background: rgb(var(--chip-bg));
+    color: rgb(var(--chip-text));
+    border: 1px solid rgba(var(--border), 85%);
+    border-radius: 4px;
+    font-size: 0.85em;
+  }
+</style>
+

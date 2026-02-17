@@ -1,0 +1,31 @@
+---
+import BlogMeta from "@/components/pages/blog/BlogMeta.astro";
+import BlogThumbnail from "@/components/pages/blog/BlogThumbnail.astro";
+import BlogBody from "@/components/pages/blog/BlogBody.astro";
+import type { Blog } from "@/types/blog";
+
+interface Props {
+	blog: Blog;
+}
+
+const { blog } = Astro.props;
+---
+
+<main>
+  <article data-pagefind-body>
+    <BlogMeta blog={blog} />
+    <BlogThumbnail eyecatch={blog.eyecatch} />
+    <BlogBody title={blog.title} content={blog.content} />
+  </article>
+</main>
+
+<style>
+  main {
+    width: calc(100% - 2em);
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 1em;
+    color: rgb(var(--gray-dark));
+  }
+</style>
+

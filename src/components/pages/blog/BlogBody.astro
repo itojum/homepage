@@ -1,0 +1,57 @@
+---
+interface Props {
+	title: string;
+	content: string;
+}
+
+const { title, content } = Astro.props;
+---
+
+<h1 class="title" data-pagefind-meta="title">{title}</h1>
+<div class="post" set:html={content} />
+
+<style>
+  .title {
+    margin: 0 0 1em 0;
+    padding-bottom: 0.5em;
+    line-height: 1.2;
+    color: rgb(var(--black));
+    font-size: 3rem;
+  }
+  .post {
+    line-height: 1.7;
+  }
+  .post :global(h2) {
+    margin: 1.5em 0 0.5em;
+    font-size: 2rem;
+  }
+  .post :global(h3) {
+    margin: 1.25em 0 0.5em;
+    font-size: 1.1rem;
+  }
+  .post :global(p) {
+    margin: 0.75em 0;
+  }
+  .post :global(ul),
+  .post :global(ol) {
+    margin: 0.75em 0;
+    padding-left: 1.5em;
+  }
+  .post :global(ul) {
+    list-style: disc;
+  }
+  .post :global(ol) {
+    list-style: decimal;
+  }
+  .post :global(li) {
+    margin: 0.25em 0;
+  }
+  .post :global(a) {
+    color: rgb(var(--accent));
+  }
+  .post :global(img) {
+    @apply rounded-md shadow-md;
+    margin: 0.75em 0;
+  }
+</style>
+
