@@ -2,7 +2,6 @@
 import { getBlogs } from "@/libs/microcms";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import BlogsPage from "@/components/pages/blogs/BlogsPage.astro";
-import { SITE_DESCRIPTION, SITE_TITLE } from "@/consts";
 
 const response = await getBlogs({
   orders: "-publishedAt",
@@ -11,6 +10,6 @@ const response = await getBlogs({
 const { contents: blogs } = response;
 ---
 
-<BaseLayout title={SITE_TITLE} description={SITE_DESCRIPTION}>
+<BaseLayout title="Blogs" description="Blogs">
   <BlogsPage blogs={blogs} />
 </BaseLayout>

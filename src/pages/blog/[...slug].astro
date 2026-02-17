@@ -18,7 +18,7 @@ const blog = await getBlogDetail(blogId, {
 });
 ---
 
-<BaseLayout title={`${blog.title} | ${SITE_TITLE}`} description={blog.title}>
+<BaseLayout title={blog.title} description={blog.title}>
   <main>
     <article>
       <div class="meta">
