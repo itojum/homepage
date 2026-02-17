@@ -2,7 +2,6 @@
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import FormattedDate from "@/components/ui/FormattedDate.astro";
 import { getBlogs, getBlogDetail } from "@/libs/microcms";
-import { SITE_TITLE } from "@/consts";
 
 export async function getStaticPaths() {
   const response = await getBlogs({ fields: ["id"] });
