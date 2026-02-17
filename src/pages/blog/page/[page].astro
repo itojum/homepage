@@ -5,7 +5,7 @@ import BlogsPage from "@/components/pages/blogs/BlogsPage.astro";
 
 export async function getStaticPaths() {
 	const PER_PAGE = 10;
-	
+
 	const response = await getBlogs({ limit: 10 });
 	const totalPages = Math.ceil(response.totalCount / PER_PAGE);
 	return Array.from({ length: totalPages }, (_, i) => ({

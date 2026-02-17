@@ -3,16 +3,13 @@ import "@/styles/global.css";
 import { SITE_TITLE } from "@/consts";
 
 interface Props {
-  title: string;
-  description: string;
-  image?: string;
-  noIndex?: boolean;
+	title: string;
+	description: string;
+	image?: string;
+	noIndex?: boolean;
 }
 
-const canonicalURL = new URL(
-  Astro.url.pathname,
-  Astro.site || Astro.url.origin,
-);
+const canonicalURL = new URL(Astro.url.pathname, Astro.site || Astro.url.origin);
 
 const { title, description, image, noIndex } = Astro.props;
 const titleText = `${title} | ${SITE_TITLE}`;
