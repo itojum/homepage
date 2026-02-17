@@ -47,7 +47,8 @@ const { title, content } = Astro.props;
     margin: 0.25em 0;
   }
   .post :global(a) {
-    color: rgb(var(--accent));
+    color: var(--accent);
+    text-decoration: underline;
   }
   .post :global(img) {
     @apply rounded-md shadow-md;
