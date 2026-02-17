@@ -38,6 +38,10 @@ import SearchComponent from "astro-pagefind/components/Search";
     const modal = document.querySelector("[data-search-modal]");
 
     if (modal instanceof HTMLElement) {
+      if (modal.parentElement !== document.body) {
+        document.body.appendChild(modal);
+      }
+
       const openButtons = document.querySelectorAll("[data-search-open]");
       const closeButtons = modal.querySelectorAll("[data-search-close]");
 
