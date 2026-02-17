@@ -3,6 +3,7 @@ import Logo from "./Logo.astro";
 import NavLinks from "./NavLinks.astro";
 import Actions from "./Actions.astro";
 import MobileNav from "./MobileNav.astro";
+import Search from "../Search.astro";
 ---
 
 <header>
@@ -14,6 +15,7 @@ import MobileNav from "./MobileNav.astro";
       <MobileNav />
     </div>
   </nav>
+  <Search />
 </header>
 <style>
   header {
@@ -41,6 +43,4 @@ import MobileNav from "./MobileNav.astro";
   .header-content {
     @apply flex items-center gap-4 ml-auto;
   }
-
-  /* 右側コンテンツをまとめてロゴの右に寄せる */
 </style>

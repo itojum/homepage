@@ -1,5 +1,111 @@
 ---
-import SearchComponent from 'astro-pagefind/components/Search';
+import SearchComponent from "astro-pagefind/components/Search";
 ---
 
-<SearchComponent id="search" className="pagefind-ui" />
+<div
+  class="search-modal"
+  data-search-modal
+  aria-hidden="true"
+>
+  <div class="search-modal__backdrop" data-search-close></div>
+  <div
+    class="search-modal__dialog"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="search-modal-title"
+  >
+    <div class="search-modal__header">
+      <h2 id="search-modal-title" class="search-modal__title">
+        ブログ内検索
+      </h2>
+      <button
+        type="button"
+        class="search-modal__close"
+        aria-label="検索モーダルを閉じる"
+        data-search-close
+      >
+        ✕
+      </button>
+    </div>
+    <div class="p-4">
+      <SearchComponent id="search" className="pagefind-ui" />
+    </div>
+  </div>
+</div>
+
+<script>
+  if (typeof window !== "undefined") {
+    const modal = document.querySelector("[data-search-modal]");
+
+    if (modal instanceof HTMLElement) {
+      const openButtons = document.querySelectorAll("[data-search-open]");
+      const closeButtons = modal.querySelectorAll("[data-search-close]");
+
+      const open = () => {
+        modal.classList.add("is-open");
+        modal.setAttribute("aria-hidden", "false");
+        document.body.style.overflow = "hidden";
+      };
+
+      const close = () => {
+        modal.classList.remove("is-open");
+        modal.setAttribute("aria-hidden", "true");
+        document.body.style.overflow = "";
+      };
+
+      openButtons.forEach((button) => {
+        button.addEventListener("click", (event) => {
+          event.preventDefault();
+          open();
+        });
+      });
+
+      closeButtons.forEach((button) => {
+        button.addEventListener("click", (event) => {
+          event.preventDefault();
+          close();
+        });
+      });
+
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape" && modal.classList.contains("is-open")) {
+          close();
+        }
+      });
+    }
+  }
+</script>
+
+<style>
+  .search-modal {
+    @apply fixed inset-0 flex items-start justify-center bg-black/40;
+    display: none;
+    z-index: 60;
+    padding-top: 5rem;
+  }
+
+  .search-modal.is-open {
+    display: flex;
+  }
+
+  .search-modal__backdrop {
+    @apply absolute inset-0;
+  }
+
+  .search-modal__dialog {
+    @apply relative w-full h-[80vh] max-w-3xl mx-4 bg-white rounded-xl shadow-xl;
+    z-index: 1;
+  }
+
+  .search-modal__header {
+    @apply flex items-center justify-between px-4 py-3 border-b border-gray-200;
+  }
+
+  .search-modal__title {
+    @apply m-0 text-base font-semibold text-[rgb(var(--gray-dark))];
+  }
+
+  .search-modal__close {
+    @apply inline-flex items-center justify-center w-8 h-8 rounded-full border border-gray-200 bg-white text-[rgb(var(--gray-dark))] cursor-pointer;
+  }
+</style>
