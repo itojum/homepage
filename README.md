@@ -1,75 +1,62 @@
-# Astro Starter Kit: Blog
+## 概要
 
-```sh
-pnpm create astro@latest -- --template blog
+このリポジトリは、Astro を使って構築した個人サイト／ブログです。  
+microCMS をヘッドレス CMS として利用し、ブログ記事やアクティビティ情報を配信しています。  
+
+## 主な技術スタック
+
+- フレームワーク: Astro
+- スタイル: Tailwind CSS（`@astrojs/tailwind`）、カスタム CSS
+- CMS: microCMS（`microcms-js-sdk`）
+- 検索: Pagefind（`astro-pagefind`）
+- アイコン: `astro-icon` + `@iconify-json/ri`
+- その他:
+  - Lint/Format: Biome (`@biomejs/biome`)
+
+## 必要な環境変数
+
+ルートディレクトリに `.env.example` をコピーし、 `.env` を作成し、少なくとも以下を設定してください。
+
+```bash
+SITE_URL="https://example.com"
+
+# microCMS
+MICROCMS_SERVICE_DOMAIN="your-service-domain"
+MICROCMS_API_KEY="your-api-key"
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## セットアップ
 
-Features:
+### 1. 依存パッケージのインストール
 
-- ✅ Minimal styling (make it your own!)
-- ✅ 100/100 Lighthouse performance
-- ✅ SEO-friendly with canonical URLs and OpenGraph data
-- ✅ Sitemap support
-- ✅ RSS Feed support
-- ✅ Markdown & MDX support
+このプロジェクトは pnpm を前提としています。
 
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
-├── public/
-├── src/
-│   ├── components/
-│   ├── content/
-│   ├── layouts/
-│   └── pages/
-├── astro.config.mjs
-├── README.md
-├── package.json
-└── tsconfig.json
+```bash
+pnpm install
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+### 2. 開発サーバーの起動
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+```bash
+pnpm dev
+```
 
-The `src/content/` directory contains "collections" of related Markdown and MDX documents. Use `getCollection()` to retrieve posts from `src/content/blog/`, and type-check your frontmatter using an optional schema. See [Astro's Content Collections docs](https://docs.astro.build/en/guides/content-collections/) to learn more.
+ブラウザで `http://localhost:4321` へアクセスすると開発中のサイトを確認できます。
 
-Any static assets, like images, can be placed in the `public/` directory.
+### 3. ビルド
 
-## 📝 microCMS でブログを表示する
+本番用ビルドは以下のコマンドで生成されます。
 
-ブログ一覧・詳細は microCMS の「blogs」API から取得しています。
+```bash
+pnpm build
+```
 
-1. [microCMS](https://microcms.io/) でサービスを作成し、**リスト形式**の API「blogs」を追加する。
-2. フィールドに **title**（テキスト）と **content**（リッチエディタ）を用意する。
-3. プロジェクトルートに `.env` を作成し、以下を設定する（`.microcms.io` は含めない）:
-   ```env
-   MICROCMS_SERVICE_DOMAIN=your-service
-   MICROCMS_API_KEY=your-api-key
-   ```
-4. `pnpm dev` または `pnpm build` を実行する。
+ビルド成果物は `dist/` 配下に出力されます。
 
-## 🧞 Commands
+### 4. ビルド済みサイトのプレビュー
 
-All commands are run from the root of the project, from a terminal:
+ビルド済みファイルを使ってローカルプレビューを行う場合は次のコマンドを使います。
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `pnpm install`             | Installs dependencies                            |
-| `pnpm dev`             | Starts local dev server at `localhost:4321`      |
-| `pnpm build`           | Build your production site to `./dist/`          |
-| `pnpm preview`         | Preview your build locally, before deploying     |
-| `pnpm astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `pnpm astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Check out [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
-
-## Credit
-
-This theme is based off of the lovely [Bear Blog](https://github.com/HermanMartinus/bearblog/).
+```bash
+pnpm preview
+```
