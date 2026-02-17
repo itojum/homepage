@@ -19,11 +19,14 @@ import Search from "../Search.astro";
 </header>
 <style>
   header {
-    @apply m-0 px-4 bg-white;
+    @apply m-0 px-4;
     position: sticky;
     top: 0;
     z-index: 50;
-    box-shadow: 0 2px 8px rgba(var(--black), 5%);
+    background-color: rgba(var(--surface-overlay), 92%);
+    border-bottom: 1px solid rgba(var(--border), 80%);
+    backdrop-filter: blur(12px);
+    box-shadow: var(--header-shadow);
   }
 
   nav {

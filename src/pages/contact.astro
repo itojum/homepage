@@ -13,9 +13,7 @@ import { EMAIL_ADDRESS, X_URL } from "@/consts";
     </header>
 
     <div class="grid gap-4 md:grid-cols-2">
-      <div
-        class="rounded-xl border border-[rgb(var(--gray-light))] bg-white/70 p-4 shadow-sm"
-      >
+      <div class="contact-card">
         <p
           class="text-xs font-semibold uppercase tracking-wide text-[rgb(var(--gray))]"
         >
@@ -33,9 +31,7 @@ import { EMAIL_ADDRESS, X_URL } from "@/consts";
         </p>
       </div>
 
-      <div
-        class="rounded-xl border border-[rgb(var(--gray-light))] bg-white/70 p-4 shadow-sm"
-      >
+      <div class="contact-card">
         <p
           class="text-xs font-semibold uppercase tracking-wide text-[rgb(var(--gray))]"
         >
@@ -54,3 +50,12 @@ import { EMAIL_ADDRESS, X_URL } from "@/consts";
     </div>
   </section>
 </BaseLayout>
+
+<style>
+  .contact-card {
+    @apply rounded-xl border p-4;
+    border-color: rgba(var(--border), 90%);
+    background: rgba(var(--surface), 72%);
+    box-shadow: var(--card-shadow);
+  }
+</style>

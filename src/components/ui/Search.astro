@@ -78,7 +78,8 @@ import SearchComponent from "astro-pagefind/components/Search";
 
 <style>
   .search-modal {
-    @apply fixed inset-0 flex items-start justify-center bg-black/40;
+    @apply fixed inset-0 flex items-start justify-center;
+    background: rgba(var(--overlay), 45%);
     display: none;
     z-index: 60;
     padding-top: 5rem;
@@ -93,12 +94,17 @@ import SearchComponent from "astro-pagefind/components/Search";
   }
 
   .search-modal__dialog {
-    @apply relative w-full h-[80vh] max-w-3xl mx-4 bg-white rounded-xl shadow-xl;
+    @apply relative w-full h-[80vh] max-w-3xl mx-4 rounded-xl;
+    background: rgb(var(--surface));
+    border: 1px solid rgba(var(--border), 90%);
+    box-shadow: var(--box-shadow);
+    color: rgb(var(--gray-dark));
     z-index: 1;
   }
 
   .search-modal__header {
-    @apply flex items-center justify-between px-4 py-3 border-b border-gray-200;
+    @apply flex items-center justify-between px-4 py-3 border-b;
+    border-color: rgba(var(--border), 90%);
   }
 
   .search-modal__title {
@@ -106,6 +112,25 @@ import SearchComponent from "astro-pagefind/components/Search";
   }
 
   .search-modal__close {
-    @apply inline-flex items-center justify-center w-8 h-8 rounded-full border border-gray-200 bg-white text-[rgb(var(--gray-dark))] cursor-pointer;
+    @apply inline-flex items-center justify-center w-8 h-8 rounded-full border text-[rgb(var(--gray-dark))] cursor-pointer;
+    border-color: rgba(var(--border), 90%);
+    background: rgb(var(--surface-soft));
+  }
+
+  .search-modal__close:hover {
+    background: rgb(var(--surface-muted));
+  }
+
+  .search-modal :global(.pagefind-ui) {
+    --pagefind-ui-primary: var(--accent);
+    --pagefind-ui-text: rgb(var(--gray-dark));
+    --pagefind-ui-background: rgb(var(--surface-soft));
+    --pagefind-ui-border: rgba(var(--border), 90%);
+    --pagefind-ui-tag: rgb(var(--surface-muted));
+    --pagefind-ui-font: 'MPLUS1Code', sans-serif;
+  }
+
+  .search-modal :global(.pagefind-ui__result-link) {
+    color: var(--accent);
   }
 </style>

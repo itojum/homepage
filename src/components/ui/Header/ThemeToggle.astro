@@ -9,20 +9,25 @@ import { Icon } from "astro-icon/components";
 <style>
   #themeToggle {
     border: 0;
-    background: none;
+    background: transparent;
+    color: rgb(var(--gray-dark));
     cursor: pointer;
     display: inline-flex;
     align-items: center;
     justify-content: center;
   }
 
+  #themeToggle:hover {
+    color: var(--accent);
+  }
+
   .sun {
-    fill: black;
+    fill: currentColor;
     display: block;
   }
 
   .moon {
-    fill: white;
+    fill: currentColor;
     display: none;
   }
 
@@ -65,4 +70,3 @@ import { Icon } from "astro-icon/components";
 
   document.getElementById("themeToggle")?.addEventListener("click", handleToggleClick);
 </script>
-

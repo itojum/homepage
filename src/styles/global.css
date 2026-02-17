@@ -12,14 +12,65 @@
 		--main: #509efe;
 		--accent: #2382ff;
 		--accent-dark: #005dd8;
+		--bg-page: 247, 250, 255;
+		--surface: 255, 255, 255;
+		--surface-soft: 246, 249, 255;
+		--surface-muted: 236, 241, 249;
+		--surface-overlay: 255, 255, 255;
+		--border: 219, 226, 238;
+		--border-strong: 179, 192, 215;
+		--overlay: 12, 17, 27;
 		--black: 15, 18, 25;
 		--gray: 96, 115, 159;
 		--gray-light: 229, 233, 240;
 		--gray-dark: 34, 41, 57;
 		--gray-gradient: rgba(var(--gray-light), 50%), #fff;
+		--header-shadow: 0 2px 8px rgba(var(--black), 7%);
+		--card-shadow: 0 1px 2px rgba(var(--gray), 8%);
+		--card-shadow-hover:
+			0 8px 24px rgba(var(--gray), 12%), 0 2px 8px rgba(80, 158, 254, 8%);
+		--timeline-line: 216, 223, 236;
+		--timeline-node-border: 187, 197, 218;
+		--timeline-node-bg: 255, 255, 255;
+		--timeline-node-ring: 255, 255, 255;
+		--chip-bg: 234, 240, 248;
+		--chip-text: 54, 66, 93;
 		--box-shadow:
 			0 2px 6px rgba(var(--gray), 25%), 0 8px 24px rgba(var(--gray), 33%),
 			0 16px 32px rgba(var(--gray), 33%);
+		color-scheme: light;
+	}
+
+	:root.dark {
+		--accent: #67b0ff;
+		--accent-dark: #a3d0ff;
+		--bg-page: 8, 12, 19;
+		--surface: 18, 24, 36;
+		--surface-soft: 23, 31, 46;
+		--surface-muted: 39, 50, 71;
+		--surface-overlay: 13, 19, 30;
+		--border: 60, 73, 99;
+		--border-strong: 90, 108, 140;
+		--overlay: 3, 6, 11;
+		--black: 236, 243, 255;
+		--gray: 151, 166, 195;
+		--gray-light: 67, 80, 106;
+		--gray-dark: 215, 225, 244;
+		--gray-gradient: rgba(14, 20, 30, 95%), rgb(8, 12, 19);
+		--header-shadow: 0 2px 12px rgba(0, 0, 0, 35%);
+		--card-shadow: 0 1px 2px rgba(0, 0, 0, 45%);
+		--card-shadow-hover:
+			0 10px 28px rgba(0, 0, 0, 45%), 0 3px 12px rgba(80, 158, 254, 20%);
+		--timeline-line: 73, 87, 116;
+		--timeline-node-border: 106, 121, 153;
+		--timeline-node-bg: 17, 24, 36;
+		--timeline-node-ring: 11, 16, 25;
+		--chip-bg: 45, 58, 82;
+		--chip-text: 208, 219, 242;
+		--box-shadow:
+			0 2px 8px rgba(0, 0, 0, 35%), 0 10px 26px rgba(0, 0, 0, 45%),
+			0 16px 34px rgba(0, 0, 0, 40%);
+		color-scheme: dark;
 	}
 
 	@font-face {
@@ -33,7 +84,9 @@
 	body {
 		@apply m-0 p-0 text-left break-words text-[rgb(var(--gray-dark))] text-[20px] leading-[1.7] flex flex-col min-h-screen;
 		font-family: 'MPLUS1Code', sans-serif;
-		background: linear-gradient(var(--gray-gradient)) no-repeat;
+		background-color: rgb(var(--bg-page));
+		background-image: linear-gradient(var(--gray-gradient));
+		background-repeat: no-repeat;
 		background-size: 100% 600px;
 	}
 
@@ -108,7 +161,7 @@
 	}
 
 	code {
-		@apply px-1 py-0.5 rounded bg-[rgb(var(--gray-light))];
+		@apply px-1 py-0.5 rounded bg-[rgb(var(--surface-muted))];
 	}
 
 	pre {
@@ -124,7 +177,7 @@
 	}
 
 	hr {
-		@apply border-0 border-t border-[rgb(var(--gray-light))] my-8;
+		@apply border-0 border-t border-[rgb(var(--border))] my-8;
 	}
 
 	@media (max-width: 720px) {

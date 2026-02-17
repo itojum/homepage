@@ -62,7 +62,10 @@ import { Icon } from "astro-icon/components";
     left: 0;
     right: 0;
     top: 100%; /* ヘッダー(nav)のすぐ下から表示 */
-    @apply bg-white/90 border-t border-[rgb(var(--gray-light))] pt-6 pb-10 px-0 shadow-lg;
+    @apply border-t pt-6 pb-10 px-0;
+    background-color: rgba(var(--surface-overlay), 94%);
+    border-color: rgba(var(--border), 90%);
+    box-shadow: var(--box-shadow);
     backdrop-filter: blur(12px);
     overflow-y: auto;
   }
