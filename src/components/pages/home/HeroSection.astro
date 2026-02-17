@@ -1,0 +1,20 @@
+---
+import { Image } from "astro:assets";
+import { Icon } from "astro-icon/components";
+import iconImage from "@/assets/icon.jpg";
+---
+
+<Image
+  src={iconImage}
+  class="icon-image"
+  alt="いとじゅんのicon"
+  width={1000}
+  height={1000}
+/>
+<h1>itojum</h1>
+<p class="occupation">student / junior developer</p>
+<p>情報系の学生やってます。Web技術、AIエージェント、Minecraftなどに興味があります。名前は"いとじゅん"と読んでほしいです。</p>
+<a href="/about" class="about-link">
+  About Me
+  <Icon name="ri:arrow-right-line" size={24} />
+</a>

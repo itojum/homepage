@@ -1,0 +1,17 @@
+---
+import type { Blog } from "@/types/blog";
+import BlogCardList from "@/components/pages/blogs/BlogCardList.astro";
+import "./RecentBlogsSection.css";
+
+interface Props {
+  blogs: Blog[];
+}
+
+const { blogs } = Astro.props;
+---
+
+<section class="recent-blogs">
+  <h2 class="section-title">最新記事</h2>
+  <BlogCardList blogs={blogs} />
+  <a href="/blog/" class="recent-blogs-link">すべての記事を見る</a>
+</section>

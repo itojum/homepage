@@ -1,0 +1,47 @@
+.icon-image {
+  object-fit: cover;
+  object-position: center;
+  border-radius: 9999px;
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  width: 300px;
+  height: 300px;
+  max-width: 80vw;
+  max-height: 80vw;
+}
+
+.occupation {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: rgb(var(--gray));
+}
+
+.about-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 1.125rem;
+  font-weight: 700;
+  border-bottom-width: 2px;
+  border-bottom-color: var(--accent);
+  line-height: 0.5em;
+}
+
+.about-link:hover {
+  border-bottom-color: var(--accent-dark);
+}
+
+.link-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.link-name {
+  text-decoration: underline;
+}
+
+.section-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: rgb(var(--black));
+}

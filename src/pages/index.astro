@@ -1,67 +1,16 @@
 ---
-import { Image } from 'astro:assets';
-import BaseLayout from '@/layouts/BaseLayout.astro';
-import { SITE_DESCRIPTION, SITE_TITLE, LINKS } from '@/consts';
-import { Icon } from 'astro-icon/components';
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { SITE_DESCRIPTION, SITE_TITLE, LINKS } from "@/consts";
+import { getBlogs } from "@/libs/microcms";
+import HomePage from "@/components/pages/home/HomePage.astro";
 
-import iconImage from '@/assets/icon.jpg';
+const { contents: latestBlogs } = await getBlogs({
+  limit: 3,
+  orders: "-publishedAt",
+  depth: 2,
+});
 ---
 
 <BaseLayout title={SITE_TITLE} description={SITE_DESCRIPTION}>
-	<Image 
-		src={iconImage} 
-		class="icon-image" 
-		alt="いとじゅんのicon" 
-		width={1000} height={1000}
-	/>
-	<h1>itojum</h1>
-	<p class="occupation">student / junior developer</p>
-	<p>情報系の学生やってます。Web技術、AIエージェント、Minecraftなどに興味があります。名前は"いとじゅん"と読んでほしいです。</p>
-
-	<a href="/about" class="about-link">
-		About Me
-		<Icon name="ri:arrow-right-line" size={24} />
-	</a>
-
-	<hr />
-
-	<h2>Links</h2>
-	<ul class="links">
-		{LINKS.map((link) => (
-			<li class="link-item">
-				<Icon name={link.icon ?? 'ri:link'} size={24} />
-				{link.service}:&nbsp;
-				<a href={link.url} target="_blank" rel="noopener noreferrer" >
-					<span class="link-name">{link.name}</span>
-				</a>
-			</li>
-		))}
-	</ul>
+  <HomePage latestBlogs={latestBlogs} links={LINKS} />
 </BaseLayout>
-
-<style>
-	.icon-image {
-		@apply object-cover object-center rounded-full shadow-md;
-		width: 300px;
-		height: 300px;
-		max-width: 80vw;
-		max-height: 80vw;
-	}
-	.occupation {
-		@apply text-2xl font-bold;
-		color: rgb(var(--gray));
-	}
-	.about-link {
-		@apply inline-flex items-center gap-1 text-lg font-bold border-b-2 border-[var(--accent)];
-		line-height: 0.5em;
-	}
-	.about-link:hover {
-		@apply border-[var(--accent-dark)];
-	}
-	.link-item {
-		@apply flex items-center gap-2;
-	}
-	.link-name {
-		@apply underline;
-	}
-</style>
