@@ -64,7 +64,7 @@ const blog = await getBlogDetail(blogId);
   }
   .post :global(h2) {
     margin: 1.5em 0 0.5em;
-    font-size: 1.25rem;
+    font-size: 2rem;
   }
   .post :global(h3) {
     margin: 1.25em 0 0.5em;
@@ -78,7 +78,20 @@ const blog = await getBlogDetail(blogId);
     margin: 0.75em 0;
     padding-left: 1.5em;
   }
+  .post :global(ul) {
+    list-style: disc;
+  }
+  .post :global(ol) {
+    list-style: decimal;
+  }
+  .post :global(li) {
+    margin: 0.25em 0;
+  }
   .post :global(a) {
     color: rgb(var(--accent));
+  }
+  .post :global(img) {
+    @apply rounded-md shadow-md;
+    margin: 0.75em 0;
   }
 </style>
