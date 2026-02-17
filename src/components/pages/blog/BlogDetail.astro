@@ -5,6 +5,7 @@ import BlogBody from "@/components/pages/blog/BlogBody.astro";
 import BlogShare from "@/components/pages/blog/BlogShare.astro";
 import type { Blog } from "@/types/blog";
 import { SITE_TITLE } from "@/consts";
+import { Icon } from "astro-icon/components";
 
 interface Props {
 	blog: Blog;
@@ -14,6 +15,11 @@ const { blog } = Astro.props;
 ---
 
 <main>
+  <a href="/blog" class="flex items-center text-sm text-gray-500 mt-12 mb-4">
+    <Icon name="ri:arrow-left-line" size={18} />
+    一覧へ戻る
+  </a>
+
   <article data-pagefind-body>
     <BlogMeta blog={blog} />
     <BlogThumbnail eyecatch={blog.eyecatch} />
