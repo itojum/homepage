@@ -1,0 +1,17 @@
+---
+import type { Blog } from "@/types/blog";
+import BlogPageHeader from "./BlogPageHeader.astro";
+import BlogCardList from "./BlogCardList.astro";
+import "./BlogPage.css";
+
+interface Props {
+  blogs: Blog[];
+}
+
+const { blogs } = Astro.props;
+---
+
+<section class="blog-page">
+  <BlogPageHeader title="Blog" subtitle="記事一覧" />
+  <BlogCardList blogs={blogs} />
+</section>

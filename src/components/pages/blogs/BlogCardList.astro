@@ -1,0 +1,14 @@
+---
+import type { Blog } from "@/types/blog";
+import BlogCard from "./BlogCard.astro";
+
+interface Props {
+  blogs: Blog[];
+}
+
+const { blogs } = Astro.props;
+---
+
+<ul class="card-list">
+  {blogs.map((blog) => <BlogCard blog={blog} />)}
+</ul>

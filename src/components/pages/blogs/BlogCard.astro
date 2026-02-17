@@ -1,0 +1,53 @@
+---
+import type { Blog } from "@/types/blog";
+import FormattedDate from "@/components/ui/FormattedDate.astro";
+
+interface Props {
+  blog: Blog;
+}
+
+const { blog } = Astro.props;
+const publishedDate = new Date(blog.publishedAt ?? blog.createdAt);
+---
+
+<li class="card">
+  <a href={`/blog/${blog.id}/`} class="card-link">
+    <div class="card-image-wrap">
+      {blog.eyecatch?.url ? (
+        <img
+          src={blog.eyecatch.url}
+          alt=""
+          width={blog.eyecatch.width}
+          height={blog.eyecatch.height}
+          loading="lazy"
+        />
+      ) : (
+        <div class="card-image-placeholder" aria-hidden="true">
+          📝
+        </div>
+      )}
+    </div>
+    <div class="card-body">
+      <div class="card-meta">
+        <time class="card-date">
+          <FormattedDate date={publishedDate} />
+        </time>
+      </div>
+      <h2 class="card-title">{blog.title}</h2>
+      {(blog.category || (blog.tags && blog.tags.length > 0)) && (
+        <div class="card-taxonomies">
+          {blog.category && (
+            <span class="card-category">{blog.category.name}</span>
+          )}
+          {blog.tags && blog.tags.length > 0 && (
+            <ul class="card-tags" aria-label="タグ">
+              {blog.tags.map((tag) => (
+                <li><span>{tag.name}</span></li>
+              ))}
+            </ul>
+          )}
+        </div>
+      )}
+    </div>
+  </a>
+</li>
