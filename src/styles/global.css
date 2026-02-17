@@ -208,7 +208,7 @@
 	}
 
 	blockquote {
-		@apply m-0 pl-5 text-[1.333em] border-l-4 border-[var(--accent)];
+		@apply m-0 pl-5 text-[1.333em] border-l-4;
 	}
 
 	hr {
