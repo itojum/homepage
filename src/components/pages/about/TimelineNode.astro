@@ -1,0 +1,34 @@
+---
+interface Props {
+  isFirst?: boolean;
+}
+
+const { isFirst = false } = Astro.props;
+---
+
+<span
+  class={`activities-timeline__node ${isFirst ? "is-first" : ""}`}
+  aria-hidden="true"
+/>
+
+<style is:global>
+  .activities-timeline__node {
+    @apply relative z-10 mt-1.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 border-gray-300 bg-white;
+    box-shadow: 0 0 0 4px white;
+  }
+
+  .activities-timeline__node.is-first {
+    border-color: var(--main);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .activities-timeline__node {
+      @apply border-gray-600 bg-gray-900;
+      box-shadow: 0 0 0 4px rgb(17 24 39);
+    }
+
+    .activities-timeline__node.is-first {
+      border-color: var(--main);
+    }
+  }
+</style>

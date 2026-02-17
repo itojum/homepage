@@ -1,0 +1,147 @@
+---
+import TimelineNode from "./TimelineNode.astro";
+import { Icon } from "astro-icon/components";
+
+type TimelineItemType =
+  | "project"
+  | "event"
+  | "work"
+  | "examination"
+  | "other"
+  | "current";
+
+interface Props {
+  activity: {
+    title: string;
+    date: Date;
+    type: TimelineItemType;
+    link:
+      | {
+          url: string;
+          text: string;
+        }
+      | undefined;
+  };
+  isFirst?: boolean;
+}
+
+const { activity, isFirst = false } = Astro.props;
+
+const typeIcons: Record<TimelineItemType, string> = {
+  project: "ri:lightbulb-flash-line",
+  event: "ri:calendar-event-line",
+  work: "ri:briefcase-4-line",
+  examination: "ri:medal-line",
+  other: "ri:more-line",
+  current: "ri:time-line",
+};
+
+const typeLabels: Record<TimelineItemType, string> = {
+  project: "プロジェクト",
+  event: "イベント",
+  work: "仕事",
+  examination: "資格",
+  other: "その他",
+  current: "現在",
+};
+
+function formatDate(d: Date): string {
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, "0");
+  return `${y}/${m}`;
+}
+---
+
+<li class="timeline-item">
+  <TimelineNode isFirst={isFirst} />
+  <div class="timeline-item__content">
+    <div class="timeline-item__header">
+      <time class="timeline-item__date">
+        {formatDate(activity.date)}
+      </time>
+      <span
+        class={`timeline-item__badge timeline-item__badge--${activity.type}`}
+        title={typeLabels[activity.type]}
+        aria-label={typeLabels[activity.type]}
+      >
+        <Icon name={typeIcons[activity.type]} size={16} />
+      </span>
+    </div>
+    <p class="timeline-item__title">
+      {activity.title}
+      {activity.link && (
+        <a
+          href={activity.link.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="timeline-item__link"
+        >
+          {activity.link.text}
+          <Icon
+            name="ri:external-link-fill"
+            size={14}
+            aria-hidden="true"
+          />
+        </a>
+      )}
+    </p>
+  </div>
+</li>
+
+<style>
+  .timeline-item {
+    @apply relative flex gap-4;
+  }
+
+  .timeline-item:last-child {
+    @apply pb-0;
+  }
+
+  .timeline-item__content {
+    @apply min-w-0 flex-1 pt-0;
+  }
+
+  .timeline-item__header {
+    @apply flex flex-wrap items-baseline gap-2;
+  }
+
+  .timeline-item__date {
+    @apply text-sm font-medium text-gray-500 dark:text-gray-400;
+  }
+
+  .timeline-item__badge {
+    @apply inline-flex items-center justify-center rounded-full p-1.5;
+  }
+
+  .timeline-item__badge--project {
+    @apply bg-amber-100 text-amber-800 dark:bg-amber-900/40 dark:text-amber-300;
+  }
+
+  .timeline-item__badge--event {
+    @apply bg-blue-100 text-blue-800 dark:bg-blue-900/40 dark:text-blue-300;
+  }
+
+  .timeline-item__badge--work {
+    @apply bg-emerald-100 text-emerald-800 dark:bg-emerald-900/40 dark:text-emerald-300;
+  }
+
+  .timeline-item__badge--examination {
+    @apply bg-violet-100 text-violet-800 dark:bg-violet-900/40 dark:text-violet-300;
+  }
+
+  .timeline-item__badge--other {
+    @apply bg-gray-100 text-gray-700 dark:bg-gray-700/40 dark:text-gray-300;
+  }
+
+  .timeline-item__badge--current {
+    @apply bg-sky-100 text-sky-800 dark:bg-sky-900/40 dark:text-sky-300;
+  }
+
+  .timeline-item__title {
+    @apply mt-1 text-base font-medium text-gray-900 dark:text-gray-100 flex flex-wrap items-baseline gap-x-4 gap-y-0;
+  }
+
+  .timeline-item__link {
+    @apply text-sm text-blue-600 dark:text-blue-400 hover:underline inline-flex items-center gap-1;
+  }
+</style>

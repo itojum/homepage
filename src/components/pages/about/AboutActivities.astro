@@ -1,4 +1,114 @@
 ---
+import TimelineItem from "./TimelineItem.astro";
+
+type TimelineItemType =
+  | "project"
+  | "event"
+  | "work"
+  | "examination"
+  | "other"
+  | "current";
+
+interface Activity {
+  title: string;
+  date: Date;
+  type: TimelineItemType;
+  link:
+    | {
+        url: string;
+        text: string;
+      }
+    | undefined;
+}
+
+const activities: Activity[] = [
+  {
+    title: "〇〇ハッカソン 優勝",
+    date: new Date("2025-01-01"),
+    type: "project",
+    link: {
+      url: "https://example.com",
+      text: "優勝インタビュー",
+    },
+  },
+  {
+    title: "アプリリリース",
+    date: new Date("2024-04-01"),
+    type: "event",
+    link: undefined,
+  },
+  {
+    title: "hoge株式会社 入社",
+    date: new Date("2024-08-01"),
+    type: "work",
+    link: undefined,
+  },
+  {
+    title: "応用情報技術者試験 合格",
+    date: new Date("2024-01-01"),
+    type: "examination",
+    link: undefined,
+  },
+  {
+    title: "その他",
+    date: new Date("2024-01-01"),
+    type: "other",
+    link: undefined,
+  },
+];
+
+const sortedActivities = [...activities].sort(
+  (a, b) => b.date.getTime() - a.date.getTime(),
+);
+
+const nowItem: Activity = {
+  title: "現在",
+  date: new Date(),
+  type: "current",
+  link: undefined,
+};
+
+const timelineItems = [nowItem, ...sortedActivities];
 ---
 
 <h2>Activities</h2>
+<div class="activities-timeline">
+  <ul class="activities-timeline__list">
+    <span
+      class="activities-timeline__line"
+      aria-hidden="true"></span>
+    {
+      timelineItems.map((activity, index) => (
+        <TimelineItem activity={activity} isFirst={index === 0} />
+      ))
+    }
+  </ul>
+</div>
+
+<style>
+  .activities-timeline {
+    margin-top: 1.5rem;
+  }
+
+  .activities-timeline__list {
+    position: relative;
+    padding-left: 0;
+    list-style: none;
+  }
+
+  .activities-timeline__line {
+    position: absolute;
+    left: 0.75rem;
+    top: 0.5rem;
+    bottom: 0.5rem;
+    width: 0.125rem;
+    background-color: rgb(229 231 235);
+    border-radius: 9999px;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .activities-timeline__line {
+      background-color: rgb(55 65 81);
+    }
+  }
+</style>
