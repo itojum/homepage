@@ -1,0 +1,136 @@
+---
+import { Icon } from "astro-icon/components";
+
+interface Props {
+	title: string;
+}
+
+const { title } = Astro.props;
+
+const pageUrl = Astro.url.href;
+const shareText = `${title}`;
+
+const xShareUrl = `https://x.com/intent/tweet?text=${encodeURIComponent(
+	shareText,
+)}&url=${encodeURIComponent(pageUrl)}`;
+---
+
+<div class="share">
+  <p class="share-label">この記事をシェアする</p>
+  <div class="share-buttons">
+    <a
+      href={xShareUrl}
+      class="share-button share-button-x"
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="Xで共有"
+    >
+      <Icon name="ri:twitter-x-line" size={20} />
+    </a>
+
+    <a
+      href="https://b.hatena.ne.jp/entry/"
+      class="hatena-bookmark-button"
+      data-hatena-bookmark-layout="touch"
+      data-hatena-bookmark-url={pageUrl}
+      data-hatena-bookmark-title={title}
+      title="このエントリーをはてなブックマークに追加"
+    >
+      <img
+        src="https://b.st-hatena.com/images/v4/public/entry-button/button-only@2x.png"
+        alt="このエントリーをはてなブックマークに追加"
+        width="48"
+        height="48"
+        style="border: none;"
+      />
+    </a>
+
+    <button
+      type="button"
+      class="share-button share-button-native"
+      data-share-button="native"
+      data-share-title={title}
+      data-share-text={shareText}
+      data-share-url={pageUrl}
+      aria-label="このページを共有"
+    >
+      <Icon name="ri:share-line" size={18} />
+    </button>
+  </div>
+</div>
+
+<script is:inline>
+  (function () {
+    const button = document.querySelector('[data-share-button="native"]');
+    if (!button) return;
+
+    if (!navigator || !navigator.share) {
+      button.hidden = true;
+      return;
+    }
+
+    button.hidden = false;
+
+    button.addEventListener("click", function () {
+      const dataset = button.dataset;
+
+      navigator
+        .share({
+          title: dataset.shareTitle || document.title,
+          text: dataset.shareText || "",
+          url: dataset.shareUrl || location.href,
+        })
+        .catch(function () {
+          // キャンセルなどは無視
+        });
+    });
+  })();
+</script>
+
+<script
+  is:inline
+  type="text/javascript"
+  src="https://b.st-hatena.com/js/bookmark_button.js"
+  charset="utf-8"
+  async
+></script>
+
+<style>
+  .share {
+    margin-top: 2.5rem;
+    padding-top: 1.75rem;
+    border-top: 1px solid rgba(var(--border), 80%);
+  }
+
+  .share-label {
+    margin: 0 0 0.75rem;
+    font-size: 0.9rem;
+    color: rgb(var(--gray));
+  }
+
+  .share-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  .share-button {
+    @apply flex items-center justify-center w-[42px] h-[42px] rounded-md border border-[rgb(var(--border))] bg-transparent;
+  }
+
+  .share-button-x {
+    background: #000;
+    color: #fff;
+  }
+  .share-button-x:hover {
+    background: #292929;
+  }
+
+  .share-button-native {
+    background: #ffffff;
+    color: #000;
+  }
+  .share-button-native:hover {
+    background: #ebebeb;
+  }
+</style>

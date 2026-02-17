@@ -2,7 +2,9 @@
 import BlogMeta from "@/components/pages/blog/BlogMeta.astro";
 import BlogThumbnail from "@/components/pages/blog/BlogThumbnail.astro";
 import BlogBody from "@/components/pages/blog/BlogBody.astro";
+import BlogShare from "@/components/pages/blog/BlogShare.astro";
 import type { Blog } from "@/types/blog";
+import { SITE_TITLE } from "@/consts";
 
 interface Props {
 	blog: Blog;
@@ -16,6 +18,7 @@ const { blog } = Astro.props;
     <BlogMeta blog={blog} />
     <BlogThumbnail eyecatch={blog.eyecatch} />
     <BlogBody title={blog.title} content={blog.content} />
+    <BlogShare title={`${blog.title} | ${SITE_TITLE}`} />
   </article>
 </main>
 
@@ -28,4 +31,3 @@ const { blog } = Astro.props;
     color: rgb(var(--gray-dark));
   }
 </style>
-
