@@ -15,20 +15,18 @@
   color: rgb(var(--gray));
 }
 
-.about-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.25rem;
-  font-size: 1.125rem;
-  font-weight: 700;
-  border-bottom-width: 2px;
-  border-bottom-color: var(--accent);
-  line-height: 0.5em;
+.home-link {
+  display: inline-block;
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--accent);
 }
 
-.about-link:hover {
-  border-bottom-color: var(--accent-dark);
+.home-link:hover {
+  text-decoration: underline;
 }
+
 
 .link-item {
   display: flex;

@@ -5,18 +5,6 @@
   padding: 1.5rem 0 2rem;
 }
 
-.recent-blogs-link {
-  display: inline-block;
-  margin-top: 1rem;
-  font-size: 0.9rem;
-  font-weight: 500;
-  color: var(--accent);
-}
-
-.recent-blogs-link:hover {
-  text-decoration: underline;
-}
-
 .recent-blogs .card-list {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
