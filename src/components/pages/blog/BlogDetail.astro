@@ -8,32 +8,31 @@ import { SITE_TITLE } from "@/consts";
 import { Icon } from "astro-icon/components";
 
 interface Props {
-	blog: Blog;
+  blog: Blog;
 }
 
 const { blog } = Astro.props;
 ---
 
-<main>
-  <a href="/blog" class="flex items-center text-sm text-gray-500 mt-12 mb-4">
-    <Icon name="ri:arrow-left-line" size={18} />
-    一覧へ戻る
-  </a>
+<a href="/blog" class="flex items-center text-sm text-gray-500 mb-4">
+  <Icon name="ri:arrow-left-line" size={18} />
+  一覧へ戻る
+</a>
 
-  <article data-pagefind-body>
-    <BlogMeta blog={blog} />
-    <BlogThumbnail eyecatch={blog.eyecatch} />
-    <BlogBody title={blog.title} content={blog.content} description={blog.description} />
-    <BlogShare title={`${blog.title} | ${SITE_TITLE}`} />
-  </article>
-</main>
+<article data-pagefind-body>
+  <BlogMeta blog={blog} />
+  <BlogThumbnail eyecatch={blog.eyecatch} />
+  <BlogBody
+    title={blog.title}
+    content={blog.content}
+    description={blog.description}
+  />
+  <BlogShare title={`${blog.title} | ${SITE_TITLE}`} />
+</article>
 
 <style>
   main {
-    width: calc(100% - 2em);
     max-width: 720px;
-    margin: 0 auto;
-    padding: 1em;
     color: rgb(var(--gray-dark));
   }
 </style>
