@@ -19,9 +19,9 @@ const blog = await getBlogDetail(blogId, {
 
 <BaseLayout title={blog.title} description={blog.title}>
   <main>
-    <article>
+    <article data-pagefind-body>
       <div class="meta">
-        <time class="date">
+        <time class="date" data-pagefind-meta="date">
           <FormattedDate date={new Date(blog.publishedAt ?? blog.createdAt)} />
         </time>
         {
@@ -36,7 +36,7 @@ const blog = await getBlogDetail(blogId, {
             {blog.category && (
               <span class="taxonomy-item">
                 <span class="taxonomy-label">カテゴリ:</span>
-                <span class="category">{blog.category.name}</span>
+                <span class="category" data-pagefind-filter="category">{blog.category.name}</span>
               </span>
             )}
             {blog.tags && blog.tags.length > 0 && (
@@ -44,7 +44,7 @@ const blog = await getBlogDetail(blogId, {
                 <span class="taxonomy-label">タグ:</span>
                 <ul class="tags" aria-label="タグ">
                   {blog.tags.map((tag) => (
-                    <li><span>{tag.name}</span></li>
+                    <li><span data-pagefind-filter="tag">{tag.name}</span></li>
                   ))}
                 </ul>
               </div>
@@ -56,13 +56,13 @@ const blog = await getBlogDetail(blogId, {
         <div class="thumbnail">
           <img
             src={blog.eyecatch.url}
-            alt=""
             width={blog.eyecatch.width}
             height={blog.eyecatch.height}
+            ata-pagefind-meta="image[src]" 
           />
         </div>
       )}
-      <h1 class="title">{blog.title}</h1>
+      <h1 class="title" data-pagefind-meta="title">{blog.title}</h1>
       <div class="post" set:html={blog.content} />
     </article>
   </main>
