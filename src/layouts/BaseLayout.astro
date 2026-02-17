@@ -4,10 +4,10 @@ import Footer from "@/components/ui/Footer.astro";
 import Header from "@/components/ui/Header/index.astro";
 
 interface Props {
-	title: string;
-	description: string;
-	image?: string;
-	noIndex?: boolean;
+  title: string;
+  description: string;
+  image?: string;
+  noIndex?: boolean;
 }
 
 const { title, description, image, noIndex } = Astro.props;
@@ -15,21 +15,26 @@ const { title, description, image, noIndex } = Astro.props;
 
 <!doctype html>
 <html lang="ja">
-	<head>
-		<BaseHead title={title} description={description} image={image} noIndex={noIndex} />
-		<slot name="head" />
-	</head>
-	<body>
-		<Header />
-		<main>
-			<slot />
-		</main>
-		<Footer />
-	</body>
+  <head>
+    <BaseHead
+      title={title}
+      description={description}
+      image={image}
+      noIndex={noIndex}
+    />
+    <slot name="head" />
+  </head>
+  <body>
+    <Header />
+    <main>
+      <slot />
+    </main>
+    <Footer />
+  </body>
 </html>
 
 <style>
-	main {
-		@apply py-24;
-	}
+  main {
+    @apply py-24;
+  }
 </style>

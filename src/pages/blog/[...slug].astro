@@ -17,6 +17,6 @@ const blog = await getBlogDetail(blogId, {
 });
 ---
 
-<BaseLayout title={blog.title} description={blog.title}>
+<BaseLayout title={blog.title} description={blog.description}>
   <BlogDetail blog={blog} />
 </BaseLayout>

@@ -33,6 +33,7 @@ export type Blog = {
 	publishedAt: string;
 	revisedAt: string;
 	title: string;
+	description: string;
 	content: string;
 	eyecatch: Eyecatch;
 	category: Category | null;

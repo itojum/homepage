@@ -159,6 +159,17 @@ main:has(.blog-page) {
 	color: rgb(var(--black));
 }
 
+.blog-page .card-description {
+	margin: 0.25rem 0 0;
+	font-size: 0.8rem;
+	color: rgb(var(--gray));
+	display: -webkit-box;
+	line-clamp: 2;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+}
+
 .blog-page .card-list .card:first-child .card-title {
 	font-size: 1rem;
 	font-weight: 600;

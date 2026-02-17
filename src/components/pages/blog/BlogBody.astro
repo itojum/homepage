@@ -2,21 +2,29 @@
 interface Props {
 	title: string;
 	content: string;
+	description: string;
 }
 
-const { title, content } = Astro.props;
+const { title, content, description } = Astro.props;
 ---
 
 <h1 class="title" data-pagefind-meta="title">{title}</h1>
+<p class="summary" data-pagefind-meta="description">
+  {description}
+</p>
 <div class="post" set:html={content} />
 
 <style>
   .title {
-    margin: 0 0 1em 0;
     padding-bottom: 0.5em;
     line-height: 1.2;
     color: rgb(var(--black));
     font-size: 3rem;
+  }
+  .summary {
+    margin: 0.5em 0;
+    font-size: 1rem;
+    color: rgb(var(--gray));
   }
   .post {
     line-height: 1.7;

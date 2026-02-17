@@ -23,7 +23,7 @@ const { blog } = Astro.props;
   <article data-pagefind-body>
     <BlogMeta blog={blog} />
     <BlogThumbnail eyecatch={blog.eyecatch} />
-    <BlogBody title={blog.title} content={blog.content} />
+    <BlogBody title={blog.title} content={blog.content} description={blog.description} />
     <BlogShare title={`${blog.title} | ${SITE_TITLE}`} />
   </article>
 </main>

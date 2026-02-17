@@ -34,6 +34,9 @@ const publishedDate = new Date(blog.publishedAt ?? blog.createdAt);
         </time>
       </div>
       <h2 class="card-title">{blog.title}</h2>
+      <p class="card-description" data-pagefind-meta="description">
+        {blog.description}
+      </p>
       {(blog.category || (blog.tags && blog.tags.length > 0)) && (
         <div class="card-taxonomies">
           {blog.category && (

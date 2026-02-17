@@ -3,13 +3,16 @@ import "@/styles/global.css";
 import { SITE_TITLE } from "@/consts";
 
 interface Props {
-	title: string;
-	description: string;
-	image?: string;
-	noIndex?: boolean;
+  title: string;
+  description: string;
+  image?: string;
+  noIndex?: boolean;
 }
 
-const canonicalURL = new URL(Astro.url.pathname, Astro.site || Astro.url.origin);
+const canonicalURL = new URL(
+  Astro.url.pathname,
+  Astro.site || Astro.url.origin,
+);
 
 const { title, description, image, noIndex } = Astro.props;
 const titleText = `${title} | ${SITE_TITLE}`;
@@ -21,32 +24,40 @@ const titleText = `${title} | ${SITE_TITLE}`;
 <link rel="icon" href="/favicon.ico" />
 <link rel="sitemap" href="/sitemap-index.xml" />
 <script is:inline>
-	(() => {
-		try {
-			const savedTheme = localStorage.getItem('theme');
-			const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-			const theme =
-				savedTheme === 'dark' || savedTheme === 'light'
-					? savedTheme
-					: systemPrefersDark
-						? 'dark'
-						: 'light';
-			document.documentElement.classList.toggle('dark', theme === 'dark');
-		} catch {
-			/* noop */
-		}
-	})();
+  (() => {
+    try {
+      const savedTheme = localStorage.getItem("theme");
+      const systemPrefersDark = window.matchMedia(
+        "(prefers-color-scheme: dark)",
+      ).matches;
+      const theme =
+        savedTheme === "dark" || savedTheme === "light"
+          ? savedTheme
+          : systemPrefersDark
+            ? "dark"
+            : "light";
+      document.documentElement.classList.toggle("dark", theme === "dark");
+    } catch {
+      /* noop */
+    }
+  })();
 </script>
 <link
-	rel="alternate"
-	type="application/rss+xml"
-	title={SITE_TITLE}
-	href={new URL('rss.xml', Astro.site || Astro.url.origin)}
+  rel="alternate"
+  type="application/rss+xml"
+  title={SITE_TITLE}
+  href={new URL("rss.xml", Astro.site || Astro.url.origin)}
 />
 <meta name="generator" content={Astro.generator} />
 
 <!-- Font preloads -->
-<link rel="preload" href="/fonts/MPLUS1Code-VariableFont_wght.ttf" as="font" type="font/ttf" crossorigin />
+<link
+  rel="preload"
+  href="/fonts/MPLUS1Code-VariableFont_wght.ttf"
+  as="font"
+  type="font/ttf"
+  crossorigin
+/>
 
 <!-- Canonical URL -->
 <link rel="canonical" href={canonicalURL} />
