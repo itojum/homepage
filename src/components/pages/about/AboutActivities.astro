@@ -30,7 +30,6 @@ const { contents: microCMSActivities } = await getActivities({
 
 // microCMSのデータを内部形式に変換
 const activities: Activity[] = microCMSActivities.map((item: MicroCMSActivity) => {
-  // type配列の最初の要素を使用（通常は1つだけ）
   const type = (item.type[0] || "other") as TimelineItemType;
   
   return {
