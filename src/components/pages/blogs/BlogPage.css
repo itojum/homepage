@@ -1,11 +1,11 @@
 main:has(.blog-page) {
   width: 100%;
-  max-width: 720px;
+  max-width: 960px;
 }
 
 .blog-page {
   width: 100%;
-  max-width: 720px;
+  max-width: 960px;
   margin: 0 auto;
   padding: 1rem 0 2rem;
 }
@@ -33,7 +33,7 @@ main:has(.blog-page) {
 
 .blog-page .card-list {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 1rem;
   list-style: none;
   margin: 0;
@@ -81,13 +81,13 @@ main:has(.blog-page) {
 }
 
 .blog-page .card-list .card:first-child .card-body {
-  padding: 0.75rem 1rem;
+  padding: 0.65rem 0.85rem;
 }
 
 .blog-page .card-image-wrap {
   position: relative;
   width: 100%;
-  aspect-ratio: 16 / 9;
+  aspect-ratio: 3 / 2;
   background: linear-gradient(
     135deg,
     rgba(var(--gray-light), 0.6) 0%,
@@ -97,7 +97,7 @@ main:has(.blog-page) {
 }
 
 .blog-page .card-list .card:first-child .card-image-wrap {
-  aspect-ratio: 21 / 9;
+  aspect-ratio: 3 / 1;
 }
 
 .blog-page .card-image-wrap::after {
@@ -141,7 +141,7 @@ main:has(.blog-page) {
 }
 
 .blog-page .card-list .card:first-child .card-image-placeholder {
-  font-size: 2rem;
+  font-size: 1.75rem;
 }
 
 .blog-page .card-meta {
@@ -166,7 +166,7 @@ main:has(.blog-page) {
 }
 
 .blog-page .card-list .card:first-child .card-title {
-  font-size: 1.1rem;
+  font-size: 1rem;
   font-weight: 600;
 }
 
@@ -204,7 +204,7 @@ main:has(.blog-page) {
 
 @media (max-width: 720px) {
   .blog-page {
-    padding: 1rem 0 1.5rem;
+    padding: 1rem 1.25rem 1.5rem;
   }
 
   .blog-page .page-header {
@@ -217,7 +217,7 @@ main:has(.blog-page) {
   }
 
   .blog-page .card-list .card:first-child .card-image-wrap {
-    aspect-ratio: 16 / 9;
+    aspect-ratio: 3 / 2;
   }
 
   .blog-page .card-body,
