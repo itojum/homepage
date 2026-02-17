@@ -5,10 +5,10 @@
  *   MICROCMS_SERVICE_DOMAIN=<YOUR_SERVICE>  （.microcms.io は含めない）
  *   MICROCMS_API_KEY=<YOUR_KEY_VALUE>
  */
-import type { MicroCMSQueries } from 'microcms-js-sdk';
-import { createClient } from 'microcms-js-sdk';
-import type { Blog } from '@/types/blog';
-import type { Activity } from '@/types/activity';
+import type { MicroCMSQueries } from "microcms-js-sdk";
+import { createClient } from "microcms-js-sdk";
+import type { Blog } from "@/types/blog";
+import type { Activity } from "@/types/activity";
 
 const client = createClient({
 	serviceDomain: import.meta.env.MICROCMS_SERVICE_DOMAIN,
@@ -17,16 +17,13 @@ const client = createClient({
 
 /** 記事一覧を取得 */
 export const getBlogs = async (queries?: MicroCMSQueries) => {
-	return await client.getList<Blog>({ endpoint: 'blogs', queries });
+	return await client.getList<Blog>({ endpoint: "blogs", queries });
 };
 
 /** 記事詳細を取得 */
-export const getBlogDetail = async (
-	contentId: string,
-	queries?: MicroCMSQueries,
-) => {
+export const getBlogDetail = async (contentId: string, queries?: MicroCMSQueries) => {
 	return await client.getListDetail<Blog>({
-		endpoint: 'blogs',
+		endpoint: "blogs",
 		contentId,
 		queries,
 	});
@@ -34,5 +31,5 @@ export const getBlogDetail = async (
 
 /** アクティビティ一覧を取得 */
 export const getActivities = async (queries?: MicroCMSQueries) => {
-	return await client.getAllContents<Activity>({ endpoint: 'activities', queries });
+	return await client.getAllContents<Activity>({ endpoint: "activities", queries });
 };

@@ -2,14 +2,14 @@
 import { Icon } from "astro-icon/components";
 
 interface LinkItem {
-  service: string;
-  url: string;
-  icon: string | null;
-  name: string;
+	service: string;
+	url: string;
+	icon: string | null;
+	name: string;
 }
 
 interface Props {
-  links: LinkItem[];
+	links: LinkItem[];
 }
 
 const { links } = Astro.props;

@@ -1,45 +1,44 @@
 .icon-image {
-  object-fit: cover;
-  object-position: center;
-  border-radius: 9999px;
-  box-shadow: var(--box-shadow);
-  width: 300px;
-  height: 300px;
-  max-width: 80vw;
-  max-height: 80vw;
+	object-fit: cover;
+	object-position: center;
+	border-radius: 9999px;
+	box-shadow: var(--box-shadow);
+	width: 300px;
+	height: 300px;
+	max-width: 80vw;
+	max-height: 80vw;
 }
 
 .occupation {
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: rgb(var(--gray));
+	font-size: 1.5rem;
+	font-weight: 700;
+	color: rgb(var(--gray));
 }
 
 .home-link {
-  display: inline-block;
-  margin-top: 1rem;
-  font-size: 0.9rem;
-  font-weight: 500;
-  color: var(--accent);
+	display: inline-block;
+	margin-top: 1rem;
+	font-size: 0.9rem;
+	font-weight: 500;
+	color: var(--accent);
 }
 
 .home-link:hover {
-  text-decoration: underline;
+	text-decoration: underline;
 }
 
-
 .link-item {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
 }
 
 .link-name {
-  text-decoration: underline;
+	text-decoration: underline;
 }
 
 .section-title {
-  font-size: 1.5rem;
-  font-weight: 600;
-  color: rgb(var(--black));
+	font-size: 1.5rem;
+	font-weight: 600;
+	color: rgb(var(--black));
 }

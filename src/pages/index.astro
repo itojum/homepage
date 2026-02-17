@@ -5,9 +5,9 @@ import { getBlogs } from "@/libs/microcms";
 import HomePage from "@/components/pages/home/HomePage.astro";
 
 const { contents: latestBlogs } = await getBlogs({
-  limit: 3,
-  orders: "-publishedAt",
-  depth: 2,
+	limit: 3,
+	orders: "-publishedAt",
+	depth: 2,
 });
 ---
 

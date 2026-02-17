@@ -27,8 +27,7 @@
 		--gray-gradient: rgba(var(--gray-light), 50%), #fff;
 		--header-shadow: 0 2px 8px rgba(var(--black), 7%);
 		--card-shadow: 0 1px 2px rgba(var(--gray), 8%);
-		--card-shadow-hover:
-			0 8px 24px rgba(var(--gray), 12%), 0 2px 8px rgba(80, 158, 254, 8%);
+		--card-shadow-hover: 0 8px 24px rgba(var(--gray), 12%), 0 2px 8px rgba(80, 158, 254, 8%);
 		--timeline-line: 216, 223, 236;
 		--timeline-node-border: 187, 197, 218;
 		--timeline-node-bg: 255, 255, 255;
@@ -59,8 +58,7 @@
 		--gray-gradient: rgba(14, 20, 30, 95%), rgb(8, 12, 19);
 		--header-shadow: 0 2px 12px rgba(0, 0, 0, 35%);
 		--card-shadow: 0 1px 2px rgba(0, 0, 0, 45%);
-		--card-shadow-hover:
-			0 10px 28px rgba(0, 0, 0, 45%), 0 3px 12px rgba(80, 158, 254, 20%);
+		--card-shadow-hover: 0 10px 28px rgba(0, 0, 0, 45%), 0 3px 12px rgba(80, 158, 254, 20%);
 		--timeline-line: 73, 87, 116;
 		--timeline-node-border: 106, 121, 153;
 		--timeline-node-bg: 17, 24, 36;
@@ -68,14 +66,13 @@
 		--chip-bg: 45, 58, 82;
 		--chip-text: 208, 219, 242;
 		--box-shadow:
-			0 2px 8px rgba(0, 0, 0, 35%), 0 10px 26px rgba(0, 0, 0, 45%),
-			0 16px 34px rgba(0, 0, 0, 40%);
+			0 2px 8px rgba(0, 0, 0, 35%), 0 10px 26px rgba(0, 0, 0, 45%), 0 16px 34px rgba(0, 0, 0, 40%);
 		color-scheme: dark;
 	}
 
 	@font-face {
-		font-family: 'MPLUS1Code';
-		src: url('/fonts/MPLUS1Code-VariableFont_wght.ttf') format('truetype');
+		font-family: "MPLUS1Code";
+		src: url("/fonts/MPLUS1Code-VariableFont_wght.ttf") format("truetype");
 		font-weight: 400;
 		font-style: normal;
 		font-display: swap;
@@ -83,7 +80,7 @@
 
 	body {
 		@apply m-0 p-0 text-left break-words text-[rgb(var(--gray-dark))] text-[20px] leading-[1.7] flex flex-col min-h-screen;
-		font-family: 'MPLUS1Code', sans-serif;
+		font-family: "MPLUS1Code", sans-serif;
 		background-color: rgb(var(--bg-page));
 		background-image: linear-gradient(var(--gray-gradient));
 		background-repeat: no-repeat;

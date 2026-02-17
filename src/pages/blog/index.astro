@@ -4,8 +4,8 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
 import BlogsPage from "@/components/pages/blogs/BlogsPage.astro";
 
 const response = await getBlogs({
-  orders: "-publishedAt",
-  depth: 2,
+	orders: "-publishedAt",
+	depth: 2,
 });
 const { contents: blogs } = response;
 ---

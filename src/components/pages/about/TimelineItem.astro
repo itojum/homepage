@@ -2,53 +2,47 @@
 import TimelineNode from "./TimelineNode.astro";
 import { Icon } from "astro-icon/components";
 
-type TimelineItemType =
-  | "project"
-  | "event"
-  | "work"
-  | "examination"
-  | "other"
-  | "current";
+type TimelineItemType = "project" | "event" | "work" | "examination" | "other" | "current";
 
 interface Props {
-  activity: {
-    title: string;
-    date: Date;
-    type: TimelineItemType;
-    link:
-      | {
-          url: string;
-          text: string;
-        }
-      | undefined;
-  };
-  isFirst?: boolean;
+	activity: {
+		title: string;
+		date: Date;
+		type: TimelineItemType;
+		link:
+			| {
+					url: string;
+					text: string;
+			  }
+			| undefined;
+	};
+	isFirst?: boolean;
 }
 
 const { activity, isFirst = false } = Astro.props;
 
 const typeIcons: Record<TimelineItemType, string> = {
-  project: "ri:lightbulb-flash-line",
-  event: "ri:calendar-event-line",
-  work: "ri:briefcase-4-line",
-  examination: "ri:medal-line",
-  other: "ri:more-line",
-  current: "ri:time-line",
+	project: "ri:lightbulb-flash-line",
+	event: "ri:calendar-event-line",
+	work: "ri:briefcase-4-line",
+	examination: "ri:medal-line",
+	other: "ri:more-line",
+	current: "ri:time-line",
 };
 
 const typeLabels: Record<TimelineItemType, string> = {
-  project: "プロジェクト",
-  event: "イベント",
-  work: "仕事",
-  examination: "資格",
-  other: "その他",
-  current: "現在",
+	project: "プロジェクト",
+	event: "イベント",
+	work: "仕事",
+	examination: "資格",
+	other: "その他",
+	current: "現在",
 };
 
 function formatDate(d: Date): string {
-  const y = d.getFullYear();
-  const m = String(d.getMonth() + 1).padStart(2, "0");
-  return `${y}/${m}`;
+	const y = d.getFullYear();
+	const m = String(d.getMonth() + 1).padStart(2, "0");
+	return `${y}/${m}`;
 }
 ---
 

@@ -4,16 +4,16 @@ import FormattedDate from "@/components/ui/FormattedDate.astro";
 import { getBlogs, getBlogDetail } from "@/libs/microcms";
 
 export async function getStaticPaths() {
-  const response = await getBlogs({ fields: ["id"] });
-  return response.contents.map((content) => ({
-    params: { slug: content.id },
-  }));
+	const response = await getBlogs({ fields: ["id"] });
+	return response.contents.map((content) => ({
+		params: { slug: content.id },
+	}));
 }
 
 const slug = Astro.params.slug;
 const blogId = Array.isArray(slug) ? slug[0] : (slug ?? "");
 const blog = await getBlogDetail(blogId, {
-  depth: 2,
+	depth: 2,
 });
 ---
 

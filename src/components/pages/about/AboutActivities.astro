@@ -3,57 +3,50 @@ import TimelineItem from "./TimelineItem.astro";
 import { getActivities } from "@/libs/microcms";
 import type { Activity as MicroCMSActivity } from "@/types/activity";
 
-type TimelineItemType =
-  | "project"
-  | "event"
-  | "work"
-  | "examination"
-  | "other"
-  | "current";
+type TimelineItemType = "project" | "event" | "work" | "examination" | "other" | "current";
 
 interface Activity {
-  title: string;
-  date: Date;
-  type: TimelineItemType;
-  link:
-    | {
-        url: string;
-        text: string;
-      }
-    | undefined;
+	title: string;
+	date: Date;
+	type: TimelineItemType;
+	link:
+		| {
+				url: string;
+				text: string;
+		  }
+		| undefined;
 }
 
 // microCMSからアクティビティを取得
 const microCMSActivities = await getActivities({
-  orders: "-date",
+	orders: "-date",
 });
 
 // microCMSのデータを内部形式に変換
 const activities: Activity[] = microCMSActivities.map((item: MicroCMSActivity) => {
-  const type = (item.type[0] || "other") as TimelineItemType;
-  
-  return {
-    title: item.title,
-    date: new Date(item.date),
-    type: type,
-    link: item.link && item.link_text
-      ? {
-          url: item.link,
-          text: item.link_text,
-        }
-      : undefined,
-  };
+	const type = (item.type[0] || "other") as TimelineItemType;
+
+	return {
+		title: item.title,
+		date: new Date(item.date),
+		type: type,
+		link:
+			item.link && item.link_text
+				? {
+						url: item.link,
+						text: item.link_text,
+					}
+				: undefined,
+	};
 });
 
-const sortedActivities = [...activities].sort(
-  (a, b) => b.date.getTime() - a.date.getTime(),
-);
+const sortedActivities = [...activities].sort((a, b) => b.date.getTime() - a.date.getTime());
 
 const nowItem: Activity = {
-  title: "現在",
-  date: new Date(),
-  type: "current",
-  link: undefined,
+	title: "現在",
+	date: new Date(),
+	type: "current",
+	link: undefined,
 };
 
 const timelineItems = [nowItem, ...sortedActivities];
