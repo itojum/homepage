@@ -6,6 +6,7 @@ import { SITE_DESCRIPTION, SITE_TITLE } from "@/consts";
 
 const response = await getBlogs({
   orders: "-publishedAt",
+  depth: 2,
 });
 const { contents: blogs, limit, offset, totalCount } = response;
 ---
@@ -66,6 +67,41 @@ const { contents: blogs, limit, offset, totalCount } = response;
       ul a:hover img {
         box-shadow: var(--box-shadow);
       }
+      .taxonomies {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 0.35em 0.5em;
+        margin-top: 0.4em;
+        font-size: 0.8em;
+      }
+      .category {
+        color: rgb(var(--accent));
+        font-weight: 500;
+      }
+      .tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.25em;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      .tags li span {
+        display: inline-block;
+        padding: 0.15em 0.45em;
+        background: rgb(var(--gray-light));
+        color: rgb(var(--gray-dark));
+        border-radius: 4px;
+        font-size: 0.9em;
+      }
+      ul li a:hover .category {
+        color: var(--accent-dark);
+      }
+      ul li a:hover .tags li span {
+        background: var(--accent);
+        color: white;
+      }
       @media (max-width: 720px) {
         ul {
           gap: 0.5em;
@@ -104,6 +140,20 @@ const { contents: blogs, limit, offset, totalCount } = response;
                   date={new Date(blog.publishedAt ?? blog.createdAt)}
                 />
               </p>
+              {(blog.category || (blog.tags && blog.tags.length > 0)) && (
+                <div class="taxonomies">
+                  {blog.category && (
+                    <span class="category">{blog.category.name}</span>
+                  )}
+                  {blog.tags && blog.tags.length > 0 && (
+                    <ul class="tags" aria-label="タグ">
+                      {blog.tags.map((tag) => (
+                        <li><span>{tag.name}</span></li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
+              )}
             </a>
           </li>
         ))

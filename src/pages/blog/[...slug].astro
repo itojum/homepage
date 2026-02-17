@@ -13,7 +13,9 @@ export async function getStaticPaths() {
 
 const slug = Astro.params.slug;
 const blogId = Array.isArray(slug) ? slug[0] : (slug ?? "");
-const blog = await getBlogDetail(blogId);
+const blog = await getBlogDetail(blogId, {
+  depth: 2,
+});
 ---
 
 <BaseLayout title={`${blog.title} | ${SITE_TITLE}`} description={blog.title}>
@@ -30,6 +32,26 @@ const blog = await getBlogDetail(blogId);
             </p>
           )
         }
+        {(blog.category || (blog.tags && blog.tags.length > 0)) && (
+          <div class="taxonomies">
+            {blog.category && (
+              <span class="taxonomy-item">
+                <span class="taxonomy-label">カテゴリ:</span>
+                <span class="category">{blog.category.name}</span>
+              </span>
+            )}
+            {blog.tags && blog.tags.length > 0 && (
+              <div class="taxonomy-item">
+                <span class="taxonomy-label">タグ:</span>
+                <ul class="tags" aria-label="タグ">
+                  {blog.tags.map((tag) => (
+                    <li><span>{tag.name}</span></li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </div>
+        )}
       </div>
       {blog.eyecatch?.url && (
         <div class="thumbnail">
@@ -62,6 +84,44 @@ const blog = await getBlogDetail(blogId);
   .revised {
     margin: 0;
     font-size: 0.9em;
+  }
+  .taxonomies {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5em 1em;
+    margin-top: 0.75em;
+    font-size: 0.9em;
+  }
+  .taxonomy-item {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.35em;
+  }
+  .taxonomy-label {
+    color: rgb(var(--gray));
+    font-size: 0.9em;
+  }
+  .category {
+    color: rgb(var(--accent));
+    font-weight: 500;
+  }
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35em;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .tags li span {
+    display: inline-block;
+    padding: 0.2em 0.6em;
+    background: rgb(var(--gray-light));
+    color: rgb(var(--gray-dark));
+    border-radius: 4px;
+    font-size: 0.85em;
   }
   .thumbnail {
     margin-bottom: 1em;
