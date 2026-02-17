@@ -8,6 +8,7 @@
 import type { MicroCMSQueries } from 'microcms-js-sdk';
 import { createClient } from 'microcms-js-sdk';
 import type { Blog } from '@/types/blog';
+import type { Activity } from '@/types/activity';
 
 const client = createClient({
 	serviceDomain: import.meta.env.MICROCMS_SERVICE_DOMAIN,
@@ -29,4 +30,9 @@ export const getBlogDetail = async (
 		contentId,
 		queries,
 	});
+};
+
+/** アクティビティ一覧を取得 */
+export const getActivities = async (queries?: MicroCMSQueries) => {
+	return await client.getList<Activity>({ endpoint: 'activities', queries });
 };

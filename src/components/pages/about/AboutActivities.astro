@@ -1,5 +1,7 @@
 ---
 import TimelineItem from "./TimelineItem.astro";
+import { getActivities } from "@/libs/microcms";
+import type { Activity as MicroCMSActivity } from "@/types/activity";
 
 type TimelineItemType =
   | "project"
@@ -21,41 +23,28 @@ interface Activity {
     | undefined;
 }
 
-const activities: Activity[] = [
-  {
-    title: "〇〇ハッカソン 優勝",
-    date: new Date("2025-01-01"),
-    type: "project",
-    link: {
-      url: "https://example.com",
-      text: "優勝インタビュー",
-    },
-  },
-  {
-    title: "アプリリリース",
-    date: new Date("2024-04-01"),
-    type: "event",
-    link: undefined,
-  },
-  {
-    title: "hoge株式会社 入社",
-    date: new Date("2024-08-01"),
-    type: "work",
-    link: undefined,
-  },
-  {
-    title: "応用情報技術者試験 合格",
-    date: new Date("2024-01-01"),
-    type: "examination",
-    link: undefined,
-  },
-  {
-    title: "その他",
-    date: new Date("2024-01-01"),
-    type: "other",
-    link: undefined,
-  },
-];
+// microCMSからアクティビティを取得
+const { contents: microCMSActivities } = await getActivities({
+  orders: "-date",
+});
+
+// microCMSのデータを内部形式に変換
+const activities: Activity[] = microCMSActivities.map((item: MicroCMSActivity) => {
+  // type配列の最初の要素を使用（通常は1つだけ）
+  const type = (item.type[0] || "other") as TimelineItemType;
+  
+  return {
+    title: item.title,
+    date: new Date(item.date),
+    type: type,
+    link: item.link && item.link_text
+      ? {
+          url: item.link,
+          text: item.link_text,
+        }
+      : undefined,
+  };
+});
 
 const sortedActivities = [...activities].sort(
   (a, b) => b.date.getTime() - a.date.getTime(),
