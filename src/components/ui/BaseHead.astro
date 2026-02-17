@@ -6,11 +6,12 @@ interface Props {
 	title: string;
 	description: string;
 	image?: string;
+	noIndex?: boolean;
 }
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site || Astro.url.origin);
 
-const { title, description, image } = Astro.props;
+const { title, description, image, noIndex } = Astro.props;
 const titleText = `${title} | ${SITE_TITLE}`;
 ---
 
@@ -54,6 +55,7 @@ const titleText = `${title} | ${SITE_TITLE}`;
 <title>{titleText}</title>
 <meta name="title" content={titleText} />
 <meta name="description" content={description} />
+{noIndex && <meta name="robots" content="noindex, nofollow" />}
 
 <!-- Open Graph / Facebook -->
 <meta property="og:type" content="website" />
