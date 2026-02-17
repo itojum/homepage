@@ -13,147 +13,290 @@ const { contents: blogs, limit, offset, totalCount } = response;
 
 <BaseLayout title={SITE_TITLE} description={SITE_DESCRIPTION}>
   <Fragment slot="head">
-    <style>
-      main {
-        width: 960px;
-      }
-      ul {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 2rem;
-        list-style-type: none;
-        margin: 0;
-        padding: 0;
-      }
-      ul li {
-        width: calc(50% - 1rem);
-      }
-      ul li * {
-        text-decoration: none;
-        transition: 0.2s ease;
-      }
-      ul li:first-child {
+    <style is:global>
+      main:has(.blog-page) {
         width: 100%;
-        margin-bottom: 1rem;
-        text-align: center;
+        max-width: 720px;
       }
-      ul li:first-child .title {
-        font-size: 2.369rem;
-      }
-      ul li img {
-        display: block;
+
+      .blog-page {
         width: 100%;
-        height: 200px;
-        object-fit: cover;
-        margin-bottom: 0.5rem;
-        border-radius: 12px;
+        max-width: 720px;
+        margin: 0 auto;
+        padding: 1rem 0 2rem;
       }
-      ul li a {
-        display: block;
+
+      .blog-page .page-header {
+        margin-bottom: 1.5rem;
+        padding-bottom: 0.75rem;
+        border-bottom: 1px solid rgba(var(--gray), 0.2);
       }
-      .title {
+
+      .blog-page .page-title {
         margin: 0;
+        font-size: 1.25rem;
+        font-weight: 600;
         color: rgb(var(--black));
-        line-height: 1;
+        letter-spacing: 0.02em;
       }
-      .date {
-        margin: 0;
+
+      .blog-page .page-subtitle {
+        margin: 0.25rem 0 0;
+        font-size: 0.8rem;
         color: rgb(var(--gray));
+        font-weight: 400;
       }
-      ul li a:hover h4,
-      ul li a:hover .date {
-        color: rgb(var(--accent));
-      }
-      ul a:hover img {
-        box-shadow: var(--box-shadow);
-      }
-      .taxonomies {
-        display: flex;
-        flex-wrap: wrap;
-        align-items: center;
-        gap: 0.35em 0.5em;
-        margin-top: 0.4em;
-        font-size: 0.8em;
-      }
-      .category {
-        color: rgb(var(--accent));
-        font-weight: 500;
-      }
-      .tags {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.25em;
+
+      .blog-page .card-list {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
         list-style: none;
         margin: 0;
         padding: 0;
       }
-      .tags li span {
+
+      .blog-page .card-list .card {
+        break-inside: avoid;
+      }
+
+      .blog-page .card-list .card:first-child {
+        grid-column: 1 / -1;
+      }
+
+      .blog-page .card-link {
+        display: block;
+        height: 100%;
+        text-decoration: none;
+        color: inherit;
+        background: rgba(255, 255, 255, 0.7);
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 1px 2px rgba(var(--gray), 0.08);
+        border: 1px solid rgba(var(--gray-light), 0.8);
+        transition:
+          transform 0.25s ease,
+          box-shadow 0.25s ease,
+          border-color 0.2s ease;
+      }
+
+      .blog-page .card-link:hover {
+        transform: translateY(-4px);
+        box-shadow:
+          0 8px 24px rgba(var(--gray), 0.12),
+          0 2px 8px rgba(var(--accent), 0.08);
+        border-color: rgba(var(--gray), 0.15);
+      }
+
+      .blog-page .card-link:hover .card-image-wrap::after {
+        opacity: 1;
+      }
+
+      .blog-page .card-body {
+        padding: 0.6rem 0.75rem;
+      }
+
+      .blog-page .card-list .card:first-child .card-body {
+        padding: 0.75rem 1rem;
+      }
+
+      .blog-page .card-image-wrap {
+        position: relative;
+        width: 100%;
+        aspect-ratio: 16 / 9;
+        background: linear-gradient(
+          135deg,
+          rgba(var(--gray-light), 0.6) 0%,
+          rgba(var(--gray-light), 0.3) 100%
+        );
+        overflow: hidden;
+      }
+
+      .blog-page .card-list .card:first-child .card-image-wrap {
+        aspect-ratio: 21 / 9;
+      }
+
+      .blog-page .card-image-wrap::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          to top,
+          rgba(var(--black), 0.15) 0%,
+          transparent 50%
+        );
+        opacity: 0;
+        transition: opacity 0.25s ease;
+      }
+
+      .blog-page .card-image-wrap img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.4s ease;
+      }
+
+      .blog-page .card-link:hover .card-image-wrap img {
+        transform: scale(1.03);
+      }
+
+      .blog-page .card-image-placeholder {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(
+          135deg,
+          rgba(var(--gray-light), 0.8) 0%,
+          rgba(80, 158, 254, 0.08) 100%
+        );
+        color: rgba(var(--gray), 0.6);
+        font-size: 1.5rem;
+      }
+
+      .blog-page .card-list .card:first-child .card-image-placeholder {
+        font-size: 2rem;
+      }
+
+      .blog-page .card-meta {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-bottom: 0.35rem;
+        font-size: 0.75rem;
+        color: rgb(var(--gray));
+      }
+
+      .blog-page .card-date {
+        margin: 0;
+      }
+
+      .blog-page .card-title {
+        margin: 0;
+        font-size: 0.95rem;
+        font-weight: 600;
+        line-height: 1.35;
+        color: rgb(var(--black));
+      }
+
+      .blog-page .card-list .card:first-child .card-title {
+        font-size: 1.1rem;
+        font-weight: 600;
+      }
+
+      .blog-page .card-taxonomies {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 0.3rem 0.5rem;
+        margin-top: 0.4rem;
+        font-size: 0.72rem;
+      }
+
+      .blog-page .card-category {
+        color: var(--accent);
+        font-weight: 500;
+      }
+
+      .blog-page .card-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.2rem;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+
+      .blog-page .card-tags li span {
         display: inline-block;
-        padding: 0.15em 0.45em;
-        background: rgb(var(--gray-light));
+        padding: 0.15em 0.4em;
+        background: rgba(var(--gray-light), 0.9);
         color: rgb(var(--gray-dark));
         border-radius: 4px;
-        font-size: 0.9em;
+        font-size: 0.85em;
       }
-      ul li a:hover .category {
-        color: var(--accent-dark);
-      }
-      ul li a:hover .tags li span {
-        background: var(--accent);
-        color: white;
-      }
+
       @media (max-width: 720px) {
-        ul {
-          gap: 0.5em;
+        .blog-page {
+          padding: 1rem 0 1.5rem;
         }
-        ul li {
-          width: 100%;
-          text-align: center;
+
+        .blog-page .page-header {
+          margin-bottom: 1rem;
         }
-        ul li:first-child {
-          margin-bottom: 0;
+
+        .blog-page .card-list {
+          grid-template-columns: 1fr;
+          gap: 0.75rem;
         }
-        ul li:first-child .title {
-          font-size: 1.563em;
+
+        .blog-page .card-list .card:first-child .card-image-wrap {
+          aspect-ratio: 16 / 9;
+        }
+
+        .blog-page .card-body,
+        .blog-page .card-list .card:first-child .card-body {
+          padding: 0.6rem 0.75rem;
+        }
+
+        .blog-page .card-title,
+        .blog-page .card-list .card:first-child .card-title {
+          font-size: 0.95rem;
         }
       }
     </style>
   </Fragment>
-  <section>
-    <ul>
+  <section class="blog-page">
+    <header class="page-header">
+      <h1 class="page-title">Blog</h1>
+      <p class="page-subtitle">記事一覧</p>
+    </header>
+    <ul class="card-list">
       {
         blogs.map((blog) => (
-          <li>
-            <a href={`/blog/${blog.id}/`}>
-              {blog.eyecatch?.url && (
-                <img
-                  src={blog.eyecatch.url}
-                  alt=""
-                  width={blog.eyecatch.width}
-                  height={blog.eyecatch.height}
-                  loading="lazy"
-                />
-              )}
-              <h4 class="title">{blog.title}</h4>
-              <p class="date">
-                <FormattedDate
-                  date={new Date(blog.publishedAt ?? blog.createdAt)}
-                />
-              </p>
-              {(blog.category || (blog.tags && blog.tags.length > 0)) && (
-                <div class="taxonomies">
-                  {blog.category && (
-                    <span class="category">{blog.category.name}</span>
-                  )}
-                  {blog.tags && blog.tags.length > 0 && (
-                    <ul class="tags" aria-label="タグ">
-                      {blog.tags.map((tag) => (
-                        <li><span>{tag.name}</span></li>
-                      ))}
-                    </ul>
-                  )}
+          <li class="card">
+            <a href={`/blog/${blog.id}/`} class="card-link">
+              <div class="card-image-wrap">
+                {blog.eyecatch?.url ? (
+                  <img
+                    src={blog.eyecatch.url}
+                    alt=""
+                    width={blog.eyecatch.width}
+                    height={blog.eyecatch.height}
+                    loading="lazy"
+                  />
+                ) : (
+                  <div class="card-image-placeholder" aria-hidden="true">
+                    📝
+                  </div>
+                )}
+              </div>
+              <div class="card-body">
+                <div class="card-meta">
+                  <time class="card-date">
+                    <FormattedDate
+                      date={new Date(blog.publishedAt ?? blog.createdAt)}
+                    />
+                  </time>
                 </div>
-              )}
+                <h2 class="card-title">{blog.title}</h2>
+                {(blog.category || (blog.tags && blog.tags.length > 0)) && (
+                  <div class="card-taxonomies">
+                    {blog.category && (
+                      <span class="card-category">{blog.category.name}</span>
+                    )}
+                    {blog.tags && blog.tags.length > 0 && (
+                      <ul class="card-tags" aria-label="タグ">
+                        {blog.tags.map((tag) => (
+                          <li><span>{tag.name}</span></li>
+                        ))}
+                      </ul>
+                    )}
+                  </div>
+                )}
+              </div>
             </a>
           </li>
         ))
