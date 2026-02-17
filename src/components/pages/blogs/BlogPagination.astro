@@ -1,0 +1,63 @@
+---
+interface Props {
+	currentPage: number;
+	totalPages: number;
+}
+
+const { currentPage, totalPages } = Astro.props;
+
+const createPageHref = (page: number) => {
+	if (page === 1) return "/blog/";
+	return `/blog/page/${page}/`;
+};
+
+const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
+---
+
+{totalPages > 1 && (
+  <nav class="blog-pagination" aria-label="ブログのページネーション">
+    <a
+      href={currentPage > 1 ? createPageHref(currentPage - 1) : undefined}
+      class:list={[
+        "blog-pagination__control",
+        "blog-pagination__control--prev",
+        { "is-disabled": currentPage === 1 },
+      ]}
+      aria-disabled={currentPage === 1}
+    >
+      前へ
+    </a>
+
+    <ul class="blog-pagination__list">
+      {pages.map((page) => (
+        <li
+          class:list={[
+            "blog-pagination__item",
+            { "is-active": page === currentPage },
+          ]}
+        >
+          <a
+            href={createPageHref(page)}
+            aria-current={page === currentPage ? "page" : undefined}
+            class="blog-pagination__link"
+          >
+            {page}
+          </a>
+        </li>
+      ))}
+    </ul>
+
+    <a
+      href={currentPage < totalPages ? createPageHref(currentPage + 1) : undefined}
+      class:list={[
+        "blog-pagination__control",
+        "blog-pagination__control--next",
+        { "is-disabled": currentPage === totalPages },
+      ]}
+      aria-disabled={currentPage === totalPages}
+    >
+      次へ
+    </a>
+  </nav>
+)}
+

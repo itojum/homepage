@@ -3,13 +3,20 @@ import { getBlogs } from "@/libs/microcms";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import BlogsPage from "@/components/pages/blogs/BlogsPage.astro";
 
+const PER_PAGE = 10;
+const currentPage = 1;
+
 const response = await getBlogs({
 	orders: "-publishedAt",
 	depth: 2,
+	limit: PER_PAGE,
+	offset: (currentPage - 1) * PER_PAGE,
 });
-const { contents: blogs } = response;
+
+const { contents: blogs, totalCount } = response;
+const totalPages = Math.ceil(totalCount / PER_PAGE);
 ---
 
 <BaseLayout title="Blogs" description="Blogs">
-  <BlogsPage blogs={blogs} />
+  <BlogsPage blogs={blogs} currentPage={currentPage} totalPages={totalPages} />
 </BaseLayout>

@@ -2,16 +2,20 @@
 import type { Blog } from "@/types/blog";
 import BlogPageHeader from "./BlogPageHeader.astro";
 import BlogCardList from "./BlogCardList.astro";
+import BlogPagination from "./BlogPagination.astro";
 import "./BlogPage.css";
 
 interface Props {
 	blogs: Blog[];
+	currentPage: number;
+	totalPages: number;
 }
 
-const { blogs } = Astro.props;
+const { blogs, currentPage, totalPages } = Astro.props;
 ---
 
 <section class="blog-page">
   <BlogPageHeader title="Blog" subtitle="記事一覧" />
   <BlogCardList blogs={blogs} />
+  <BlogPagination currentPage={currentPage} totalPages={totalPages} />
 </section>

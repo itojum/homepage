@@ -1,0 +1,39 @@
+---
+import { getBlogs } from "@/libs/microcms";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import BlogsPage from "@/components/pages/blogs/BlogsPage.astro";
+
+export async function getStaticPaths() {
+	const PER_PAGE = 10;
+	
+	const response = await getBlogs({ limit: 10 });
+	const totalPages = Math.ceil(response.totalCount / PER_PAGE);
+	return Array.from({ length: totalPages }, (_, i) => ({
+		params: { page: String(i + 1) },
+	}));
+}
+
+const PER_PAGE = 10;
+
+const pageParam = Astro.params.page ?? "1";
+const currentPage = Number(pageParam);
+
+if (!Number.isInteger(currentPage) || currentPage < 1) {
+	throw new Error("Invalid page");
+}
+
+const response = await getBlogs({
+	orders: "-publishedAt",
+	depth: 2,
+	limit: PER_PAGE,
+	offset: (currentPage - 1) * PER_PAGE,
+});
+
+const { contents: blogs, totalCount } = response;
+const totalPages = Math.ceil(totalCount / PER_PAGE);
+---
+
+<BaseLayout title={`Blogs - Page ${currentPage}`} description={`Blogs - Page ${currentPage}`}>
+  <BlogsPage blogs={blogs} currentPage={currentPage} totalPages={totalPages} />
+</BaseLayout>
+
