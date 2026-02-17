@@ -24,7 +24,7 @@ interface Activity {
 }
 
 // microCMSからアクティビティを取得
-const { contents: microCMSActivities } = await getActivities({
+const microCMSActivities = await getActivities({
   orders: "-date",
 });
 

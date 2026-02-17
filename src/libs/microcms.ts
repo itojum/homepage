@@ -34,5 +34,5 @@ export const getBlogDetail = async (
 
 /** アクティビティ一覧を取得 */
 export const getActivities = async (queries?: MicroCMSQueries) => {
-	return await client.getList<Activity>({ endpoint: 'activities', queries });
+	return await client.getAllContents<Activity>({ endpoint: 'activities', queries });
 };
