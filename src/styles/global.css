@@ -162,11 +162,49 @@
 	}
 
 	pre {
-		@apply p-6 rounded-lg;
+		@apply p-6 rounded-lg overflow-x-auto;
 	}
 
 	pre > code {
-		all: unset;
+		@apply block w-max min-w-full bg-transparent p-0 rounded-none;
+		font-family: "MPLUS1Code", monospace;
+	}
+
+	[data-rehype-pretty-code-figure] {
+		@apply my-6 rounded-lg overflow-hidden border;
+		border-color: rgb(var(--border));
+	}
+
+	[data-rehype-pretty-code-title] {
+		@apply m-0 flex items-center justify-between px-4 py-2 text-xs;
+		background-color: rgb(var(--surface-soft));
+		color: rgb(var(--gray-dark));
+		border-bottom: 1px solid rgb(var(--border));
+	}
+
+	[data-rehype-pretty-code-title]::after {
+		content: attr(data-language);
+		@apply text-[11px] leading-tight px-2 py-1 rounded-full;
+		text-transform: uppercase;
+		letter-spacing: 0.04em;
+		color: rgb(var(--gray));
+		background-color: rgb(var(--surface));
+	}
+
+	[data-rehype-pretty-code-figure] pre {
+		@apply m-0 rounded-none;
+	}
+
+	pre[data-theme*=" "],
+	pre[data-theme*=" "] span {
+		color: var(--shiki-light);
+		background-color: var(--shiki-light-bg);
+	}
+
+	:root.dark pre[data-theme*=" "],
+	:root.dark pre[data-theme*=" "] span {
+		color: var(--shiki-dark);
+		background-color: var(--shiki-dark-bg);
 	}
 
 	blockquote {

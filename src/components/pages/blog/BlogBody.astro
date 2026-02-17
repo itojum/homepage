@@ -1,4 +1,6 @@
 ---
+import { transformRichText } from "@/lib/richText/transformRichText";
+
 interface Props {
 	title: string;
 	content: string;
@@ -6,13 +8,14 @@ interface Props {
 }
 
 const { title, content, description } = Astro.props;
+const renderedContent = await transformRichText(content);
 ---
 
 <h1 class="title" data-pagefind-meta="title">{title}</h1>
 <p class="summary" data-pagefind-meta="description">
   {description}
 </p>
-<div class="post" set:html={content} />
+<div class="post" set:html={renderedContent} />
 
 <style>
   .title {
@@ -63,4 +66,3 @@ const { title, content, description } = Astro.props;
     margin: 0.75em 0;
   }
 </style>
-
