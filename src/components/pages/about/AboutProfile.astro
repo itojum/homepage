@@ -1,0 +1,35 @@
+---
+import { Image } from "astro:assets";
+import iconImage from "@/assets/icon.jpg";
+---
+
+<div class="sm:flex items-end gap-4">
+  <Image
+    src={iconImage}
+    class="icon-image"
+    alt="いとじゅんのicon"
+    width={1000}
+    height={1000}
+  />
+  <ul>
+    <li>Name: itojum / いとじゅん</li>
+    <li>Job: Student</li>
+    <li>Birthday: December 30th</li>
+    <li>From: Tottori/Shimane, Japan</li>
+  </ul>
+</div>
+
+<style>
+  .icon-image {
+    object-fit: cover;
+    object-position: center;
+    border-radius: 9999px;
+    box-shadow:
+      0 4px 6px -1px rgb(0 0 0 / 0.1),
+      0 2px 4px -2px rgb(0 0 0 / 0.1);
+    width: 200px;
+    height: 200px;
+    max-width: 80vw;
+    max-height: 80vw;
+  }
+</style>
