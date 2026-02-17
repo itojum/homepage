@@ -4,6 +4,7 @@ import sitemap from '@astrojs/sitemap';
 import tailwind from '@astrojs/tailwind';
 import { defineConfig } from 'astro/config';
 import icon from 'astro-icon';
+import pagefind from 'astro-pagefind';
 import dotenv from 'dotenv';
 
 const __dirname = fileURLToPath(new URL('.', import.meta.url));
@@ -11,8 +12,11 @@ const __dirname = fileURLToPath(new URL('.', import.meta.url));
 dotenv.config();
 
 export default defineConfig({
+	build: {
+    format: 'file',
+  },
 	site: process.env.SITE_URL,
-	integrations: [sitemap(), icon(), tailwind()],
+	integrations: [sitemap(), icon(), tailwind(), pagefind()],
 	vite: {
 		resolve: {
 			alias: {
