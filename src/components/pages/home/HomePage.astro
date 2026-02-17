@@ -3,6 +3,7 @@ import type { Blog } from "@/types/blog";
 import HeroSection from "./HeroSection.astro";
 import RecentBlogsSection from "./RecentBlogsSection.astro";
 import LinksSection from "./LinksSection.astro";
+import SpecialThanks from "./SpecialThanks.astro";
 import "./HomePage.css";
 
 interface LinkItem {
@@ -25,3 +26,5 @@ const { latestBlogs, links } = Astro.props;
 <RecentBlogsSection blogs={latestBlogs} />
 <hr />
 <LinksSection links={links} />
+<hr />
+<SpecialThanks />
