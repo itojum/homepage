@@ -31,6 +31,16 @@ const blog = await getBlogDetail(blogId);
           )
         }
       </div>
+      {blog.eyecatch?.url && (
+        <div class="thumbnail">
+          <img
+            src={blog.eyecatch.url}
+            alt=""
+            width={blog.eyecatch.width}
+            height={blog.eyecatch.height}
+          />
+        </div>
+      )}
       <h1 class="title">{blog.title}</h1>
       <div class="post" set:html={blog.content} />
     </article>
@@ -52,6 +62,18 @@ const blog = await getBlogDetail(blogId);
   .revised {
     margin: 0;
     font-size: 0.9em;
+  }
+  .thumbnail {
+    margin-bottom: 1em;
+    height: 280px;
+    overflow: hidden;
+    border-radius: 8px;
+  }
+  .thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
   }
   .title {
     margin: 0 0 1em 0;

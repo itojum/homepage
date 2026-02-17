@@ -40,6 +40,10 @@ const { contents: blogs, limit, offset, totalCount } = response;
         font-size: 2.369rem;
       }
       ul li img {
+        display: block;
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
         margin-bottom: 0.5rem;
         border-radius: 12px;
       }
@@ -85,6 +89,15 @@ const { contents: blogs, limit, offset, totalCount } = response;
         blogs.map((blog) => (
           <li>
             <a href={`/blog/${blog.id}/`}>
+              {blog.eyecatch?.url && (
+                <img
+                  src={blog.eyecatch.url}
+                  alt=""
+                  width={blog.eyecatch.width}
+                  height={blog.eyecatch.height}
+                  loading="lazy"
+                />
+              )}
               <h4 class="title">{blog.title}</h4>
               <p class="date">
                 <FormattedDate
