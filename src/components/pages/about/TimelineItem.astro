@@ -138,4 +138,8 @@ function formatDate(d: Date): string {
   .timeline-item__link {
     @apply text-sm text-blue-600 dark:text-blue-400 hover:underline inline-flex items-center gap-1;
   }
+
+  .timeline-item__link :global(svg) {
+    @apply shrink-0;
+  }
 </style>
