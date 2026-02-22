@@ -2,7 +2,7 @@ import rehypeParse from "rehype-parse";
 import rehypePrettyCode from "rehype-pretty-code";
 import rehypeStringify from "rehype-stringify";
 import { unified } from "unified";
-import { rehypeCodeBlockMeta } from "@/lib/richText/rehypeCodeBlockMeta";
+import { rehypeCodeBlockMeta } from "@/libs/richText/rehypeCodeBlockMeta";
 
 const prettyCodeOptions = {
 	theme: {
