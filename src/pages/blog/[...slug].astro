@@ -1,12 +1,12 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import BlogDetail from "@/components/pages/blog/BlogDetail.astro";
-import { getBlogs, getBlogDetail } from "@/libs/microcms";
+import { getAllBlogIds, getBlogDetail } from "@/libs/microcms";
 
 export async function getStaticPaths() {
-	const response = await getBlogs({ fields: ["id"] });
-	return response.contents.map((content) => ({
-		params: { slug: content.id },
+	const ids = await getAllBlogIds();
+	return ids.map((id) => ({
+		params: { slug: id },
 	}));
 }
 
@@ -17,6 +17,11 @@ const blog = await getBlogDetail(blogId, {
 });
 ---
 
-<BaseLayout title={blog.title} description={blog.description}>
+<BaseLayout
+  title={blog.title}
+  description={blog.description}
+  image={blog.eyecatch?.url}
+  path={`/blog/${blogId}`}
+>
   <BlogDetail blog={blog} />
 </BaseLayout>

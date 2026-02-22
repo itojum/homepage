@@ -11,6 +11,10 @@ const { contents: latestBlogs } = await getBlogs({
 });
 ---
 
-<BaseLayout title={SITE_TITLE} description={SITE_DESCRIPTION}>
+<BaseLayout
+  title={SITE_TITLE}
+  description={SITE_DESCRIPTION}
+  path="/"
+>
   <HomePage latestBlogs={latestBlogs} links={LINKS} />
 </BaseLayout>

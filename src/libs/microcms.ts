@@ -20,6 +20,11 @@ export const getBlogs = async (queries?: MicroCMSQueries) => {
 	return await client.getList<Blog>({ endpoint: "blogs", queries });
 };
 
+/** 全記事の ID を取得 */
+export const getAllBlogIds = async () => {
+	return await client.getAllContentIds({ endpoint: "blogs" });
+};
+
 /** 記事詳細を取得 */
 export const getBlogDetail = async (contentId: string, queries?: MicroCMSQueries) => {
 	return await client.getListDetail<Blog>({

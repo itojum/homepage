@@ -1,5 +1,6 @@
 export const SITE_TITLE = "itojum.dev";
-export const SITE_DESCRIPTION = "itojum.dev";
+export const SITE_DESCRIPTION =
+	"itojum（いとじゅん）の個人サイト。プロフィールやブログなどを公開しています。";
 
 export const EMAIL_ADDRESS = "me@itojum.dev";
 

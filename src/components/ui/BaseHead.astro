@@ -1,18 +1,19 @@
 ---
 import "@/styles/global.css";
 import { SITE_TITLE } from "@/consts";
+import SEO from "@/components/ui/SEO.astro";
 
 interface Props {
-	title: string;
-	description: string;
+	title?: string;
+	description?: string;
 	image?: string;
+	path?: string;
 	noIndex?: boolean;
 }
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site || Astro.url.origin);
 
-const { title, description, image, noIndex } = Astro.props;
-const titleText = `${title} | ${SITE_TITLE}`;
+const { title, description, image, path, noIndex } = Astro.props;
 ---
 
 <!-- Global Metadata -->
@@ -59,22 +60,11 @@ const titleText = `${title} | ${SITE_TITLE}`;
 <!-- Canonical URL -->
 <link rel="canonical" href={canonicalURL} />
 
-<!-- Primary Meta Tags -->
-<title>{titleText}</title>
-<meta name="title" content={titleText} />
-<meta name="description" content={description} />
-{noIndex && <meta name="robots" content="noindex, nofollow" />}
-
-<!-- Open Graph / Facebook -->
-<meta property="og:type" content="website" />
-<meta property="og:url" content={Astro.url} />
-<meta property="og:title" content={titleText} />
-<meta property="og:description" content={description} />
-{image && <meta property="og:image" content={image} />}
-
-<!-- Twitter -->
-<meta property="twitter:card" content="summary_large_image" />
-<meta property="twitter:url" content={Astro.url} />
-<meta property="twitter:title" content={titleText} />
-<meta property="twitter:description" content={description} />
-{image && <meta property="twitter:image" content={image} />}
+<!-- SEO Meta Tags -->
+<SEO
+	title={title}
+	description={description}
+	ogImage={image}
+	path={path}
+	noIndex={noIndex}
+/>

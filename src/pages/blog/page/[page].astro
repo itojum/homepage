@@ -33,7 +33,11 @@ const { contents: blogs, totalCount } = response;
 const totalPages = Math.ceil(totalCount / PER_PAGE);
 ---
 
-<BaseLayout title={`Blogs - Page ${currentPage}`} description={`Blogs - Page ${currentPage}`}>
+<BaseLayout
+  title={`Blog - ${currentPage}ページ目`}
+  description={`ブログ記事一覧の${currentPage}ページ目。`}
+  path={`/blog/page/${currentPage}`}
+>
   <BlogsPage blogs={blogs} currentPage={currentPage} totalPages={totalPages} />
 </BaseLayout>
 

@@ -1,0 +1,49 @@
+---
+import { SITE_TITLE, SITE_DESCRIPTION } from "@/consts";
+
+interface Props {
+	title?: string;
+	description?: string;
+	ogImage?: string;
+	path?: string;
+	noIndex?: boolean;
+}
+
+const {
+	title = SITE_TITLE,
+	description = SITE_DESCRIPTION,
+	ogImage,
+	path,
+	noIndex = false,
+} = Astro.props;
+
+const base = Astro.site ?? Astro.url.origin;
+const pageUrl = path != null ? new URL(path, base) : Astro.url;
+const titleText =
+	title === SITE_TITLE ? title : `${title} | ${SITE_TITLE}`;
+
+// 相対パスの画像を絶対 URL に変換
+const resolvedOgImage = ogImage?.startsWith("/")
+	? new URL(ogImage, base).href
+	: (ogImage ?? undefined);
+---
+
+<!-- 検索エンジン用 -->
+<title>{titleText}</title>
+<meta name="title" content={titleText} />
+<meta name="description" content={description} />
+{noIndex && <meta name="robots" content="noindex, nofollow" />}
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content="website" />
+<meta property="og:url" content={pageUrl} />
+<meta property="og:title" content={titleText} />
+<meta property="og:description" content={description} />
+{resolvedOgImage && <meta property="og:image" content={resolvedOgImage} />}
+
+<!-- X (Twitter) -->
+<meta property="twitter:card" content="summary_large_image" />
+<meta property="twitter:url" content={pageUrl} />
+<meta property="twitter:title" content={titleText} />
+<meta property="twitter:description" content={description} />
+{resolvedOgImage && <meta property="twitter:image" content={resolvedOgImage} />}
