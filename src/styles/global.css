@@ -8,6 +8,10 @@
 		height: 100%;
 	}
 
+	html {
+		background-color: rgb(var(--bg-page));
+	}
+
 	:root {
 		--main: #509efe;
 		--accent: #2382ff;
@@ -24,7 +28,7 @@
 		--gray: 96, 115, 159;
 		--gray-light: 229, 233, 240;
 		--gray-dark: 34, 41, 57;
-		--gray-gradient: rgba(var(--gray-light), 50%), #fff;
+		--gray-gradient: rgba(var(--gray-light), 50%), rgb(var(--bg-page));
 		--header-shadow: 0 2px 8px rgba(var(--black), 7%);
 		--card-shadow: 0 1px 2px rgba(var(--gray), 8%);
 		--card-shadow-hover: 0 8px 24px rgba(var(--gray), 12%), 0 2px 8px rgba(80, 158, 254, 8%);
@@ -81,7 +85,6 @@
 	body {
 		@apply m-0 p-0 text-left break-words text-[rgb(var(--gray-dark))] text-[20px] leading-[1.7] flex flex-col min-h-screen;
 		font-family: "MPLUS1Code", sans-serif;
-		background-color: rgb(var(--bg-page));
 		background-image: linear-gradient(var(--gray-gradient));
 		background-repeat: no-repeat;
 		background-size: 100% 600px;
