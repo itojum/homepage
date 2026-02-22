@@ -27,7 +27,7 @@ import SearchComponent from "astro-pagefind/components/Search";
         ✕
       </button>
     </div>
-    <div class="p-4">
+    <div class="search-modal__body p-4 overflow-y-auto flex-1 min-h-0">
       <SearchComponent id="search" className="pagefind-ui" />
     </div>
   </div>
@@ -98,7 +98,7 @@ import SearchComponent from "astro-pagefind/components/Search";
   }
 
   .search-modal__dialog {
-    @apply relative w-full h-[80vh] max-w-3xl mx-4 rounded-xl;
+    @apply relative flex flex-col w-full h-[80vh] max-w-3xl mx-4 rounded-xl;
     background: rgb(var(--surface));
     border: 1px solid rgba(var(--border), 90%);
     box-shadow: var(--box-shadow);
