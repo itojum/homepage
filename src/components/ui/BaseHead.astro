@@ -12,7 +12,7 @@ interface Props {
 const canonicalURL = new URL(Astro.url.pathname, Astro.site || Astro.url.origin);
 
 const { title, description, image, noIndex } = Astro.props;
-const titleText = `${title} | ${SITE_TITLE}`;
+const titleText = title === SITE_TITLE ? title : `${title} | ${SITE_TITLE}`;
 ---
 
 <!-- Global Metadata -->
