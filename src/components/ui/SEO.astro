@@ -1,5 +1,6 @@
 ---
 import { SITE_TITLE, SITE_DESCRIPTION } from "@/consts";
+import iconImage from "@/assets/icon.jpg";
 
 interface Props {
 	title?: string;
@@ -22,10 +23,10 @@ const pageUrl = path != null ? new URL(path, base) : Astro.url;
 const titleText =
 	title === SITE_TITLE ? title : `${title} | ${SITE_TITLE}`;
 
-// 相対パスの画像を絶対 URL に変換
-const resolvedOgImage = ogImage?.startsWith("/")
-	? new URL(ogImage, base).href
-	: (ogImage ?? undefined);
+const resolvedOgImage =
+	ogImage?.startsWith("/")
+		? new URL(ogImage, base).href
+		: ogImage ?? new URL(iconImage.src, base).href;
 ---
 
 <!-- 検索エンジン用 -->
