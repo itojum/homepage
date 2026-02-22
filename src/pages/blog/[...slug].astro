@@ -17,6 +17,11 @@ const blog = await getBlogDetail(blogId, {
 });
 ---
 
-<BaseLayout title={blog.title} description={blog.description}>
+<BaseLayout
+  title={blog.title}
+  description={blog.description}
+  image={blog.eyecatch?.url}
+  path={`/blog/${blogId}`}
+>
   <BlogDetail blog={blog} />
 </BaseLayout>

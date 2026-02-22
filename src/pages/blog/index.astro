@@ -17,6 +17,10 @@ const { contents: blogs, totalCount } = response;
 const totalPages = Math.ceil(totalCount / PER_PAGE);
 ---
 
-<BaseLayout title="Blogs" description="Blogs">
+<BaseLayout
+  title="Blog"
+  description="itojum.dev のブログ記事一覧。技術メモや活動記録を掲載しています。"
+  path="/blog"
+>
   <BlogsPage blogs={blogs} currentPage={currentPage} totalPages={totalPages} />
 </BaseLayout>
