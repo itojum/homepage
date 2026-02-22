@@ -1,8 +1,8 @@
 ---
-name: Bug report
+name: "🐛 バグ報告"
 about: 動作の不具合やエラーを報告します
-title: ''
-labels: ''
+title: "[BUG] "
+labels: bug
 assignees: ''
 
 ---
