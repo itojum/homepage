@@ -11,7 +11,7 @@ const publishedDate = new Date(blog.publishedAt ?? blog.createdAt);
 ---
 
 <li class="card">
-  <a href={`/blog/${blog.id}/`} class="card-link">
+  <a href={`/blogs/${blog.id}/`} class="card-link">
     <div class="card-image-wrap">
       {blog.eyecatch?.url ? (
         <img

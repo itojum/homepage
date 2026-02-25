@@ -7,8 +7,8 @@ interface Props {
 const { currentPage, totalPages } = Astro.props;
 
 const createPageHref = (page: number) => {
-	if (page === 1) return "/blog/";
-	return `/blog/page/${page}/`;
+	if (page === 1) return "/blogs/";
+	return `/blogs/page/${page}/`;
 };
 
 const pages = Array.from({ length: totalPages }, (_, i) => i + 1);

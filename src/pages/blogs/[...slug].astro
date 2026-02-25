@@ -21,7 +21,7 @@ const blog = await getBlogDetail(blogId, {
   title={blog.title}
   description={blog.description}
   image={blog.eyecatch?.url}
-  path={`/blog/${blogId}`}
+  path={`/blogs/${blogId}`}
 >
   <BlogDetail blog={blog} />
 </BaseLayout>

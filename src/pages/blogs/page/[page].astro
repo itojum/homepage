@@ -36,7 +36,7 @@ const totalPages = Math.ceil(totalCount / PER_PAGE);
 <BaseLayout
   title={`Blog - ${currentPage}ページ目`}
   description={`ブログ記事一覧の${currentPage}ページ目。`}
-  path={`/blog/page/${currentPage}`}
+  path={`/blogs/page/${currentPage}`}
 >
   <BlogsPage blogs={blogs} currentPage={currentPage} totalPages={totalPages} />
 </BaseLayout>
