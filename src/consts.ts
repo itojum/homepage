@@ -5,6 +5,7 @@ export const SITE_DESCRIPTION =
 export const EMAIL_ADDRESS = "me@itojum.dev";
 
 export const X_URL = "https://x.com/itojum1230";
+export const X_URL_HOBBY = "https://x.com/itojum2030";
 export const GITHUB_URL = "https://github.com/itojum";
 
 export const LINKS = [
@@ -19,6 +20,12 @@ export const LINKS = [
 		url: X_URL,
 		icon: "ri:twitter-x-line",
 		name: "@itojum1230",
+	},
+	{
+		service: "X(趣味用)",
+		url: X_URL_HOBBY,
+		icon: "ri:twitter-x-line",
+		name: "@itojum2030",
 	},
 	{
 		service: "VRChat",
