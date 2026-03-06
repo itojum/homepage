@@ -22,7 +22,7 @@
 		"dotenv": "^17.3.1",
 		"microcms-js-sdk": "^3.3.0",
 		"rehype-parse": "^9.0.1",
-		"rehype-pretty-code": "^0.14.1",
+		"rehype-pretty-code": "^0.14.3",
 		"rehype-stringify": "^10.0.1",
 		"sharp": "^0.34.3",
 		"shiki": "^3.23.0",
