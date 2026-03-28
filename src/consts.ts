@@ -22,12 +22,6 @@ export const LINKS = [
 		name: "@itojum1230",
 	},
 	{
-		service: "X(趣味用)",
-		url: X_URL_HOBBY,
-		icon: "ri:twitter-x-line",
-		name: "@itojum2030",
-	},
-	{
 		service: "VRChat",
 		url: "https://vrchat.com/home/user/usr_e7576e86-ee7d-4083-9561-9cba619067d1",
 		icon: null,
