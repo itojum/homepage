@@ -1,10 +1,10 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import BlogDetail from "@/components/pages/blog/BlogDetail.astro";
-import { getAllBlogIds, getBlogDetail, getRelatedBlogs } from "@/libs/microcms";
+import { getAllBlogIdsIncludingDraft, getBlogDetailForBuild, getRelatedBlogs } from "@/libs/microcms";
 
 export async function getStaticPaths() {
-	const ids = await getAllBlogIds();
+	const ids = await getAllBlogIdsIncludingDraft();
 	return ids.map((id) => ({
 		params: { slug: id },
 	}));
@@ -12,7 +12,7 @@ export async function getStaticPaths() {
 
 const slug = Astro.params.slug;
 const blogId = Array.isArray(slug) ? slug[0] : (slug ?? "");
-const blog = await getBlogDetail(blogId, {
+const blog = await getBlogDetailForBuild(blogId, {
 	depth: 2,
 });
 const relatedBlogs = await getRelatedBlogs(blog);

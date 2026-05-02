@@ -4,6 +4,7 @@
  * 利用前にプロジェクトルートに .env を用意し、以下を設定してください：
  *   MICROCMS_SERVICE_DOMAIN=<YOUR_SERVICE>  （.microcms.io は含めない）
  *   MICROCMS_API_KEY=<YOUR_KEY_VALUE>
+ *   MICROCMS_PREVIEW_API_KEY=<DRAFT_READ_KEY>  （下書き読み取り可キー）
  */
 import type { MicroCMSQueries } from "microcms-js-sdk";
 import { createClient } from "microcms-js-sdk";
@@ -15,19 +16,39 @@ const client = createClient({
 	apiKey: import.meta.env.MICROCMS_API_KEY,
 });
 
+/** 下書きを含むクライアント（静的ページ生成用）。専用キー未設定時は MICROCMS_API_KEY を使用 */
+const previewClient = createClient({
+	serviceDomain: import.meta.env.MICROCMS_SERVICE_DOMAIN,
+	apiKey: import.meta.env.MICROCMS_PREVIEW_API_KEY ?? import.meta.env.MICROCMS_API_KEY,
+});
+
 /** 記事一覧を取得 */
 export const getBlogs = async (queries?: MicroCMSQueries) => {
 	return await client.getList<Blog>({ endpoint: "blogs", queries });
 };
 
-/** 全記事の ID を取得 */
+/** 全記事の ID を取得（公開のみ） */
 export const getAllBlogIds = async () => {
 	return await client.getAllContentIds({ endpoint: "blogs" });
 };
 
-/** 記事詳細を取得 */
+/** 全記事の ID を取得（下書き含む）— 静的パス生成用 */
+export const getAllBlogIdsIncludingDraft = async () => {
+	return await previewClient.getAllContentIds({ endpoint: "blogs" });
+};
+
+/** 記事詳細を取得（公開のみ） */
 export const getBlogDetail = async (contentId: string, queries?: MicroCMSQueries) => {
 	return await client.getListDetail<Blog>({
+		endpoint: "blogs",
+		contentId,
+		queries,
+	});
+};
+
+/** 記事詳細を取得（下書き含む）— 静的ページ生成用 */
+export const getBlogDetailForBuild = async (contentId: string, queries?: MicroCMSQueries) => {
+	return await previewClient.getListDetail<Blog>({
 		endpoint: "blogs",
 		contentId,
 		queries,
