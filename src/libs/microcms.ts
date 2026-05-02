@@ -34,6 +34,20 @@ export const getBlogDetail = async (contentId: string, queries?: MicroCMSQueries
 	});
 };
 
+/** 下書きを含む全記事 ID を取得（ビルド時のプレビューページ生成用） */
+export const getAllBlogIdsIncludingDraft = async () => {
+	return await client.getAllContentIds({ endpoint: "blogs" });
+};
+
+/** 下書きを含む記事詳細を取得（ビルド時のプレビューページ生成用） */
+export const getBlogDetailIncludingDraft = async (contentId: string) => {
+	return await client.getListDetail<Blog>({
+		endpoint: "blogs",
+		contentId,
+		queries: { depth: 2 },
+	});
+};
+
 /** アクティビティ一覧を取得 */
 export const getActivities = async (queries?: MicroCMSQueries) => {
 	return await client.getAllContents<Activity>({ endpoint: "activities", queries });
