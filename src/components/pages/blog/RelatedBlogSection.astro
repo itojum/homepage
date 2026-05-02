@@ -1,0 +1,71 @@
+---
+import type { Blog } from "@/types/blog";
+import BlogCard from "@/components/pages/blogs/BlogCard.astro";
+import "../blogs/BlogPage.css";
+
+interface Props {
+  relatedBlogs: Blog[];
+}
+
+const { relatedBlogs } = Astro.props;
+---
+
+{relatedBlogs.length > 0 && (
+  <section class="related-blogs blog-page">
+    <h2 class="related-blogs__title">関連ブログ</h2>
+    <ul class="card-list">
+      {relatedBlogs.map((blog) => <BlogCard blog={blog} />)}
+    </ul>
+  </section>
+)}
+
+<style>
+  .related-blogs {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(var(--border), 90%);
+  }
+
+  .related-blogs__title {
+    margin: 0 0 1rem;
+    font-size: 1rem;
+    font-weight: 600;
+    color: rgb(var(--black));
+  }
+</style>
+
+<style is:global>
+  .related-blogs.blog-page .card-list {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  /* first-childの全幅表示を無効化 */
+  .related-blogs.blog-page .card-list .card:first-child {
+    grid-column: auto;
+  }
+
+  /* 全カードの画像を16:9に統一（3:2と3:1の上書き） */
+  .related-blogs.blog-page .card-image-wrap,
+  .related-blogs.blog-page .card-list .card:first-child .card-image-wrap {
+    aspect-ratio: 16 / 9;
+  }
+
+  /* first-childの特別スタイルをリセット */
+  .related-blogs.blog-page .card-list .card:first-child .card-body {
+    padding: 0.6rem 0.75rem;
+  }
+
+  .related-blogs.blog-page .card-list .card:first-child .card-title {
+    font-size: 0.95rem;
+  }
+
+  .related-blogs.blog-page .card-list .card:first-child .card-image-placeholder {
+    font-size: 1.5rem;
+  }
+
+  @media (max-width: 720px) {
+    .related-blogs.blog-page .card-list {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
