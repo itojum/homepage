@@ -30,6 +30,18 @@ const getArg = (name) => {
 	const found = args.find((a) => a.startsWith(`--${name}=`));
 	return found ? found.split("=").slice(1).join("=") : null;
 };
+const getArgsAfterFlag = (name) => {
+	const flag = `--${name}`;
+	const index = args.indexOf(flag);
+	if (index === -1) return [];
+
+	const values = [];
+	for (let i = index + 1; i < args.length; i += 1) {
+		if (args[i].startsWith("--")) break;
+		values.push(args[i]);
+	}
+	return values;
+};
 
 const mode = getArg("mode");
 if (mode !== "draft" && mode !== "publish") {
@@ -37,9 +49,12 @@ if (mode !== "draft" && mode !== "publish") {
 	process.exit(1);
 }
 
-// --files の残りはスペース区切りで渡される（Actions では複数引数になる）
+// --files は `--files=...` と `--files ...` の両方を受け付ける
 const filesArg = getArg("files");
-let filePaths = filesArg ? filesArg.split(" ").filter(Boolean) : [];
+let filePaths = [
+	...(filesArg ? filesArg.split(/\s+/).filter(Boolean) : []),
+	...getArgsAfterFlag("files"),
+];
 
 // --files 未指定の場合は content/blogs/ 配下の全 index.md
 if (filePaths.length === 0) {
