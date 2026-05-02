@@ -33,11 +33,13 @@ jobs:
         id: detect
         run: |
           FILES=$(git diff --name-only HEAD~1 HEAD -- content/blogs/ | grep 'index\.md$' || true)
+          FILES=$(printf '%s\n' "$FILES" | tr '\n' ' ' | sed 's/[[:space:]]*$//')
           echo "files=$FILES" >> "$GITHUB_OUTPUT"
 
           # images/ ディレクトリを持つスラグを検出（削除対象）
           SLUGS=$(git diff --name-only HEAD~1 HEAD -- content/blogs/ \
             | grep -oP 'content/blogs/\K[^/]+' | sort -u || true)
+          SLUGS=$(printf '%s\n' "$SLUGS" | tr '\n' ' ' | sed 's/[[:space:]]*$//')
           echo "slugs=$SLUGS" >> "$GITHUB_OUTPUT"
 
       - name: microCMS にコンテンツを公開
