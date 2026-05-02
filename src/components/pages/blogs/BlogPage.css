@@ -70,6 +70,15 @@ main:has(.blog-page) {
 	border-color: rgba(var(--border-strong), 65%);
 }
 
+.blog-page .card-image-wrap::after {
+	content: "";
+	position: absolute;
+	inset: 0;
+	background: linear-gradient(to top, rgba(var(--overlay), 28%) 0%, transparent 50%);
+	opacity: 0;
+	transition: opacity 0.25s ease;
+}
+
 .blog-page .card-link:hover .card-image-wrap::after {
 	opacity: 1;
 }
@@ -96,15 +105,6 @@ main:has(.blog-page) {
 
 .blog-page .card-list .card:first-child .card-image-wrap {
 	aspect-ratio: 3 / 1;
-}
-
-.blog-page .card-image-wrap::after {
-	content: "";
-	position: absolute;
-	inset: 0;
-	background: linear-gradient(to top, rgba(var(--overlay), 28%) 0%, transparent 50%);
-	opacity: 0;
-	transition: opacity 0.25s ease;
 }
 
 .blog-page .card-image-wrap img {
