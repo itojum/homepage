@@ -19,7 +19,7 @@ const client = createClient({
 /** 下書きを含むクライアント（静的ページ生成用）。専用キー未設定時は MICROCMS_API_KEY を使用 */
 const previewClient = createClient({
 	serviceDomain: import.meta.env.MICROCMS_SERVICE_DOMAIN,
-	apiKey: import.meta.env.MICROCMS_PREVIEW_API_KEY ?? import.meta.env.MICROCMS_API_KEY,
+	apiKey: import.meta.env.MICROCMS_PREVIEW_API_KEY || import.meta.env.MICROCMS_API_KEY,
 });
 
 /** 記事一覧を取得 */
