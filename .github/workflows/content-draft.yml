@@ -1,0 +1,56 @@
+name: Upload content draft to microCMS
+
+on:
+  push:
+    branches-ignore:
+      - main
+    paths:
+      - "content/blogs/**"
+
+permissions:
+  contents: write
+
+jobs:
+  sync-draft:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: "11.0.3"
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .node-version
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile --ignore-scripts
+
+      - name: 変更された記事ファイルを検出
+        id: detect
+        run: |
+          FILES=$(git diff --name-only HEAD~1 HEAD -- content/blogs/ | grep 'index\.md$' || true)
+          echo "files=$FILES" >> "$GITHUB_OUTPUT"
+
+      - name: 下書きを microCMS にアップロード
+        if: steps.detect.outputs.files != ''
+        env:
+          MICROCMS_SERVICE_DOMAIN: ${{ secrets.MICROCMS_SERVICE_DOMAIN }}
+          MICROCMS_API_KEY: ${{ secrets.MICROCMS_API_KEY }}
+        run: |
+          node scripts/microcms-sync.mjs --mode=draft --files="${{ steps.detect.outputs.files }}"
+
+      - name: 画像パス置換後の index.md をコミット
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add content/blogs/
+          if git diff --cached --quiet; then
+            echo "変更なし。コミットをスキップします。"
+          else
+            git commit -m "chore: 画像パスを microCMS URL に置換"
+            git push
+          fi
