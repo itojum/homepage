@@ -58,7 +58,7 @@ jobs:
             IMAGES_DIR="content/blogs/${SLUG}/images"
             if [ -d "$IMAGES_DIR" ]; then
               rm -rf "$IMAGES_DIR"
-              git add "$IMAGES_DIR"
+              git add -A -- "$IMAGES_DIR"
               DELETED=true
               echo "削除: ${IMAGES_DIR}"
             fi
