@@ -1,0 +1,32 @@
+---
+export const prerender = false;
+
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import BlogDetail from "@/components/pages/blog/BlogDetail.astro";
+import { getBlogDetailPreview, getRelatedBlogs } from "@/libs/microcms";
+
+const { id } = Astro.params;
+const draftKey = Astro.url.searchParams.get("draftKey");
+
+if (!id || !draftKey) {
+  return Astro.redirect("/404");
+}
+
+let blog;
+try {
+  blog = await getBlogDetailPreview(id, draftKey);
+} catch {
+  return Astro.redirect("/404");
+}
+
+const relatedBlogs = await getRelatedBlogs(blog);
+---
+
+<BaseLayout
+  title={blog.title}
+  description={blog.description}
+  image={blog.eyecatch?.url}
+  noIndex={true}
+>
+  <BlogDetail blog={blog} relatedBlogs={relatedBlogs} />
+</BaseLayout>
