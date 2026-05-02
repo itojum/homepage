@@ -15,4 +15,4 @@
 
 ## デプロイ環境
 
-Cloudflare Workers にデプロイされる。Node.js 組み込みモジュール（`fs`、`path` 等）は使用不可。
+Cloudflare Workers にデプロイされる。Node.js 組み込みモジュール（`fs`、`path` 等）は Cloudflare Workers の実行時コードでは使用不可。ビルド時・生成時の処理や設定ファイルでの利用まで一律に禁止するものではない。
