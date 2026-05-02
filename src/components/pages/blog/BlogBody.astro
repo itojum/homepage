@@ -73,4 +73,69 @@ const renderedContent = await transformRichText(content);
     color: rgb(var(--gray));
     font-size: 0.9em;
   }
+  .post :global(.link-card) {
+    margin: 1.25em 0;
+    border: 1px solid #e5e7eb;
+    border-radius: 0.5em;
+    overflow: hidden;
+    transition: background-color 0.15s;
+  }
+  .post :global(.link-card:hover) {
+    background-color: #f9fafb;
+  }
+  .post :global(.link-card__anchor) {
+    display: flex;
+    align-items: stretch;
+    text-decoration: none !important;
+    color: inherit;
+  }
+  .post :global(.link-card__body) {
+    flex: 1;
+    min-width: 0;
+    padding: 0.75em 1em;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25em;
+  }
+  .post :global(.link-card__title) {
+    font-weight: 600;
+    font-size: 0.95em;
+    color: rgb(var(--black));
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .post :global(.link-card__description) {
+    font-size: 0.8em;
+    color: rgb(var(--gray));
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    flex: 1;
+  }
+  .post :global(.link-card__meta) {
+    display: flex;
+    align-items: center;
+    gap: 0.375em;
+    margin-top: 0.5em;
+  }
+  .post :global(.link-card__favicon) {
+    flex-shrink: 0;
+    margin: 0;
+  }
+  .post :global(.link-card__site) {
+    font-size: 0.75em;
+    color: rgb(var(--gray));
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .post :global(.link-card__image) {
+    width: 130px;
+    flex-shrink: 0;
+    object-fit: cover;
+    border-left: 1px solid #e5e7eb;
+    margin: 0;
+  }
 </style>
