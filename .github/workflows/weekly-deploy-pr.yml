@@ -37,7 +37,9 @@ jobs:
         run: |
           git fetch origin main develop
 
-          CHANGES=$(git log origin/main..origin/develop --pretty=format:"- %s (%h)" --no-merges)
+          CHANGES=$(git log origin/main..origin/develop --pretty=format:"%s" --merges \
+            | grep "^Merge pull request #" \
+            | sed 's/Merge pull request #\([0-9]*\).*/- #\1/')
 
           if [ -z "$CHANGES" ]; then
             echo "no_changes=true" >> "$GITHUB_OUTPUT"
