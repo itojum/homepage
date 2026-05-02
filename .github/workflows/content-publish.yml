@@ -1,0 +1,71 @@
+name: Publish content to microCMS
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "content/blogs/**"
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: "11.0.3"
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .node-version
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile --ignore-scripts
+
+      - name: 変更された記事ファイルを検出
+        id: detect
+        run: |
+          FILES=$(git diff --name-only HEAD~1 HEAD -- content/blogs/ | grep 'index\.md$' || true)
+          echo "files=$FILES" >> "$GITHUB_OUTPUT"
+
+          # images/ ディレクトリを持つスラグを検出（削除対象）
+          SLUGS=$(git diff --name-only HEAD~1 HEAD -- content/blogs/ \
+            | grep -oP 'content/blogs/\K[^/]+' | sort -u || true)
+          echo "slugs=$SLUGS" >> "$GITHUB_OUTPUT"
+
+      - name: microCMS にコンテンツを公開
+        if: steps.detect.outputs.files != ''
+        env:
+          MICROCMS_SERVICE_DOMAIN: ${{ secrets.MICROCMS_SERVICE_DOMAIN }}
+          MICROCMS_API_KEY: ${{ secrets.MICROCMS_API_KEY }}
+        run: |
+          node scripts/microcms-sync.mjs --mode=publish --files="${{ steps.detect.outputs.files }}"
+
+      - name: images/ ディレクトリを削除してコミット
+        if: steps.detect.outputs.slugs != ''
+        run: |
+          DELETED=false
+          for SLUG in ${{ steps.detect.outputs.slugs }}; do
+            IMAGES_DIR="content/blogs/${SLUG}/images"
+            if [ -d "$IMAGES_DIR" ]; then
+              rm -rf "$IMAGES_DIR"
+              git add "$IMAGES_DIR"
+              DELETED=true
+              echo "削除: ${IMAGES_DIR}"
+            fi
+          done
+
+          if [ "$DELETED" = "true" ]; then
+            git config user.name  "github-actions[bot]"
+            git config user.email "github-actions[bot]@users.noreply.github.com"
+            git commit -m "chore: 公開済みコンテンツの画像ファイルを削除"
+            git push
+          fi
+
