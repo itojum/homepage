@@ -18,6 +18,7 @@ import { unified } from "unified";
 import remarkParse from "remark-parse";
 import remarkRehype from "remark-rehype";
 import rehypeStringify from "rehype-stringify";
+import { visit } from "unist-util-visit";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, "..");
@@ -89,10 +90,114 @@ async function fetchMicroCMS(path, options = {}) {
 	return res.json();
 }
 
+// --- リンクカード（OGP）-----------------------------------------------------
+
+function escapeHtml(str) {
+	return String(str)
+		.replace(/&/g, "&amp;")
+		.replace(/</g, "&lt;")
+		.replace(/>/g, "&gt;")
+		.replace(/"/g, "&quot;");
+}
+
+const ogpCache = new Map();
+
+async function fetchOGP(url) {
+	if (ogpCache.has(url)) return ogpCache.get(url);
+
+	try {
+		const res = await fetch(url, {
+			headers: { "User-Agent": "Mozilla/5.0 (compatible; bot/1.0)" },
+			signal: AbortSignal.timeout(8000),
+			redirect: "follow",
+		});
+		const html = await res.text();
+
+		const getMeta = (property) => {
+			const m =
+				new RegExp(
+					`<meta[^>]+property=["']${property}["'][^>]+content=["']([^"']+)["']`,
+					"i",
+				).exec(html) ||
+				new RegExp(
+					`<meta[^>]+content=["']([^"']+)["'][^>]+property=["']${property}["']`,
+					"i",
+				).exec(html);
+			return m?.[1];
+		};
+
+		const result = {
+			title:
+				getMeta("og:title") ||
+				/<title[^>]*>([^<]+)<\/title>/i.exec(html)?.[1]?.trim(),
+			description: getMeta("og:description"),
+			image: getMeta("og:image"),
+			siteName: getMeta("og:site_name") || new URL(url).hostname,
+		};
+		ogpCache.set(url, result);
+		return result;
+	} catch (e) {
+		console.warn(`  OGP取得失敗: ${url} (${e.message})`);
+		const result = { siteName: new URL(url).hostname };
+		ogpCache.set(url, result);
+		return result;
+	}
+}
+
+function buildLinkCardHtml(url, { title, description, image, siteName }) {
+	const hostname = new URL(url).hostname;
+	const faviconUrl = `https://www.google.com/s2/favicons?domain=${hostname}&sz=32`;
+
+	const imageHtml = image
+		? `<img src="${escapeHtml(image)}" alt="" class="link-card__image" loading="lazy">`
+		: "";
+
+	return `<div class="link-card"><a href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer" class="link-card__anchor"><div class="link-card__body">${title ? `<div class="link-card__title">${escapeHtml(title)}</div>` : ""}${description ? `<div class="link-card__description">${escapeHtml(description)}</div>` : ""}<div class="link-card__meta"><img src="${escapeHtml(faviconUrl)}" alt="" class="link-card__favicon" width="16" height="16"><span class="link-card__site">${escapeHtml(siteName ?? hostname)}</span></div></div>${imageHtml}</a></div>`;
+}
+
+/** URL のみの段落をリンクカード HTML ノードに変換する remark プラグイン */
+function remarkLinkCard() {
+	return async (tree) => {
+		const candidates = [];
+
+		visit(tree, "paragraph", (node, index, parent) => {
+			if (node.children.length !== 1) return;
+			const child = node.children[0];
+
+			let url = null;
+			if (
+				child.type === "text" &&
+				/^https?:\/\/\S+$/.test(child.value.trim())
+			) {
+				url = child.value.trim();
+			} else if (
+				child.type === "link" &&
+				child.children.length === 1 &&
+				child.children[0].type === "text" &&
+				child.children[0].value === child.url
+			) {
+				url = child.url;
+			}
+
+			if (url) candidates.push({ index, parent, url });
+		});
+
+		for (const { index, parent, url } of candidates) {
+			console.log(`  リンクカード取得: ${url}`);
+			const ogp = await fetchOGP(url);
+			parent.children[index] = {
+				type: "html",
+				value: buildLinkCardHtml(url, ogp),
+			};
+		}
+	};
+}
+
 /** Markdown → HTML */
 async function markdownToHtml(markdown) {
 	const file = await unified()
 		.use(remarkParse)
+		.use(remarkLinkCard)
 		.use(remarkRehype, { allowDangerousHtml: true })
 		.use(rehypeStringify, { allowDangerousHtml: true })
 		.process(markdown);
