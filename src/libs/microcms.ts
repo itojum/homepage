@@ -38,3 +38,39 @@ export const getBlogDetail = async (contentId: string, queries?: MicroCMSQueries
 export const getActivities = async (queries?: MicroCMSQueries) => {
 	return await client.getAllContents<Activity>({ endpoint: "activities", queries });
 };
+
+/** 関連ブログを最大 limit 件取得（カテゴリまたはタグが一致するもの優先、不足分は他の記事で補填） */
+export const getRelatedBlogs = async (blog: Blog, limit: number = 3): Promise<Blog[]> => {
+	const filterParts: string[] = [];
+
+	if (blog.category) {
+		filterParts.push(`category[equals]${blog.category.id}`);
+	}
+	for (const tag of blog.tags) {
+		filterParts.push(`tags[contains]${tag.id}`);
+	}
+
+	let relatedBlogs: Blog[] = [];
+
+	if (filterParts.length > 0) {
+		const response = await getBlogs({
+			limit: limit + 1,
+			filters: filterParts.join("[or]"),
+			depth: 2,
+		});
+		relatedBlogs = response.contents.filter((b) => b.id !== blog.id).slice(0, limit);
+	}
+
+	if (relatedBlogs.length < limit) {
+		const needed = limit - relatedBlogs.length;
+		const excludeIds = new Set([blog.id, ...relatedBlogs.map((b) => b.id)]);
+		const response = await getBlogs({
+			limit: needed + excludeIds.size,
+			depth: 2,
+		});
+		const additional = response.contents.filter((b) => !excludeIds.has(b.id)).slice(0, needed);
+		relatedBlogs = [...relatedBlogs, ...additional];
+	}
+
+	return relatedBlogs;
+};
