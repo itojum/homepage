@@ -43,10 +43,11 @@ jobs:
             echo "no_changes=true" >> "$GITHUB_OUTPUT"
           else
             echo "no_changes=false" >> "$GITHUB_OUTPUT"
+            DELIM=$(openssl rand -hex 16)
             {
-              echo "changes<<EOF_CHANGES"
+              echo "changes<<${DELIM}"
               echo "$CHANGES"
-              echo "EOF_CHANGES"
+              echo "${DELIM}"
             } >> "$GITHUB_OUTPUT"
           fi
 
