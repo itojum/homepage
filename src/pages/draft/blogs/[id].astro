@@ -4,6 +4,7 @@ export const prerender = false;
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import BlogDetail from "@/components/pages/blog/BlogDetail.astro";
 import { getBlogDetailPreview, getRelatedBlogs } from "@/libs/microcms";
+import type { Blog } from "@/types/blog";
 
 const { id } = Astro.params;
 const draftKey = Astro.url.searchParams.get("draftKey");
@@ -12,7 +13,7 @@ if (!id || !draftKey) {
   return Astro.redirect("/404");
 }
 
-let blog;
+let blog: Blog;
 try {
   blog = await getBlogDetailPreview(id, draftKey);
 } catch {
