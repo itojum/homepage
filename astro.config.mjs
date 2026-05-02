@@ -1,6 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import cloudflare from '@astrojs/cloudflare';
 import sitemap from '@astrojs/sitemap';
 import tailwind from '@astrojs/tailwind';
 import { defineConfig } from 'astro/config';
@@ -15,6 +16,7 @@ dotenv.config();
 const siteUrl = process.env.SITE_URL;
 
 export default defineConfig({
+	adapter: cloudflare(),
 	build: {
 		format: 'file',
 	},

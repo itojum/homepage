@@ -1,6 +1,7 @@
 {
   "name": "homepage",
   "compatibility_date": "2026-02-17",
+  "compatibility_flags": ["nodejs_compat"],
   "assets": {
     "directory": "./dist"
   }

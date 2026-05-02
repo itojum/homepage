@@ -12,11 +12,12 @@
 		"check": "biome check ."
 	},
 	"dependencies": {
-		"@astrojs/mdx": "^4.3.14",
+		"@astrojs/cloudflare": "^13.3.0",
+		"@astrojs/mdx": "^5.0.4",
 		"@astrojs/rss": "^4.0.18",
 		"@astrojs/sitemap": "^3.7.2",
 		"@iconify-json/ri": "^1.2.10",
-		"astro": "^5.18.1",
+		"astro": "^6.2.1",
 		"astro-icon": "^1.1.5",
 		"astro-pagefind": "^1.8.6",
 		"dotenv": "^17.4.2",
@@ -28,6 +29,12 @@
 		"shiki": "^4.0.2",
 		"unified": "^11.0.5",
 		"unist-util-visit": "^5.1.0"
+	},
+	"pnpm": {
+		"onlyBuiltDependencies": [
+			"sharp",
+			"workerd"
+		]
 	},
 	"devDependencies": {
 		"@astrojs/tailwind": "^6.0.2",

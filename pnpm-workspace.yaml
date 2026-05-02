@@ -1,0 +1,2 @@
+allowBuilds:
+  workerd: set this to true or false
