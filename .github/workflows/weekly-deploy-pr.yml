@@ -1,0 +1,80 @@
+name: 週次デプロイPR作成
+
+on:
+  schedule:
+    - cron: '0 0 * * 1' # 毎週月曜日 09:00 JST (00:00 UTC)
+  workflow_dispatch:
+
+jobs:
+  create-deploy-pr:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: 前週のデプロイPRをクローズ
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          prs=$(gh pr list --base main --head develop --state open --json number --jq '.[].number')
+          if [ -n "$prs" ]; then
+            for pr in $prs; do
+              echo "Closing PR #$pr"
+              gh pr close "$pr" --comment "新しい週次デプロイPRが作成されるためクローズします。"
+            done
+          fi
+
+      - name: 変更内容を取得
+        id: get_changes
+        run: |
+          git fetch origin main develop
+
+          CHANGES=$(git log origin/main..origin/develop --pretty=format:"- %s (%h)" --no-merges)
+
+          if [ -z "$CHANGES" ]; then
+            echo "no_changes=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "no_changes=false" >> "$GITHUB_OUTPUT"
+            {
+              echo "changes<<EOF_CHANGES"
+              echo "$CHANGES"
+              echo "EOF_CHANGES"
+            } >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: 変更なしをスキップ
+        if: steps.get_changes.outputs.no_changes == 'true'
+        run: echo "develop と main の差分がないため、PRの作成をスキップします。"
+
+      - name: PRを作成
+        if: steps.get_changes.outputs.no_changes == 'false'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CHANGES: ${{ steps.get_changes.outputs.changes }}
+        run: |
+          DATE=$(TZ=Asia/Tokyo date '+%Y/%m/%d')
+
+          cat > pr_body.md << 'TEMPLATE_END'
+          ## 変更内容
+
+          TEMPLATE_END
+
+          echo "$CHANGES" >> pr_body.md
+
+          cat >> pr_body.md << 'TEMPLATE_END'
+
+          ---
+          *このPRは毎週月曜日に自動生成されます。*
+          TEMPLATE_END
+
+          gh pr create \
+            --base main \
+            --head develop \
+            --title "chore: 週次デプロイ (${DATE})" \
+            --body-file pr_body.md
