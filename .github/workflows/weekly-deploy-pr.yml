@@ -19,8 +19,6 @@ jobs:
           fetch-depth: 0
 
       - name: 前週のデプロイPRをクローズ
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           prs=$(gh pr list --base main --head develop --state open --json number --jq '.[].number')
           if [ -n "$prs" ]; then
@@ -55,7 +53,6 @@ jobs:
       - name: PRを作成
         if: steps.get_changes.outputs.no_changes == 'false'
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           CHANGES: ${{ steps.get_changes.outputs.changes }}
         run: |
           DATE=$(TZ=Asia/Tokyo date '+%Y/%m/%d')
