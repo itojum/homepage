@@ -40,6 +40,15 @@
 	border-color: rgba(var(--border-strong), 65%);
 }
 
+.recent-blogs .card-image-wrap::after {
+	content: "";
+	position: absolute;
+	inset: 0;
+	background: linear-gradient(to top, rgba(var(--overlay), 28%) 0%, transparent 50%);
+	opacity: 0;
+	transition: opacity 0.25s ease;
+}
+
 .recent-blogs .card-link:hover .card-image-wrap::after {
 	opacity: 1;
 }
@@ -58,15 +67,6 @@
 		rgba(var(--surface-soft), 45%) 100%
 	);
 	overflow: hidden;
-}
-
-.recent-blogs .card-image-wrap::after {
-	content: "";
-	position: absolute;
-	inset: 0;
-	background: linear-gradient(to top, rgba(var(--overlay), 28%) 0%, transparent 50%);
-	opacity: 0;
-	transition: opacity 0.25s ease;
 }
 
 .recent-blogs .card-image-wrap img {
