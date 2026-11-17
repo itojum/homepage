@@ -11,7 +11,11 @@ interface Props {
 	noIndex?: boolean;
 }
 
-const canonicalURL = new URL(Astro.url.pathname, Astro.site || Astro.url.origin);
+// build.format: "file" では Astro.url が /blogs/foo.html になるため、.html を除いた URL を canonical にする
+const canonicalURL = new URL(
+	Astro.url.pathname.replace(/\.html$/, "").replace(/\/index$/, "/"),
+	Astro.site || Astro.url.origin,
+);
 
 const { title, description, image, path, noIndex } = Astro.props;
 ---
