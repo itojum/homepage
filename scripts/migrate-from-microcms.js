@@ -90,6 +90,27 @@ const download = async (src, dest) => {
 	await writeFile(dest, Buffer.from(await res.arrayBuffer()));
 };
 
+const TWEET_STATUS = /^https:\/\/(?:www\.)?(?:x|twitter)\.com\/(\w+)\/status\/(\d+)/;
+
+const hasClass = (node, className) =>
+	(node.getAttribute("class") ?? "").split(/\s+/).includes(className);
+
+/** iframe の src を、remarkEmbeds が展開できる URL（または画像）に変換する */
+const iframeToMarkdown = (src) => {
+	const url = new URL(src, "https://example.com");
+	if (url.hostname === "cdn.iframe.ly") {
+		const target = url.searchParams.get("url") ?? src;
+		return /\.(gif|png|jpe?g|webp)$/i.test(target) ? `![](${target})` : target;
+	}
+	if (url.hostname === "giphy.com" && url.pathname.startsWith("/embed/")) {
+		return `![](https://media.giphy.com/media/${url.pathname.split("/")[2]}/giphy.gif)`;
+	}
+	if (url.hostname.endsWith("youtube.com") && url.pathname.startsWith("/embed/")) {
+		return `https://www.youtube.com/watch?v=${url.pathname.split("/")[2]}`;
+	}
+	return src;
+};
+
 /** 文字列中の最長のバッククォート連続より長いフェンスを返す */
 const fenceFor = (code) => {
 	const longest = Math.max(0, ...(code.match(/`+/g) ?? []).map((s) => s.length));
@@ -104,8 +125,30 @@ const createTurndown = (imageMap) => {
 		emDelimiter: "*",
 	});
 	turndown.use(gfm);
-	// 埋め込み（YouTube / X など）は HTML のまま残す
-	turndown.keep(["iframe", "script"]);
+	// 埋め込みは URL だけの行に変換し、ビルド時に remarkEmbeds で展開する
+	turndown.remove("script");
+	turndown.addRule("tweet", {
+		filter: (node) => node.nodeName === "BLOCKQUOTE" && hasClass(node, "twitter-tweet"),
+		replacement: (content, node) => {
+			const hrefs = Array.from(node.getElementsByTagName("a"), (a) => a.getAttribute("href") ?? "");
+			const status = hrefs.map((href) => href.match(TWEET_STATUS)).findLast(Boolean);
+			return status ? `\n\nhttps://x.com/${status[1]}/status/${status[2]}\n\n` : content;
+		},
+	});
+	turndown.addRule("iframelyCard", {
+		filter: (node) => node.nodeName === "DIV" && hasClass(node, "iframely-embed"),
+		replacement: (content, node) => {
+			const href = node.getElementsByTagName("a")[0]?.getAttribute("href");
+			return href ? `\n\n${href}\n\n` : content;
+		},
+	});
+	turndown.addRule("iframe", {
+		filter: "iframe",
+		replacement: (_content, node) => {
+			const src = node.getAttribute("src");
+			return src ? `\n\n${iframeToMarkdown(src)}\n\n` : "";
+		},
+	});
 
 	// microCMS のコードブロック: <div data-filename="..."><pre><code class="language-xx">...</code></pre></div>
 	turndown.addRule("microcmsCodeBlock", {
