@@ -96,11 +96,22 @@ export const parseSlidesFeed = (xml: string): Slide[] => {
 		.sort((a, b) => (b.publishedAt?.getTime() ?? 0) - (a.publishedAt?.getTime() ?? 0));
 };
 
+/** スライド一覧の 1 ページあたりの件数 */
+export const SLIDES_PER_PAGE = 12;
+
+let slidesPromise: Promise<Slide[]> | undefined;
+
 /**
  * スライド一覧を新しい順に取得する。
  * 取得に失敗してもビルドを止めないよう、失敗時は空配列を返す。
  */
-export const getSlides = async (): Promise<Slide[]> => {
+export const getSlides = (): Promise<Slide[]> => {
+	// 一覧の各ページで呼ばれるため、ビルド中の取得は 1 回にまとめる
+	slidesPromise ??= fetchSlides();
+	return slidesPromise;
+};
+
+const fetchSlides = async (): Promise<Slide[]> => {
 	for (const feedUrl of FEED_URLS) {
 		try {
 			const res = await fetch(feedUrl, { signal: AbortSignal.timeout(FETCH_TIMEOUT_MS) });

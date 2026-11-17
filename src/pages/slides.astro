@@ -1,9 +1,11 @@
 ---
 import SlidesPage from "@/components/pages/slides/SlidesPage.astro";
 import BaseLayout from "@/layouts/BaseLayout.astro";
-import { getSlides } from "@/libs/slide";
+import { getSlides, SLIDES_PER_PAGE } from "@/libs/slide";
 
-const slides = await getSlides();
+const allSlides = await getSlides();
+const slides = allSlides.slice(0, SLIDES_PER_PAGE);
+const totalPages = Math.ceil(allSlides.length / SLIDES_PER_PAGE);
 ---
 
 <BaseLayout
@@ -11,5 +13,5 @@ const slides = await getSlides();
   description="itojum（いとじゅん）の登壇資料・スライド一覧。"
   path="/slides"
 >
-  <SlidesPage slides={slides} />
+  <SlidesPage slides={slides} currentPage={1} totalPages={totalPages} />
 </BaseLayout>

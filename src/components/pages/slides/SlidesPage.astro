@@ -1,14 +1,18 @@
 ---
+import Pagination from "@/components/ui/Pagination.astro";
 import { SPEAKERDECK_URL } from "@/consts";
 import type { Slide } from "@/types/slide";
 import SlideCard from "./SlideCard.astro";
 import "./SlidesPage.css";
 
 interface Props {
+	/** 現在のページに表示するスライド */
 	slides: Slide[];
+	currentPage: number;
+	totalPages: number;
 }
 
-const { slides } = Astro.props;
+const { slides, currentPage, totalPages } = Astro.props;
 ---
 
 <section class="slides-page">
@@ -22,6 +26,12 @@ const { slides } = Astro.props;
       <ul class="slide-card-list">
         {slides.map((slide) => <SlideCard slide={slide} />)}
       </ul>
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        basePath="/slides"
+        label="スライド一覧のページネーション"
+      />
       <p class="slides-more">
         <a href={SPEAKERDECK_URL} target="_blank" rel="noopener noreferrer">
           Speaker Deck で見る →
