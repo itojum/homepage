@@ -58,7 +58,7 @@ Astroの公式ドキュメントで調べてみる
 ```typescript title="元のコード"
 const pathname = Astro.url.pathname.replace(import.meta.env.BASE_URL, "");
 const subpath = pathname.match(/[^/]+/g);
-const isActive = href === pathname || href === /${subpath?.[0] || ""};
+const isActive = href === pathname || href === `/${subpath?.[0] || ""}`;
 ```
 
 ```typescript title="修正後のコード"
@@ -66,7 +66,7 @@ const pathname = Astro.url.pathname
  .replace(import.meta.env.BASE_URL, "")
  .replace(/\.html$/, "");
 const subpath = pathname.match(/[^/]+/g);
-const isActive = href === pathname || href === /${subpath?.[0] || ""};
+const isActive = href === pathname || href === `/${subpath?.[0] || ""}`;
 ```
 
 この修正によってカレント表示機能が正常にビルド後でも動くようになりました。
