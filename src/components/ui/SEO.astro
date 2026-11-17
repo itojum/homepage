@@ -30,7 +30,11 @@ const {
 const base = Astro.site ?? Astro.url.origin;
 const siteUrl = new URL("/", base).href;
 // canonical と og:url を必ず同じ URL にするため、ここで一元的に算出する
-const pageUrl = new URL(path ?? Astro.url.pathname, base).href;
+// path 未指定時は現在の URL を使う。build.format: "file" では /blogs/foo.html になるため .html を除く
+const pageUrl = new URL(
+	path ?? Astro.url.pathname.replace(/\.html$/, "").replace(/\/index$/, "/"),
+	base,
+).href;
 const titleText = title === SITE_TITLE ? title : `${title} | ${SITE_TITLE}`;
 
 const hasCustomImage = Boolean(ogImage);
