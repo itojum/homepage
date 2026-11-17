@@ -87,7 +87,6 @@ updatedAt: 2026-11-20      # 任意
 eyecatch: ./eyecatch.png   # 任意
 category: 技術             # 任意
 tags: [Astro, Cloudflare]  # 任意
-draft: false               # true にすると一覧に出さず /draft/blogs/<slug> のみ生成
 ---
 
 本文
@@ -99,7 +98,9 @@ console.log("hello");
 ```
 ````
 
+- 下書きはブランチ / PR 上で管理し、`main` にマージした時点で公開されます（下書き用のフラグはありません）
 - 画像を使わない記事は `src/content/blogs/<slug>.md` でも構いません
+- `eyecatch` を省略すると、タイトルと公開日を入れたアイキャッチ画像がビルド時に自動生成されます（`/og/blogs/<slug>.png`。生成処理は `src/libs/eyecatch.ts`）
 - ビルド時に相対パスの画像は `${IMAGE_BASE_URL}/blogs/<slug>/<ファイル名>` に書き換えられます
 - 画像ファイルは `develop` / `main` に push されると GitHub Actions（`sync-blog-images.yml`）が WebP に変換して R2 にアップロードします
   - PNG / JPEG / GIF は `.webp` に変換され、記事内の参照（`./screenshot.png` など）もビルド時に `.webp` の URL に書き換わります。手元での変換は不要です
@@ -132,6 +133,25 @@ https://github.com/itojum/homepage
 
 About ページの Activities は `src/content/activities.yaml` で管理しています。
 
+### 記事の自動レビュー
+
+`src/content/blogs/**` を変更する PR では、`blog-review.yml` が次のように動きます。
+
+| タイミング | 動作 |
+| --- | --- |
+| PR を作成したとき（opened） | 挨拶コメントを投稿 |
+| PR に push したとき（synchronize） | PR 内の記事を Claude がレビュー（指摘済みの内容は繰り返さない） |
+| Ready for review にしたとき / 再オープンしたとき | PR 内のすべての記事を Claude がレビュー |
+
+Claude は `.claude/skills/blog-review/SKILL.md` の基準に従って、変更行へのインラインコメントとサマリーコメントを残します。
+手元の Claude Code でも「blog-review スキルでこの記事をレビューして」のように使えます。
+
+事前に次の設定が必要です。
+
+1. [Claude GitHub App](https://github.com/apps/claude) をこのリポジトリにインストールする
+2. 手元で `claude setup-token` を実行してトークンを発行し、Settings > Secrets and variables > Actions の Secrets に `CLAUDE_CODE_OAUTH_TOKEN` として登録する
+   - API キーを使う場合は `ANTHROPIC_API_KEY` を登録し、ワークフローの `claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}` を `anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}` に置き換える
+
 ## Cloudflare R2 の初期設定
 
 1. Cloudflare ダッシュボードで R2 バケットを作成し、カスタムドメイン（例: `images.example.com`）を接続して公開する
@@ -140,16 +160,3 @@ About ページの Activities は `src/content/activities.yaml` で管理して�
    - Secrets: `CLOUDFLARE_ACCOUNT_ID` / `R2_ACCESS_KEY_ID` / `R2_SECRET_ACCESS_KEY`
    - Variables: `R2_BUCKET`（バケット名）
 4. Cloudflare Workers のビルド環境変数に `IMAGE_BASE_URL` を設定する
-
-## microCMS からの移行
-
-一度だけ、手元で次のコマンドを実行して既存の記事とアクティビティを取り込みます。
-
-```bash
-MICROCMS_SERVICE_DOMAIN="your-service-domain" MICROCMS_API_KEY="your-api-key" pnpm migrate:microcms
-```
-
-- 記事は Markdown に変換され、microCMS 上の画像は各記事フォルダにダウンロードされます
-- 公開中の記事のみが対象です。下書きは手動で移行してください
-- 既存のファイルはスキップします。上書きする場合は `--force` を付けます
-- 変換結果を `pnpm dev` で確認し、崩れた箇所を手直ししてからコミットしてください

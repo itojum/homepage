@@ -12,7 +12,7 @@ const { relatedBlogs } = Astro.props;
 
 {relatedBlogs.length > 0 && (
   <section class="related-blogs blog-page">
-    <h2 class="related-blogs__title">関連ブログ</h2>
+    <h2 class="related-blogs__title">関連記事</h2>
     <ul class="card-list">
       {relatedBlogs.map((blog) => <BlogCard blog={blog} />)}
     </ul>
