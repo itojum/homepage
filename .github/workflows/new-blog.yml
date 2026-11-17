@@ -10,8 +10,8 @@ name: ブログ執筆用 PR を作成
 #
 # 注意
 #   GITHUB_TOKEN で作成した push / PR は他のワークフローを発火させない（無限ループ防止の仕様）。
-#   そのためこの PR の作成時点では blog-review.yml の「opened」は動かない。
-#   執筆者が自分で push すると synchronize として通常どおりレビューが動く。
+#   そのためこの PR の作成時点では、PR をトリガーにする他のワークフローは動かない。
+#   執筆者が自分で push すると、通常どおり各ワークフローが動く。
 
 on:
   workflow_dispatch:
@@ -63,11 +63,12 @@ jobs:
         id: scaffold
         # 外部パッケージを使わないスクリプトのため依存のインストールは不要
         run: |
+          # 値がハイフンで始まってもオプションと解釈されないよう --option=value 形式で渡す
           node scripts/new-blog.js \
-            --title "$INPUT_TITLE" \
-            --slug "$INPUT_SLUG" \
-            --category "$INPUT_CATEGORY" \
-            --tags "$INPUT_TAGS"
+            --title="$INPUT_TITLE" \
+            --slug="$INPUT_SLUG" \
+            --category="$INPUT_CATEGORY" \
+            --tags="$INPUT_TAGS"
 
       - name: ブランチを作成して push
         id: branch
@@ -104,8 +105,7 @@ jobs:
 
           1. このブランチ（\`${BRANCH}\`）を checkout して記事を書く
           2. 画像は記事と同じフォルダに置き、相対パスで参照する
-          3. push するたびに Claude が記事をレビューしてコメントします（\`.claude/skills/blog-review/SKILL.md\`）
-          4. 公開するときは frontmatter の \`description\` / \`eyecatch\` / \`tags\` を埋めて Ready for review にする
+          3. 公開するときは frontmatter の \`description\` / \`eyecatch\` / \`tags\` を埋めて Ready for review にする
 
           > この PR は GitHub Actions（\`new-blog.yml\`）で作成しました。
           EOF

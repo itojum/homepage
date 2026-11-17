@@ -149,7 +149,7 @@ pnpm blog:new --title "記事タイトル" [--slug my-post] [--category 技術] 
 ```
 
 - 事前に Settings > Actions > General > Workflow permissions の「Allow GitHub Actions to create and approve pull requests」を有効にしてください
-- `GITHUB_TOKEN` で作成した PR では他のワークフローが発火しません。レビュー（後述）は執筆者が自分で push したときに動きます
+- `GITHUB_TOKEN` で作成した PR では他のワークフローが発火しません。執筆者が自分で push すると通常どおり動きます
 
 ## Cloudflare R2 の初期設定
 
