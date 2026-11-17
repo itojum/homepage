@@ -7,6 +7,10 @@ import { defineConfig } from 'astro/config';
 import icon from 'astro-icon';
 import pagefind from 'astro-pagefind';
 import dotenv from 'dotenv';
+import rehypePrettyCode from 'rehype-pretty-code';
+import { rehypeCodeBlockMeta } from './src/libs/richText/rehypeCodeBlockMeta';
+import { remarkBlogImages } from './src/libs/richText/remarkBlogImages';
+import { remarkEmbeds } from './src/libs/richText/remarkEmbeds';
 
 const __dirname = fileURLToPath(new URL('.', import.meta.url));
 
@@ -14,12 +18,43 @@ dotenv.config();
 
 const siteUrl = process.env.SITE_URL;
 
+/** ブログ記事内の相対画像パスを Cloudflare R2 の URL に書き換える */
+const blogImages = () => ({
+	name: 'blog-images',
+	hooks: {
+		'astro:config:setup': ({ command, updateConfig }) => {
+			updateConfig({
+				markdown: {
+					remarkPlugins: [
+						[remarkBlogImages, { baseUrl: process.env.IMAGE_BASE_URL, dev: command === 'dev' }],
+					],
+				},
+			});
+		},
+	},
+});
+
 export default defineConfig({
 	build: {
 		format: 'file',
 	},
 	site: siteUrl,
-	integrations: [sitemap(), icon(), tailwind(), pagefind()],
+	markdown: {
+		syntaxHighlight: false,
+		remarkPlugins: [remarkEmbeds],
+		rehypePlugins: [
+			rehypeCodeBlockMeta,
+			[
+				rehypePrettyCode,
+				{
+					theme: { light: 'github-light', dark: 'github-dark' },
+					keepBackground: false,
+					defaultLang: 'txt',
+				},
+			],
+		],
+	},
+	integrations: [blogImages(), sitemap(), icon(), tailwind(), pagefind()],
 	vite: {
 		resolve: {
 			alias: {

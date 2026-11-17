@@ -1,14 +1,10 @@
 ---
-import BaseLayout from "@/layouts/BaseLayout.astro";
-import { SITE_DESCRIPTION, SITE_TITLE, LINKS } from "@/consts";
-import { getBlogs } from "@/libs/microcms";
 import HomePage from "@/components/pages/home/HomePage.astro";
+import { LINKS, SITE_DESCRIPTION, SITE_TITLE } from "@/consts";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { getBlogs } from "@/libs/blog";
 
-const { contents: latestBlogs } = await getBlogs({
-	limit: 3,
-	orders: "-publishedAt",
-	depth: 2,
-});
+const latestBlogs = (await getBlogs()).slice(0, 3);
 ---
 
 <BaseLayout

@@ -1,12 +1,9 @@
 import rss from "@astrojs/rss";
 import { SITE_DESCRIPTION, SITE_TITLE } from "@/consts";
-import { getBlogs } from "@/libs/microcms";
+import { getBlogs } from "@/libs/blog";
 
 export async function GET(context) {
-	const response = await getBlogs({
-		orders: "-publishedAt",
-	});
-	const posts = response.contents;
+	const posts = await getBlogs();
 	return rss({
 		title: SITE_TITLE,
 		description: SITE_DESCRIPTION,
@@ -14,7 +11,7 @@ export async function GET(context) {
 		items: posts.map((post) => ({
 			title: post.title,
 			description: post.description || "",
-			pubDate: new Date(post.publishedAt || post.createdAt),
+			pubDate: post.publishedAt,
 			link: `/blogs/${post.id}/`,
 		})),
 	});

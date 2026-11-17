@@ -1,26 +1,20 @@
 ---
-import type { Blog } from "@/types/blog";
 import FormattedDate from "@/components/ui/FormattedDate.astro";
+import type { Blog } from "@/types/blog";
 
 interface Props {
 	blog: Blog;
 }
 
 const { blog } = Astro.props;
-const publishedDate = new Date(blog.publishedAt ?? blog.createdAt);
+const publishedDate = blog.publishedAt;
 ---
 
 <li class="card">
   <a href={`/blogs/${blog.id}/`} class="card-link">
     <div class="card-image-wrap">
       {blog.eyecatch?.url ? (
-        <img
-          src={blog.eyecatch.url}
-          alt=""
-          width={blog.eyecatch.width}
-          height={blog.eyecatch.height}
-          loading="lazy"
-        />
+        <img src={blog.eyecatch.url} alt="" loading="lazy" />
       ) : (
         <div class="card-image-placeholder" aria-hidden="true">
           📝
@@ -37,15 +31,15 @@ const publishedDate = new Date(blog.publishedAt ?? blog.createdAt);
       <p class="card-description" data-pagefind-meta="description">
         {blog.description}
       </p>
-      {(blog.category || (blog.tags && blog.tags.length > 0)) && (
+      {(blog.category || blog.tags.length > 0) && (
         <div class="card-taxonomies">
           {blog.category && (
-            <span class="card-category">{blog.category.name}</span>
+            <span class="card-category">{blog.category}</span>
           )}
-          {blog.tags && blog.tags.length > 0 && (
+          {blog.tags.length > 0 && (
             <ul class="card-tags" aria-label="タグ">
               {blog.tags.map((tag) => (
-                <li><span>{tag.name}</span></li>
+                <li><span>{tag}</span></li>
               ))}
             </ul>
           )}
