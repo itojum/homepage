@@ -1,0 +1,71 @@
+name: ブログ画像を R2 に同期
+
+# src/content/blogs 配下の画像を Cloudflare R2 の blogs/ 以下へアップロードする。
+# develop へのマージ時点でアップロードしておくことで、週次デプロイ（main）時には画像が揃っている。
+#
+# 必要な設定（Settings > Secrets and variables > Actions）
+#   Secrets:   CLOUDFLARE_ACCOUNT_ID / R2_ACCESS_KEY_ID / R2_SECRET_ACCESS_KEY
+#   Variables: R2_BUCKET
+
+on:
+  push:
+    branches:
+      - develop
+      - main
+    paths:
+      - "src/content/blogs/**"
+  workflow_dispatch:
+
+concurrency:
+  group: sync-blog-images
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    env:
+      AWS_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+      AWS_DEFAULT_REGION: auto
+      # R2 は AWS CLI 新バージョンの既定チェックサムヘッダーに未対応の場合があるため必要時のみ送る
+      AWS_REQUEST_CHECKSUM_CALCULATION: when_required
+      AWS_RESPONSE_CHECKSUM_VALIDATION: when_required
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      R2_BUCKET: ${{ vars.R2_BUCKET }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: 設定の確認
+        run: |
+          missing=""
+          [ -z "$AWS_ACCESS_KEY_ID" ] && missing="$missing R2_ACCESS_KEY_ID"
+          [ -z "$AWS_SECRET_ACCESS_KEY" ] && missing="$missing R2_SECRET_ACCESS_KEY"
+          [ -z "$CLOUDFLARE_ACCOUNT_ID" ] && missing="$missing CLOUDFLARE_ACCOUNT_ID"
+          [ -z "$R2_BUCKET" ] && missing="$missing R2_BUCKET"
+          if [ -n "$missing" ]; then
+            echo "::error::未設定のシークレット / 変数があります:$missing"
+            exit 1
+          fi
+
+      - name: R2 に同期
+        # Git チェックアウト直後はタイムスタンプが全て新しくなるため、サイズ差分のみで判定する。
+        # 同じサイズのまま画像を差し替える場合は反映されないので、差し替え時はファイル名を変えること。
+        run: |
+          aws s3 sync src/content/blogs "s3://${R2_BUCKET}/blogs" \
+            --endpoint-url "https://${CLOUDFLARE_ACCOUNT_ID}.r2.cloudflarestorage.com" \
+            --size-only \
+            --no-progress \
+            --exclude "*" \
+            --include "*.png" --include "*.PNG" \
+            --include "*.jpg" --include "*.JPG" \
+            --include "*.jpeg" --include "*.JPEG" \
+            --include "*.gif" --include "*.GIF" \
+            --include "*.webp" --include "*.WEBP" \
+            --include "*.avif" --include "*.AVIF" \
+            --include "*.svg" --include "*.SVG" \
+            --cache-control "public, max-age=604800"
