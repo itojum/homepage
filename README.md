@@ -149,7 +149,7 @@ Claude は `.claude/skills/blog-review/SKILL.md` の基準に従って、変更�
 
 1. [Claude GitHub App](https://github.com/apps/claude) をこのリポジトリにインストールする
 2. 手元で `claude setup-token` を実行してトークンを発行し、Settings > Secrets and variables > Actions の Secrets に `CLAUDE_CODE_OAUTH_TOKEN` として登録する
-   - API キーを使う場合は `ANTHROPIC_API_KEY` を登録し、ワークフローの `claude_code_oauth_token` を `anthropic_api_key` に置き換える
+   - API キーを使う場合は `ANTHROPIC_API_KEY` を登録し、ワークフローの `claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}` を `anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}` に置き換える
 
 ## Cloudflare R2 の初期設定
 

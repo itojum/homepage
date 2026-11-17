@@ -124,8 +124,8 @@ jobs:
 
             注意:
             - レビュー対象以外のファイルには指摘しない
-            - push のたびに PR 内のすべての記事を対象に実行される。`gh pr view ${{ github.event.pull_request.number }} --comments` で過去のレビューを確認し、すでに指摘済みで未修正の内容は繰り返さない
+            - push のたびに PR 内のすべての記事を対象に実行される。`gh pr view ${{ github.event.pull_request.number }} --comments`（会話コメント）と `gh api --paginate repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }}/comments`（インラインのレビューコメント）で過去の指摘を確認し、すでに指摘済みで未修正の内容は繰り返さない
             - ファイルの編集、コミット、push はしない
             - すべて日本語で書く
           claude_args: |
-            --allowedTools "Read,Glob,Grep,mcp__github_inline_comment__create_inline_comment,Bash(gh pr comment:*),Bash(gh pr diff:*),Bash(gh pr view:*)"
+            --allowedTools "Read,Glob,Grep,mcp__github_inline_comment__create_inline_comment,Bash(gh pr comment:*),Bash(gh pr diff:*),Bash(gh pr view:*),Bash(gh api --paginate repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }}/comments:*)"
