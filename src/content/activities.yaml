@@ -6,4 +6,91 @@
 #   type: project | event | work | examination | other
 #   link: https://example.com   # 任意
 #   linkText: 詳細               # 任意（link とセットで表示）
-[]
+- id: "j07678zmk662"
+  title: "Google Devs' Innovative Crosstalk TECHセッション"
+  date: 2026-08-01T15:00:00.000Z
+  type: event
+  link: "https://xtalk.gdgs.jp/"
+  linkText: "Google Devs' Innovative Crosstalk '26"
+- id: "5g6nlwk18_t6"
+  title: "React Tokyoフェス2026 ポスターセッション"
+  date: 2026-02-27T15:00:00.000Z
+  type: event
+- id: "icf_5lpw_5j"
+  title: "​フレッシュITあわ～ど 2025 作品部門 優秀賞"
+  date: 2025-11-07T15:00:00.000Z
+  type: event
+  link: "https://freshitaward.wixsite.com/freshitaward2025"
+  linkText: "​フレッシュITあわ～ど 2025"
+- id: "2-o4uglnxy"
+  title: "Hiroshima Digital Meet Up2025 出展"
+  date: 2025-09-06T15:00:00.000Z
+  type: event
+  link: "https://newscast.jp/news/6865173"
+  linkText: "学生エンジニアと地元企業がメタバースで交流！テレビ新広島とOmoroiがHiroshima Digital Meet Up2025を9月7日（日）開催"
+- id: "ezq7kgvg371"
+  title: "株式会社SmartHR サマーインターンシップ参加"
+  date: 2024-08-25T15:00:00.000Z
+  type: work
+  link: "https://tech.smarthr.jp/entry/2024/11/11/130000"
+  linkText: "【26卒】プロダクトエンジニア職の夏インターンシップを開催しました！"
+- id: "4qsd0nm3z"
+  title: "楽天銀行株式会社 長期サマーインターンシップ参加"
+  date: 2024-08-04T15:00:00.000Z
+  type: work
+- id: "01rhp45cx"
+  title: "セーフィー株式会社 サマーインターンシップ参加"
+  date: 2024-07-03T15:00:00.000Z
+  type: work
+- id: "uzudl1k0pp7"
+  title: "Ruby合宿2024春 ベストチーム賞"
+  date: 2024-03-07T15:00:00.000Z
+  type: event
+  link: "https://www.rubycamp.jp/reports/2024-03-09-2024-spring/"
+  linkText: "Ruby合宿2024春 報告"
+- id: "531hfyavf9c"
+  title: "株式会社イーグリッド インターンシップ参加"
+  date: 2024-02-25T15:00:00.000Z
+  type: work
+- id: "5lnz_h7lj3y"
+  title: "2023年度 Web×IoT メイカーズチャレンジ PLUS in 鳥取 とっとりまちづくり賞"
+  date: 2024-02-11T15:00:00.000Z
+  type: event
+  link: "https://webiotmakers.github.io/static/docs/2023/tottori-report.pdf"
+  linkText: "2023年度 Web×IoT メイカーズチャレンジ PLUS in 鳥取 開催報告 "
+- id: "pa9n1rf_dj"
+  title: "就活応援ラジオ 輝く!!地元企業で働こう!! 出演"
+  date: 2024-02-01T15:00:00.000Z
+  type: other
+- id: "cw-68e8tt"
+  title: "応用情報技術者試験 合格"
+  date: 2023-11-30T15:00:00.000Z
+  type: examination
+- id: "wjq54vs6geop"
+  title: "情報セキュリティマネジメント試験 合格"
+  date: 2023-10-31T15:00:00.000Z
+  type: examination
+- id: "mvtsx955a"
+  title: "株式会社CIC サマーインターンシップ参加"
+  date: 2023-08-27T15:00:00.000Z
+  type: work
+- id: "l69tsug90ph"
+  title: "株式会社ケイズ サマーインターンシップ参加"
+  date: 2023-08-20T15:00:00.000Z
+  type: work
+- id: "8ha_djv3o1"
+  title: "画像処理エンジニア検定ベーシック 合格"
+  date: 2023-07-31T15:00:00.000Z
+  type: examination
+- id: "yh57e_s58z"
+  title: "Webデザイナー検定エキスパート 合格"
+  date: 2023-07-31T15:00:00.000Z
+  type: examination
+- id: "hpzi9j8d2jsw"
+  title: "基本情報技術者試験 合格"
+  date: 2023-05-31T15:00:00.000Z
+  type: examination
+- id: "1afy_vc9qs2y"
+  title: "ITパスポート試験 合格"
+  date: 2021-08-31T15:00:00.000Z
+  type: examination
