@@ -10,18 +10,16 @@
 		"lint": "biome lint .",
 		"format": "biome format --write .",
 		"check": "biome check .",
-		"migrate:microcms": "node scripts/migrate-from-microcms.js",
 		"images:build": "node scripts/build-blog-images.js",
 		"blog:new": "node scripts/new-blog.js"
 	},
 	"dependencies": {
-		"@astrojs/mdx": "^4.3.14",
 		"@astrojs/rss": "^4.0.19",
 		"@astrojs/sitemap": "^3.7.5",
 		"@iconify-json/ri": "^1.2.10",
 		"astro": "^5.18.2",
 		"astro-icon": "^1.2.0",
-		"astro-pagefind": "^1.8.6",
+		"astro-pagefind": "^2.0.1",
 		"dotenv": "^18.0.10",
 		"rehype-pretty-code": "^0.14.6",
 		"sharp": "^0.35.5",
@@ -33,8 +31,6 @@
 		"@biomejs/biome": "^2.6.7",
 		"autoprefixer": "^10.6.2",
 		"postcss": "^8.5.33",
-		"tailwindcss": "^3.4.19",
-		"turndown": "^7.2.5",
-		"turndown-plugin-gfm": "^1.0.2"
+		"tailwindcss": "^3.4.19"
 	}
 }
