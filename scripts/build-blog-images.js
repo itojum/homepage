@@ -16,7 +16,7 @@ import { existsSync } from "node:fs";
 import { copyFile, mkdir, readdir, readFile, rm, writeFile } from "node:fs/promises";
 import path from "node:path";
 import sharp from "sharp";
-import { BLOG_CONTENT_DIR, toPublishedImagePath } from "../src/libs/blogImage.ts";
+import { BLOG_CONTENT_DIR, decodeImagePath, toPublishedImagePath } from "../src/libs/blogImage.ts";
 
 const SOURCE_DIR = path.join(process.cwd(), BLOG_CONTENT_DIR);
 const OUT_DIR = path.resolve(process.argv[2] ?? ".blog-images");
@@ -29,7 +29,7 @@ const RASTER_EXTENSIONS = new Set([".png", ".jpg", ".jpeg", ".gif", ".webp", ".a
 const getEyecatch = (markdown) => {
 	const frontmatter = markdown.match(/^---\n([\s\S]*?)\n---/)?.[1] ?? "";
 	const value = frontmatter.match(/^eyecatch:\s*["']?([^"'\n]+?)["']?\s*$/m)?.[1];
-	return value?.startsWith("./") ? decodeURI(value.slice(2)) : undefined;
+	return value?.startsWith("./") ? decodeImagePath(value.slice(2)) : undefined;
 };
 
 const toWebp = (source, maxWidth) => {

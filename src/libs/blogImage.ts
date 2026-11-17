@@ -25,6 +25,19 @@ const CONVERTIBLE_IMAGE_EXTENSION = /\.(png|jpe?g|gif)$/i;
 export const toPublishedImagePath = (relativePath: string): string =>
 	relativePath.replace(CONVERTIBLE_IMAGE_EXTENSION, ".webp");
 
+/**
+ * Markdown に書かれた画像パスをファイル名に戻す。
+ * `%23`（#）や `%3F`（?）も戻すため decodeURIComponent を使い、`100%.png` のようにデコードできない
+ * 文字列はそのまま返す。scripts/build-blog-images.js からも使う
+ */
+export const decodeImagePath = (value: string): string => {
+	try {
+		return decodeURIComponent(value);
+	} catch {
+		return value;
+	}
+};
+
 /** 記事ファイルからの相対パスかどうか（外部 URL・絶対パス・data URI などは対象外） */
 export const isRelativeImagePath = (src: string): boolean => {
 	return !/^(?:[a-z][a-z\d+.-]*:|\/|#)/i.test(src);
@@ -76,7 +89,7 @@ export const resolveBlogImageUrl = ({
 	const suffixIndex = src.search(/[?#]/);
 	const pathPart = suffixIndex === -1 ? src : src.slice(0, suffixIndex);
 	const suffix = suffixIndex === -1 ? "" : src.slice(suffixIndex);
-	const relativePath = normalizePosixPath(`${entryDir}/${decodeURI(pathPart)}`);
+	const relativePath = normalizePosixPath(`${entryDir}/${decodeImagePath(pathPart)}`);
 	if (!relativePath) {
 		throw new Error(`画像パスが ${BLOG_CONTENT_DIR} の外を指しています: ${src} (${entryFilePath})`);
 	}
