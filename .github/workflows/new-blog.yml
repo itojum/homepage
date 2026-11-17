@@ -99,7 +99,7 @@ jobs:
           ## 記事
 
           - ファイル: \`${POST_PATH}\`
-          - 公開時の URL: \`/blogs/${SLUG}\`（下書き中は Cloudflare のプレビューデプロイで確認）
+          - 公開時の URL: \`/blogs/${SLUG}\`（下書き中の本文は Cloudflare のプレビューデプロイで確認。新しい画像は main へのマージまで R2 に同期されないため \`pnpm dev\` で確認）
 
           ## 執筆の流れ
 

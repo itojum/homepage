@@ -139,7 +139,7 @@ GitHub の Actions タブで「ブログ執筆用 PR を作成」（`new-blog.ym
 
 1. `src/content/blogs/<slug>/index.md` に雛形（`publishedAt` は日本時間の今日）を作成
 2. ブランチ `blog/<slug>` を作成して push
-3. `main` 向けの Draft PR を作成（`blog` ラベルがあれば付与）。記事は PR ブランチ上で下書きし、Cloudflare のプレビューデプロイで確認します
+3. `main` 向けの Draft PR を作成（`blog` ラベルがあれば付与）。記事は PR ブランチ上で下書きし、本文は Cloudflare のプレビューデプロイで確認します。新しく追加した画像は `main` にマージされるまで R2 に同期されずプレビューには表示されないため、画像は `pnpm dev` で確認してください
 
 入力は `title`（必須）と `slug` / `category` / `tags`（任意。`tags` はカンマ区切り）です。`slug` を空にすると英小文字 + 数字のランダムな ID になります。
 
