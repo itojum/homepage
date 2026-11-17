@@ -140,16 +140,3 @@ About ページの Activities は `src/content/activities.yaml` で管理して�
    - Secrets: `CLOUDFLARE_ACCOUNT_ID` / `R2_ACCESS_KEY_ID` / `R2_SECRET_ACCESS_KEY`
    - Variables: `R2_BUCKET`（バケット名）
 4. Cloudflare Workers のビルド環境変数に `IMAGE_BASE_URL` を設定する
-
-## microCMS からの移行
-
-一度だけ、手元で次のコマンドを実行して既存の記事とアクティビティを取り込みます。
-
-```bash
-MICROCMS_SERVICE_DOMAIN="your-service-domain" MICROCMS_API_KEY="your-api-key" pnpm migrate:microcms
-```
-
-- 記事は Markdown に変換され、microCMS 上の画像は各記事フォルダにダウンロードされます
-- 公開中の記事のみが対象です。下書きは手動で移行してください
-- 既存のファイルはスキップします。上書きする場合は `--force` を付けます
-- 変換結果を `pnpm dev` で確認し、崩れた箇所を手直ししてからコミットしてください
