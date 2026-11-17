@@ -10,6 +10,7 @@ import dotenv from 'dotenv';
 import rehypePrettyCode from 'rehype-pretty-code';
 import { rehypeCodeBlockMeta } from './src/libs/richText/rehypeCodeBlockMeta';
 import { remarkBlogImages } from './src/libs/richText/remarkBlogImages';
+import { remarkEmbeds } from './src/libs/richText/remarkEmbeds';
 
 const __dirname = fileURLToPath(new URL('.', import.meta.url));
 
@@ -40,6 +41,7 @@ export default defineConfig({
 	site: siteUrl,
 	markdown: {
 		syntaxHighlight: false,
+		remarkPlugins: [remarkEmbeds],
 		rehypePlugins: [
 			rehypeCodeBlockMeta,
 			[
