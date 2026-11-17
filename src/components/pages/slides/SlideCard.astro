@@ -1,0 +1,35 @@
+---
+import FormattedDate from "@/components/ui/FormattedDate.astro";
+import type { Slide } from "@/types/slide";
+
+interface Props {
+	slide: Slide;
+}
+
+const { slide } = Astro.props;
+---
+
+<li class="slide-card">
+  <a href={slide.url} class="slide-card-link" target="_blank" rel="noopener noreferrer">
+    <div class="slide-card-image-wrap">
+      {slide.thumbnailUrl ? (
+        <img src={slide.thumbnailUrl} alt="" loading="lazy" />
+      ) : (
+        <div class="slide-card-image-placeholder" aria-hidden="true">
+          🖥️
+        </div>
+      )}
+    </div>
+    <div class="slide-card-body">
+      {slide.publishedAt && (
+        <div class="slide-card-meta">
+          <FormattedDate date={slide.publishedAt} />
+        </div>
+      )}
+      <h2 class="slide-card-title">{slide.title}</h2>
+      {slide.description && (
+        <p class="slide-card-description">{slide.description}</p>
+      )}
+    </div>
+  </a>
+</li>
