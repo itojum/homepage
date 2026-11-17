@@ -2,7 +2,7 @@
  * ブログ記事の取得（src/content/blogs の Content Collection）
  */
 import { type CollectionEntry, getCollection } from "astro:content";
-import { resolveBlogImageUrl } from "@/libs/blogImage";
+import { generatedEyecatchPath, resolveBlogImageUrl } from "@/libs/blogImage";
 import type { Blog } from "@/types/blog";
 
 export type BlogEntry = CollectionEntry<"blogs">;
@@ -18,13 +18,14 @@ export const toBlog = (entry: BlogEntry): Blog => {
 					baseUrl: import.meta.env.IMAGE_BASE_URL,
 					dev: import.meta.env.DEV,
 				})
-			: null;
+			: // アイキャッチが無い記事はビルド時に自動生成した画像を使う
+				generatedEyecatchPath(entry.id);
 
 	return {
 		id: entry.id,
 		title: data.title,
 		description: data.description,
-		eyecatch: eyecatchUrl ? { url: eyecatchUrl } : null,
+		eyecatch: { url: eyecatchUrl },
 		category: data.category ?? null,
 		tags: data.tags,
 		publishedAt: data.publishedAt,
