@@ -46,7 +46,7 @@ export const getBlogs = async (): Promise<Blog[]> => {
 	return (await getPublishedBlogEntries()).map(toBlog);
 };
 
-/** 関連ブログを最大 limit 件取得（カテゴリまたはタグが一致するもの優先、不足分は新しい記事で補填） */
+/** 関連記事を最大 limit 件取得（カテゴリまたはタグが一致するもの優先、不足分は新しい記事で補填） */
 export const getRelatedBlogs = async (blog: Blog, limit = 3): Promise<Blog[]> => {
 	const candidates = (await getBlogs()).filter((b) => b.id !== blog.id);
 	const isRelated = (b: Blog) =>
