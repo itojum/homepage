@@ -10,8 +10,8 @@ name: ブログ執筆用 PR を作成
 #
 # 注意
 #   GITHUB_TOKEN で作成した push / PR は他のワークフローを発火させない（無限ループ防止の仕様）。
-#   そのためこの PR の作成時点では、PR をトリガーにする他のワークフローは動かない。
-#   執筆者が自分で push すると、通常どおり各ワークフローが動く。
+#   そのためこの PR の作成時点では blog-review.yml の「opened」（挨拶コメント）は動かない。
+#   執筆者が自分で push すると synchronize として通常どおりレビューが動く。
 
 on:
   workflow_dispatch:
@@ -105,7 +105,8 @@ jobs:
 
           1. このブランチ（\`${BRANCH}\`）を checkout して記事を書く
           2. 画像は記事と同じフォルダに置き、相対パスで参照する
-          3. 公開するときは frontmatter の \`description\` / \`eyecatch\` / \`tags\` を埋めて Ready for review にする
+          3. push するたびに Claude が記事をレビューしてコメントします（\`.claude/skills/blog-review/SKILL.md\`）
+          4. 公開するときは frontmatter の \`description\` / \`eyecatch\` / \`tags\` を埋めて Ready for review にする
 
           > この PR は GitHub Actions（\`new-blog.yml\`）で作成しました。
           EOF
