@@ -101,10 +101,12 @@ console.log("hello");
 
 - 画像を使わない記事は `src/content/blogs/<slug>.md` でも構いません
 - ビルド時に相対パスの画像は `${IMAGE_BASE_URL}/blogs/<slug>/<ファイル名>` に書き換えられます
-- 画像ファイルは `develop` / `main` に push されると GitHub Actions（`sync-blog-images.yml`）が R2 にアップロードします
+- 画像ファイルは `develop` / `main` に push されると GitHub Actions（`sync-blog-images.yml`）が WebP に変換して R2 にアップロードします
+  - PNG / JPEG / GIF は `.webp` に変換され、記事内の参照（`./screenshot.png` など）もビルド時に `.webp` の URL に書き換わります。手元での変換は不要です
+  - 本文画像は横幅 1440px にそろえます（小さい画像は拡大しません）。アイキャッチは 1920px を超える場合のみ縮小します
+  - `foo.png` と `foo.jpg` のように、変換後に同じ名前になる画像は同じフォルダに置けません
+  - `pnpm images:build` で、アップロードされる画像を `.blog-images/` に書き出して確認できます
 - 同期はファイルサイズで差分判定するため、画像を差し替えるときはファイル名を変えてください
-- 画像を追加したら `pnpm images:optimize` を実行してください。WebP に変換し、本文画像は横幅 1440px にそろえます（アイキャッチは 1920px を超える場合のみ縮小）。`index.md` の参照も書き換わります
-- 未変換の画像があると CI（`pnpm images:check`）が失敗します
 
 ### 埋め込み・リンクカード
 
@@ -150,5 +152,4 @@ MICROCMS_SERVICE_DOMAIN="your-service-domain" MICROCMS_API_KEY="your-api-key" pn
 - 記事は Markdown に変換され、microCMS 上の画像は各記事フォルダにダウンロードされます
 - 公開中の記事のみが対象です。下書きは手動で移行してください
 - 既存のファイルはスキップします。上書きする場合は `--force` を付けます
-- 移行後に `pnpm images:optimize` を実行して画像を WebP に変換してください
 - 変換結果を `pnpm dev` で確認し、崩れた箇所を手直ししてからコミットしてください
