@@ -2,8 +2,8 @@
  * ブログ画像の URL 解決
  *
  * 記事の画像は記事と同じフォルダ（src/content/blogs/<slug>/）に置き、Git で管理する。
- * GitHub Actions がそのフォルダ構成のまま Cloudflare R2 の `blogs/` 以下へ同期するので、
- * ビルド時は相対パスを `${IMAGE_BASE_URL}/blogs/<slug>/<file>` に書き換える。
+ * GitHub Actions が WebP に変換したうえで、そのフォルダ構成のまま Cloudflare R2 の `blogs/` 以下へ
+ * 同期するので、ビルド時は相対パスを `${IMAGE_BASE_URL}/blogs/<slug>/<file>.webp` に書き換える。
  *
  * 開発サーバーでは R2 へ同期される前でも確認できるよう、Vite が配信するローカルファイルの
  * パス（/src/content/blogs/...）を返す。
@@ -14,6 +14,16 @@ export const BLOG_CONTENT_DIR = "src/content/blogs";
 
 /** R2 バケット内のキーのプレフィックス */
 export const BLOG_IMAGE_KEY_PREFIX = "blogs";
+
+/** R2 へのアップロード時に WebP へ変換する画像の拡張子 */
+const CONVERTIBLE_IMAGE_EXTENSION = /\.(png|jpe?g|gif)$/i;
+
+/**
+ * R2 上のファイル名を返す（PNG / JPEG / GIF は CI で WebP に変換してアップロードするため拡張子を .webp にする）
+ * scripts/build-blog-images.js からも使う
+ */
+export const toPublishedImagePath = (relativePath: string): string =>
+	relativePath.replace(CONVERTIBLE_IMAGE_EXTENSION, ".webp");
 
 /** 記事ファイルからの相対パスかどうか（外部 URL・絶対パス・data URI などは対象外） */
 export const isRelativeImagePath = (src: string): boolean => {
@@ -71,10 +81,11 @@ export const resolveBlogImageUrl = ({
 		throw new Error(`画像パスが ${BLOG_CONTENT_DIR} の外を指しています: ${src} (${entryFilePath})`);
 	}
 
-	const encodedPath = relativePath.split("/").map(encodeURIComponent).join("/");
+	const encode = (value: string) => value.split("/").map(encodeURIComponent).join("/");
 
+	// 開発サーバーでは変換前のローカルファイルをそのまま表示する
 	if (dev) {
-		return `/${BLOG_CONTENT_DIR}/${encodedPath}${suffix}`;
+		return `/${BLOG_CONTENT_DIR}/${encode(relativePath)}${suffix}`;
 	}
 
 	if (!baseUrl) {
@@ -83,5 +94,6 @@ export const resolveBlogImageUrl = ({
 		);
 	}
 
-	return `${baseUrl.replace(/\/+$/, "")}/${BLOG_IMAGE_KEY_PREFIX}/${encodedPath}${suffix}`;
+	const publishedPath = encode(toPublishedImagePath(relativePath));
+	return `${baseUrl.replace(/\/+$/, "")}/${BLOG_IMAGE_KEY_PREFIX}/${publishedPath}${suffix}`;
 };
