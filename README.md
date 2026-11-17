@@ -139,7 +139,7 @@ About ページの Activities は `src/content/activities.yaml` で管理して�
 | タイミング | 動作 |
 | --- | --- |
 | PR を作成したとき（opened） | 挨拶コメントを投稿 |
-| PR に push したとき（synchronize） | push で変更された記事を Claude がレビュー |
+| PR に push したとき（synchronize） | PR 内の記事を Claude がレビュー（指摘済みの内容は繰り返さない） |
 | Ready for review にしたとき / 再オープンしたとき | PR 内のすべての記事を Claude がレビュー |
 
 Claude は `.claude/skills/blog-review/SKILL.md` の基準に従って、変更行へのインラインコメントとサマリーコメントを残します。

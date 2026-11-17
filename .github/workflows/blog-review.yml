@@ -2,9 +2,10 @@ name: ブログレビュー
 
 # ブログ記事の PR に対して次のことを行う。
 #   - opened:           挨拶コメントを投稿する
-#   - synchronize:      push された記事（src/content/blogs 配下の Markdown）を Claude がレビューする
-#   - ready_for_review: 公開前の最終チェックとして PR 内のすべての記事をレビューする
-#   - reopened:         PR 内のすべての記事をレビューする
+#   - synchronize:      PR 内の記事（src/content/blogs 配下の Markdown）を Claude がレビューする
+#   - ready_for_review: 公開前の最終チェックとして PR 内の記事をレビューする
+#   - reopened:         PR 内の記事をレビューする
+# 連続して push されたときは古い実行をキャンセルするため、取りこぼしがないよう毎回 PR 内のすべての記事を対象にする。
 # レビュー基準は .claude/skills/blog-review/SKILL.md にまとめている。
 #
 # 必要な設定（Settings > Secrets and variables > Actions）
@@ -26,7 +27,10 @@ on:
 
 jobs:
   greet:
-    if: github.event.action == 'opened'
+    # フォークからの PR では GITHUB_TOKEN が読み取り専用になりコメントできないため対象外にする
+    if: >-
+      github.event.action == 'opened' &&
+      github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
     permissions:
       pull-requests: write
@@ -74,22 +78,10 @@ jobs:
         id: files
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          ACTION: ${{ github.event.action }}
           PR_NUMBER: ${{ github.event.pull_request.number }}
-          BEFORE: ${{ github.event.before }}
-          AFTER: ${{ github.event.after }}
         run: |
-          pr_files() {
-            gh pr view "$PR_NUMBER" --repo "$GITHUB_REPOSITORY" --json files --jq '.files[].path'
-          }
-          if [ "$ACTION" = "synchronize" ]; then
-            # 今回の push で変更されたファイルだけを対象にする。
-            # force push などで比較できない場合は PR 全体の変更ファイルにフォールバックする
-            changed=$(gh api "repos/${GITHUB_REPOSITORY}/compare/${BEFORE}...${AFTER}" \
-              --jq '.files[] | select(.status != "removed") | .filename' 2>/dev/null) || changed=$(pr_files)
-          else
-            changed=$(pr_files)
-          fi
+          # 連続 push で前の実行がキャンセルされてもレビュー漏れが出ないよう、PR 内のすべての変更ファイルを対象にする
+          changed=$(gh pr view "$PR_NUMBER" --repo "$GITHUB_REPOSITORY" --json files --jq '.files[].path')
           files=$(printf '%s\n' "$changed" | grep -E '^src/content/blogs/.+\.mdx?$' | while read -r f; do
             [ -f "$f" ] && echo "$f"
           done || true)
@@ -132,6 +124,7 @@ jobs:
 
             注意:
             - レビュー対象以外のファイルには指摘しない
+            - push のたびに PR 内のすべての記事を対象に実行される。`gh pr view ${{ github.event.pull_request.number }} --comments` で過去のレビューを確認し、すでに指摘済みで未修正の内容は繰り返さない
             - ファイルの編集、コミット、push はしない
             - すべて日本語で書く
           claude_args: |
