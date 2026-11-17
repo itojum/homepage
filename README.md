@@ -87,7 +87,6 @@ updatedAt: 2026-11-20      # 任意
 eyecatch: ./eyecatch.png   # 任意
 category: 技術             # 任意
 tags: [Astro, Cloudflare]  # 任意
-draft: false               # true にすると一覧に出さず /draft/blogs/<slug> のみ生成
 ---
 
 本文
@@ -99,6 +98,7 @@ console.log("hello");
 ```
 ````
 
+- 下書きはブランチ / PR 上で管理し、`main` にマージした時点で公開されます（下書き用のフラグはありません）
 - 画像を使わない記事は `src/content/blogs/<slug>.md` でも構いません
 - ビルド時に相対パスの画像は `${IMAGE_BASE_URL}/blogs/<slug>/<ファイル名>` に書き換えられます
 - 画像ファイルは `develop` / `main` に push されると GitHub Actions（`sync-blog-images.yml`）が WebP に変換して R2 にアップロードします

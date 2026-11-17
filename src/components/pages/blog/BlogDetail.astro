@@ -11,11 +11,9 @@ import type { Blog } from "@/types/blog";
 interface Props {
 	blog: Blog;
 	relatedBlogs: Blog[];
-	/** false の場合は Pagefind の検索対象から外す（下書きプレビュー用） */
-	searchable?: boolean;
 }
 
-const { blog, relatedBlogs, searchable = true } = Astro.props;
+const { blog, relatedBlogs } = Astro.props;
 ---
 
 <a href="/blogs" class="flex items-center text-sm text-gray-500 mb-4">
@@ -23,7 +21,7 @@ const { blog, relatedBlogs, searchable = true } = Astro.props;
   一覧へ戻る
 </a>
 
-<article data-pagefind-body={searchable ? "" : undefined}>
+<article data-pagefind-body>
   <BlogMeta blog={blog} />
   <BlogThumbnail eyecatch={blog.eyecatch} />
   <BlogBody title={blog.title} description={blog.description}>

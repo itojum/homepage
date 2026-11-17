@@ -29,7 +29,6 @@ export const toBlog = (entry: BlogEntry): Blog => {
 		tags: data.tags,
 		publishedAt: data.publishedAt,
 		updatedAt: data.updatedAt ?? null,
-		draft: data.draft,
 	};
 };
 
@@ -38,13 +37,7 @@ const byPublishedAtDesc = (a: BlogEntry, b: BlogEntry) =>
 
 /** 公開済み記事のエントリを新しい順に取得 */
 export const getPublishedBlogEntries = async (): Promise<BlogEntry[]> => {
-	const entries = await getCollection("blogs", (entry) => !entry.data.draft);
-	return entries.sort(byPublishedAtDesc);
-};
-
-/** 下書き記事のエントリを取得（ビルド時のプレビューページ生成用） */
-export const getDraftBlogEntries = async (): Promise<BlogEntry[]> => {
-	const entries = await getCollection("blogs", (entry) => entry.data.draft);
+	const entries = await getCollection("blogs");
 	return entries.sort(byPublishedAtDesc);
 };
 
