@@ -3,7 +3,7 @@ title: "メタプログラミングRuby 3章 ー動的なメソッドをやる�
 description: "『メタプログラミングRuby 第2版』の読書メモ。sendによる動的ディスパッチ、define_methodによる動的定義、そして「黒魔術」とも呼ばれるmethod_missing（ゴーストメソッド）の使い方を解説します。RailsのActiveRecordでも使われる技術の基礎を、サンプルコードと共にまとめました。"
 publishedAt: 2026-05-09T15:44:18.775Z
 updatedAt: 2026-05-09T15:45:11.015Z
-eyecatch: "./eyecatch.webp"
+eyecatch: "./eyecatch.png"
 category: "技術"
 tags: ["備忘録", "書籍", "Ruby"]
 ---

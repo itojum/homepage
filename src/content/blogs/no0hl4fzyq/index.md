@@ -3,7 +3,7 @@ title: "UzumibiでCloudflareにDiscord Botをデプロイする"
 description: "  Uzumibi（Ruby × Cloudflare Workers）で Discord Botを作った話。標準にない環境変数取得の仕組みを JS と Rust で自作したところが肝です。"
 publishedAt: 2026-05-26T14:00:05.166Z
 updatedAt: 2026-05-27T12:41:36.097Z
-eyecatch: "./eyecatch.webp"
+eyecatch: "./eyecatch.png"
 category: "技術"
 tags: ["Ruby"]
 ---
@@ -21,7 +21,7 @@ https://zenn.dev/udzura/books/532f38f73fe4e9
 
 Interactions方式のDiscord Botを作りました。今回はピンポンするだけの簡単なものを開発しました。
 
-![Discord Botが動作しているスクリーンショット](./スクリーンショット-2026-05-24-15.47.32.webp)
+![Discord Botが動作しているスクリーンショット](./スクリーンショット-2026-05-24-15.47.32.png)
 
 Discord Botが動いた
 
@@ -95,6 +95,6 @@ uzumibi_cf_secret_get: (keyPtr, keySize, resultPtr, resultMaxSize) => {
 
 追加したUzumibi::Secret.getをUzumibiへPRを送り、マージしてもらいました🎉
 
-![マージしていただいたPRのスクリーンショット](./image.webp)
+![マージしていただいたPRのスクリーンショット](./image.png)
 
 マージしていただいたPRのスクリーンショット

@@ -3,7 +3,7 @@ title: "関西Ruby会議09参加レポート ~セッションとコミュニテ�
 description: "「関西Ruby会議09」の参加レポートです！カンファレンス全体の熱気ある感想をはじめ、Project Naraku、torikago、mirai gemといった各セッションの学びや、やっていきが高まった様子をまとめましたー！"
 publishedAt: 2026-07-19T15:09:46.433Z
 updatedAt: 2026-07-19T15:32:28.183Z
-eyecatch: "./eyecatch.webp"
+eyecatch: "./eyecatch.jpg"
 category: "イベント"
 tags: ["参加レポート", "Ruby"]
 ---
@@ -31,7 +31,7 @@ Keynoteの成瀬ゆいさんとはすじょいさんを始めとした登壇者�
 
 デモの印象が強すぎますね。少しだけ動画を撮っていたので見直してみたのですが、あまりにもライブすぎる。
 
-![はるかさんのセッションのデモの写真](./image.webp)
+![はるかさんのセッションのデモの写真](./image.png)
 
 はるかさんのセッションのデモ
 
@@ -87,10 +87,10 @@ https://docs.google.com/presentation/d/1ZfueAQyVJsC2pmUYgIGdb_fmnFExYaCRnr9vcCf5
 
 Day2では、ミシガンクルーズを楽しんだり、京都の伏見稲荷大社の稲荷山を登山したりして帰りました！満喫した。
 
-![ミシガンクルーズ上から見る大津の写真](./IMG_2158.webp)
+![ミシガンクルーズ上から見る大津の写真](./IMG_2158.jpg)
 
 ミシガンクルーズ上から見る大津
 
-![稲荷山 山頂の写真](./image-2.webp)
+![稲荷山 山頂の写真](./image-2.png)
 
 稲荷山 山頂

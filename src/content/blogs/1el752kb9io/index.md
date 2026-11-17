@@ -2,7 +2,7 @@
 title: "メタプログラミングRuby 2章 -オブジェクト、オブジェクト、オブジェクト-"
 description: "『メタプログラミングRuby 第2版』2章を要約。オープンクラスやオブジェクトモデル、継承チェーン、private、Refinementsを解説。Ruby 4.0.3での検証も含む、技術備忘録です。"
 publishedAt: 2026-05-06T15:49:32.982Z
-eyecatch: "./eyecatch.webp"
+eyecatch: "./eyecatch.png"
 category: "技術"
 tags: ["Ruby", "備忘録", "書籍"]
 ---
@@ -46,7 +46,7 @@ end
 
 すべてのクラスはオブジェクト。すべてのクラスはモジュール。うーん頭パンクする、と思ったので書籍の図を拡張したバージョンを作ってみました。
 
-![](./image.webp)
+![](./image.png)
 
 Rubyのあらゆるオブジェクトは何かしらのクラスのインスタンスなので、ClassクラスもClassクラスのインスタンスということ？混乱してきた。
 

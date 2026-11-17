@@ -2,7 +2,7 @@
 title: "超かぐや姫！について語りたい！"
 description: "超かぐや姫！に心を奪われ、もやもやと熱を整理するために書いた全力の好き語り。楽曲、VR、関係性…刺さった理由をネタバレ全開で語る記事です。"
 publishedAt: 2026-03-29T23:00:05.262Z
-eyecatch: "./eyecatch.webp"
+eyecatch: "./eyecatch.png"
 category: "エンタメ"
 tags: ["アニメ"]
 ---

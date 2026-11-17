@@ -3,7 +3,7 @@ title: "メタプログラミングRuby 4章 〜ブロック〜"
 description: "『メタプログラミングRuby』4章のブロックについてまとめた備忘録。スコープゲートやフラットスコープ、instance_eval、Procとlambdaの違いなどをコード例とともに分かりやすく解説します。"
 publishedAt: 2026-06-21T07:31:18.571Z
 updatedAt: 2026-06-21T07:33:47.454Z
-eyecatch: "./eyecatch.webp"
+eyecatch: "./eyecatch.png"
 category: "技術"
 tags: ["Ruby", "備忘録"]
 ---

@@ -3,7 +3,7 @@ title: "Kaigi on Rails 2026 参加レポート"
 description: "2026年10月16日・17日に初参加した「Kaigi on Rails 2026」の参加レポートです。Railsバージョンの大幅アップグレード事例や永続トークンの廃止、機能削除術、Spinel on Railsの話題など、特に印象に残ったセッションや感想をお届けします！"
 publishedAt: 2026-10-20T14:59:52.314Z
 updatedAt: 2026-10-20T15:01:06.754Z
-eyecatch: "./eyecatch.webp"
+eyecatch: "./eyecatch.jpg"
 category: "イベント"
 tags: ["Ruby", "参加レポート", "Ruby on Rails"]
 ---
@@ -16,7 +16,7 @@ tags: ["Ruby", "参加レポート", "Ruby on Rails"]
 
 https://kaigionrails.org/2026/
 
-![Kaigi on Rails 2026のDAY2の開始直前の様子の写真](./IMG_2545.webp)
+![Kaigi on Rails 2026のDAY2の開始直前の様子の写真](./IMG_2545.jpg)
 
 Kaigi on Rails 2026の様子
 
@@ -68,7 +68,7 @@ https://speakerdeck.com/player/50d4012fbddf47dd8cfcbb80b23fdba5
 
 サブイベントだとRubyMusicMixinが最高に最高でした。私の趣味にドンピシャでずっと興奮していました。
 
-![RubyMusicMixinでワールドイズマインがDJで流れている写真](./IMG_2542.webp)
+![RubyMusicMixinでワールドイズマインがDJで流れている写真](./IMG_2542.jpg)
 
 控えめに言って神
 

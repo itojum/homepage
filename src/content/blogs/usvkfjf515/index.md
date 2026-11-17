@@ -3,7 +3,7 @@ title: "予定解析Webアプリ YoteiScanを公開しました"
 description: "テキストや画像、音声など様々な媒体から予定を解析し、Googleカレンダーへ簡単に登録できるサービス「YoteiScan」を公開しました。Next.jsとGeminiを搭載したWebアプリ版の開発背景や技術構成を紹介します。"
 publishedAt: 2026-03-28T12:34:57.613Z
 updatedAt: 2026-03-28T13:33:40.116Z
-eyecatch: "./eyecatch.webp"
+eyecatch: "./eyecatch.jpg"
 category: "技術"
 tags: ["Vercel", "Next.js", "Gemini"]
 ---
