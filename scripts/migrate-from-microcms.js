@@ -241,7 +241,8 @@ const buildFrontmatter = (blog, eyecatch) => {
 
 const migrateBlog = async (blog) => {
 	const dir = path.join(BLOG_DIR, blog.id);
-	if (existsSync(dir) && !FORCE) {
+	// index.md は最後に書き込むので、その有無で移行済みかを判定する（途中で失敗したフォルダは再実行時にやり直す）
+	if (existsSync(path.join(dir, "index.md")) && !FORCE) {
 		console.log(`skip  ${blog.id}（既に存在します。上書きするには --force）`);
 		return;
 	}
