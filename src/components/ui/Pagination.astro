@@ -1,26 +1,32 @@
 ---
+import "./Pagination.css";
+
 interface Props {
 	currentPage: number;
 	totalPages: number;
+	/** 一覧のパス（例: "/blogs"）。2 ページ目以降は `${basePath}/page/<n>/` になる */
+	basePath: string;
+	/** nav の aria-label */
+	label: string;
 }
 
-const { currentPage, totalPages } = Astro.props;
+const { currentPage, totalPages, basePath, label } = Astro.props;
 
 const createPageHref = (page: number) => {
-	if (page === 1) return "/blogs/";
-	return `/blogs/page/${page}/`;
+	if (page === 1) return `${basePath}/`;
+	return `${basePath}/page/${page}/`;
 };
 
 const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
 ---
 
 {totalPages > 1 && (
-  <nav class="blog-pagination" aria-label="ブログのページネーション">
+  <nav class="pagination" aria-label={label}>
     <a
       href={currentPage > 1 ? createPageHref(currentPage - 1) : undefined}
       class:list={[
-        "blog-pagination__control",
-        "blog-pagination__control--prev",
+        "pagination__control",
+        "pagination__control--prev",
         { "is-disabled": currentPage === 1 },
       ]}
       aria-disabled={currentPage === 1}
@@ -28,18 +34,18 @@ const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
       前へ
     </a>
 
-    <ul class="blog-pagination__list">
+    <ul class="pagination__list">
       {pages.map((page) => (
         <li
           class:list={[
-            "blog-pagination__item",
+            "pagination__item",
             { "is-active": page === currentPage },
           ]}
         >
           <a
             href={createPageHref(page)}
             aria-current={page === currentPage ? "page" : undefined}
-            class="blog-pagination__link"
+            class="pagination__link"
           >
             {page}
           </a>
@@ -50,8 +56,8 @@ const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
     <a
       href={currentPage < totalPages ? createPageHref(currentPage + 1) : undefined}
       class:list={[
-        "blog-pagination__control",
-        "blog-pagination__control--next",
+        "pagination__control",
+        "pagination__control--next",
         { "is-disabled": currentPage === totalPages },
       ]}
       aria-disabled={currentPage === totalPages}
