@@ -62,7 +62,10 @@ export const resolveBlogImageUrl = ({
 	}
 
 	const entryDir = normalizedEntryPath.slice(prefix.length).split("/").slice(0, -1).join("/");
-	const [pathPart] = src.split(/[?#]/);
+	// パス部分だけを正規化し、クエリ・フラグメント（例: SVG の #svgView(...)）は末尾に戻す
+	const suffixIndex = src.search(/[?#]/);
+	const pathPart = suffixIndex === -1 ? src : src.slice(0, suffixIndex);
+	const suffix = suffixIndex === -1 ? "" : src.slice(suffixIndex);
 	const relativePath = normalizePosixPath(`${entryDir}/${decodeURI(pathPart)}`);
 	if (!relativePath) {
 		throw new Error(`画像パスが ${BLOG_CONTENT_DIR} の外を指しています: ${src} (${entryFilePath})`);
@@ -71,7 +74,7 @@ export const resolveBlogImageUrl = ({
 	const encodedPath = relativePath.split("/").map(encodeURIComponent).join("/");
 
 	if (dev) {
-		return `/${BLOG_CONTENT_DIR}/${encodedPath}`;
+		return `/${BLOG_CONTENT_DIR}/${encodedPath}${suffix}`;
 	}
 
 	if (!baseUrl) {
@@ -80,5 +83,5 @@ export const resolveBlogImageUrl = ({
 		);
 	}
 
-	return `${baseUrl.replace(/\/+$/, "")}/${BLOG_IMAGE_KEY_PREFIX}/${encodedPath}`;
+	return `${baseUrl.replace(/\/+$/, "")}/${BLOG_IMAGE_KEY_PREFIX}/${encodedPath}${suffix}`;
 };
