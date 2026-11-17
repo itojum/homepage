@@ -1,15 +1,17 @@
 ---
-import BaseLayout from "@/layouts/BaseLayout.astro";
+import { render } from "astro:content";
 import BlogDetail from "@/components/pages/blog/BlogDetail.astro";
-import { getAllBlogIdsIncludingDraft, getBlogDetailIncludingDraft, getRelatedBlogs } from "@/libs/microcms";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { type BlogEntry, getDraftBlogEntries, getRelatedBlogs, toBlog } from "@/libs/blog";
 
 export async function getStaticPaths() {
-  const ids = await getAllBlogIdsIncludingDraft();
-  return ids.map((id) => ({ params: { id } }));
+	const entries = await getDraftBlogEntries();
+	return entries.map((entry) => ({ params: { id: entry.id }, props: { entry } }));
 }
 
-const { id } = Astro.params;
-const blog = await getBlogDetailIncludingDraft(id);
+const { entry } = Astro.props as { entry: BlogEntry };
+const blog = toBlog(entry);
+const { Content } = await render(entry);
 const relatedBlogs = await getRelatedBlogs(blog);
 ---
 
@@ -19,5 +21,7 @@ const relatedBlogs = await getRelatedBlogs(blog);
   image={blog.eyecatch?.url}
   noIndex={true}
 >
-  <BlogDetail blog={blog} relatedBlogs={relatedBlogs} />
+  <BlogDetail blog={blog} relatedBlogs={relatedBlogs} searchable={false}>
+    <Content />
+  </BlogDetail>
 </BaseLayout>

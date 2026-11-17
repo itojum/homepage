@@ -1,21 +1,17 @@
 ---
-import { transformRichText } from "@/libs/richText/transformRichText";
-
 interface Props {
-  title: string;
-  content: string;
-  description: string;
+	title: string;
+	description: string;
 }
 
-const { title, content, description } = Astro.props;
-const renderedContent = await transformRichText(content);
+const { title, description } = Astro.props;
 ---
 
 <h1 class="title" data-pagefind-meta="title">{title}</h1>
 <p class="summary" data-pagefind-meta="description">
   {description}
 </p>
-<div class="post" set:html={renderedContent} />
+<div class="post"><slot /></div>
 
 <style>
   .title {

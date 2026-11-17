@@ -2,7 +2,7 @@
 import type { Eyecatch } from "@/types/blog";
 
 interface Props {
-	eyecatch?: Eyecatch;
+	eyecatch: Eyecatch | null;
 }
 
 const { eyecatch } = Astro.props;
@@ -10,12 +10,7 @@ const { eyecatch } = Astro.props;
 
 {eyecatch?.url && (
   <div class="thumbnail">
-    <img
-      src={eyecatch.url}
-      width={eyecatch.width}
-      height={eyecatch.height}
-      data-pagefind-meta="image[src]"
-    />
+    <img src={eyecatch.url} alt="" data-pagefind-meta="image[src]" />
   </div>
 )}
 

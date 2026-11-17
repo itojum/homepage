@@ -1,19 +1,21 @@
 ---
-import BlogMeta from "@/components/pages/blog/BlogMeta.astro";
-import BlogThumbnail from "@/components/pages/blog/BlogThumbnail.astro";
-import BlogBody from "@/components/pages/blog/BlogBody.astro";
-import BlogShare from "@/components/pages/blog/BlogShare.astro";
-import RelatedBlogSection from "@/components/pages/blog/RelatedBlogSection.astro";
-import type { Blog } from "@/types/blog";
-import { SITE_TITLE } from "@/consts";
 import { Icon } from "astro-icon/components";
+import BlogBody from "@/components/pages/blog/BlogBody.astro";
+import BlogMeta from "@/components/pages/blog/BlogMeta.astro";
+import BlogShare from "@/components/pages/blog/BlogShare.astro";
+import BlogThumbnail from "@/components/pages/blog/BlogThumbnail.astro";
+import RelatedBlogSection from "@/components/pages/blog/RelatedBlogSection.astro";
+import { SITE_TITLE } from "@/consts";
+import type { Blog } from "@/types/blog";
 
 interface Props {
-  blog: Blog;
-  relatedBlogs: Blog[];
+	blog: Blog;
+	relatedBlogs: Blog[];
+	/** false の場合は Pagefind の検索対象から外す（下書きプレビュー用） */
+	searchable?: boolean;
 }
 
-const { blog, relatedBlogs } = Astro.props;
+const { blog, relatedBlogs, searchable = true } = Astro.props;
 ---
 
 <a href="/blogs" class="flex items-center text-sm text-gray-500 mb-4">
@@ -21,14 +23,12 @@ const { blog, relatedBlogs } = Astro.props;
   一覧へ戻る
 </a>
 
-<article data-pagefind-body>
+<article data-pagefind-body={searchable ? "" : undefined}>
   <BlogMeta blog={blog} />
   <BlogThumbnail eyecatch={blog.eyecatch} />
-  <BlogBody
-    title={blog.title}
-    content={blog.content}
-    description={blog.description}
-  />
+  <BlogBody title={blog.title} description={blog.description}>
+    <slot />
+  </BlogBody>
   <BlogShare title={`${blog.title} | ${SITE_TITLE}`} />
 </article>
 

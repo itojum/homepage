@@ -11,29 +11,29 @@ const { blog } = Astro.props;
 
 <div class="meta">
   <time class="date" data-pagefind-meta="date">
-    <FormattedDate date={new Date(blog.publishedAt ?? blog.createdAt)} />
+    <FormattedDate date={blog.publishedAt} />
   </time>
   {
-    blog.revisedAt && (
+    blog.updatedAt && (
       <p class="revised">
-        更新: <FormattedDate date={new Date(blog.revisedAt)} />
+        更新: <FormattedDate date={blog.updatedAt} />
       </p>
     )
   }
-  {(blog.category || (blog.tags && blog.tags.length > 0)) && (
+  {(blog.category || blog.tags.length > 0) && (
     <div class="taxonomies">
       {blog.category && (
         <span class="taxonomy-item">
           <span class="taxonomy-label">カテゴリ:</span>
-          <span class="category" data-pagefind-filter="category">{blog.category.name}</span>
+          <span class="category" data-pagefind-filter="category">{blog.category}</span>
         </span>
       )}
-      {blog.tags && blog.tags.length > 0 && (
+      {blog.tags.length > 0 && (
         <div class="taxonomy-item">
           <span class="taxonomy-label">タグ:</span>
           <ul class="tags" aria-label="タグ">
             {blog.tags.map((tag) => (
-              <li><span data-pagefind-filter="tag">{tag.name}</span></li>
+              <li><span data-pagefind-filter="tag">{tag}</span></li>
             ))}
           </ul>
         </div>

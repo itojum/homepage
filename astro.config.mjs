@@ -7,6 +7,8 @@ import { defineConfig } from 'astro/config';
 import icon from 'astro-icon';
 import pagefind from 'astro-pagefind';
 import dotenv from 'dotenv';
+import rehypePrettyCode from 'rehype-pretty-code';
+import { rehypeCodeBlockMeta } from './src/libs/richText/rehypeCodeBlockMeta';
 import { remarkBlogImages } from './src/libs/richText/remarkBlogImages';
 
 const __dirname = fileURLToPath(new URL('.', import.meta.url));
@@ -36,6 +38,20 @@ export default defineConfig({
 		format: 'file',
 	},
 	site: siteUrl,
+	markdown: {
+		syntaxHighlight: false,
+		rehypePlugins: [
+			rehypeCodeBlockMeta,
+			[
+				rehypePrettyCode,
+				{
+					theme: { light: 'github-light', dark: 'github-dark' },
+					keepBackground: false,
+					defaultLang: 'txt',
+				},
+			],
+		],
+	},
 	integrations: [blogImages(), sitemap(), icon(), tailwind(), pagefind()],
 	vite: {
 		resolve: {

@@ -1,20 +1,20 @@
 ---
-import BaseLayout from "@/layouts/BaseLayout.astro";
+import { render } from "astro:content";
 import BlogDetail from "@/components/pages/blog/BlogDetail.astro";
-import { getAllBlogIds, getBlogDetail, getRelatedBlogs } from "@/libs/microcms";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { type BlogEntry, getPublishedBlogEntries, getRelatedBlogs, toBlog } from "@/libs/blog";
 
 export async function getStaticPaths() {
-	const ids = await getAllBlogIds();
-	return ids.map((id) => ({
-		params: { slug: id },
+	const entries = await getPublishedBlogEntries();
+	return entries.map((entry) => ({
+		params: { slug: entry.id },
+		props: { entry },
 	}));
 }
 
-const slug = Astro.params.slug;
-const blogId = Array.isArray(slug) ? slug[0] : (slug ?? "");
-const blog = await getBlogDetail(blogId, {
-	depth: 2,
-});
+const { entry } = Astro.props as { entry: BlogEntry };
+const blog = toBlog(entry);
+const { Content } = await render(entry);
 const relatedBlogs = await getRelatedBlogs(blog);
 ---
 
@@ -22,7 +22,9 @@ const relatedBlogs = await getRelatedBlogs(blog);
   title={blog.title}
   description={blog.description}
   image={blog.eyecatch?.url}
-  path={`/blogs/${blogId}`}
+  path={`/blogs/${blog.id}`}
 >
-  <BlogDetail blog={blog} relatedBlogs={relatedBlogs} />
+  <BlogDetail blog={blog} relatedBlogs={relatedBlogs}>
+    <Content />
+  </BlogDetail>
 </BaseLayout>
