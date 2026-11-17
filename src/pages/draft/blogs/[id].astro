@@ -19,7 +19,15 @@ const relatedBlogs = await getRelatedBlogs(blog);
   title={blog.title}
   description={blog.description}
   image={blog.eyecatch?.url}
+  imageAlt={blog.eyecatch ? blog.title : undefined}
+  path={`/draft/blogs/${blog.id}`}
   noIndex={true}
+  article={{
+    publishedTime: blog.publishedAt,
+    modifiedTime: blog.updatedAt,
+    tags: blog.tags,
+    section: blog.category,
+  }}
 >
   <BlogDetail blog={blog} relatedBlogs={relatedBlogs} searchable={false}>
     <Content />
