@@ -1,0 +1,138 @@
+name: ブログレビュー
+
+# ブログ記事の PR に対して次のことを行う。
+#   - opened:           挨拶コメントを投稿する
+#   - synchronize:      push された記事（src/content/blogs 配下の Markdown）を Claude がレビューする
+#   - ready_for_review: 公開前の最終チェックとして PR 内のすべての記事をレビューする
+#   - reopened:         PR 内のすべての記事をレビューする
+# レビュー基準は .claude/skills/blog-review/SKILL.md にまとめている。
+#
+# 必要な設定（Settings > Secrets and variables > Actions）
+#   Secrets: CLAUDE_CODE_OAUTH_TOKEN
+#     手元で `claude setup-token` を実行して発行する（Claude Pro / Max のサブスクリプションを使う場合）。
+#     API キーを使う場合は claude_code_oauth_token の代わりに anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }} を渡す。
+#   また Claude GitHub App（https://github.com/apps/claude）をこのリポジトリにインストールしておくこと。
+#
+# 注意
+#   new-blog.yml が GITHUB_TOKEN で作成した PR では opened が発火しない（GITHUB_TOKEN による操作は
+#   他のワークフローを起動しない仕様）。執筆者が自分で push すると synchronize としてレビューが動く。
+#   フォークからの PR ではシークレットを使えないため実行しない。
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+    paths:
+      - "src/content/blogs/**"
+
+jobs:
+  greet:
+    if: github.event.action == 'opened'
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+
+    steps:
+      - name: 挨拶コメントを投稿
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: |
+          gh pr comment "$PR_NUMBER" --repo "$GITHUB_REPOSITORY" --body "$(cat <<'EOF'
+          ## ✍️ ブログ執筆おつかれさまです！
+
+          この PR に記事（`src/content/blogs/**`）を push するたびに、Claude が自動でレビューしてコメントします。
+          レビュー基準は `.claude/skills/blog-review/SKILL.md` にまとめています。
+
+          - 書きかけのうちは Draft PR のままで大丈夫です
+          - 公開準備ができたら `description` / `eyecatch` / `tags` を埋めて Ready for review にしてください（最終チェックが走ります）
+          EOF
+          )"
+
+  review:
+    if: >-
+      github.event.action != 'opened' &&
+      github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+      id-token: write
+
+    concurrency:
+      # 連続して push されたときは最新のレビューだけを残す
+      group: blog-review-${{ github.event.pull_request.number }}
+      cancel-in-progress: true
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 1
+
+      - name: レビュー対象の記事を抽出
+        id: files
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ACTION: ${{ github.event.action }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          BEFORE: ${{ github.event.before }}
+          AFTER: ${{ github.event.after }}
+        run: |
+          pr_files() {
+            gh pr view "$PR_NUMBER" --repo "$GITHUB_REPOSITORY" --json files --jq '.files[].path'
+          }
+          if [ "$ACTION" = "synchronize" ]; then
+            # 今回の push で変更されたファイルだけを対象にする。
+            # force push などで比較できない場合は PR 全体の変更ファイルにフォールバックする
+            changed=$(gh api "repos/${GITHUB_REPOSITORY}/compare/${BEFORE}...${AFTER}" \
+              --jq '.files[] | select(.status != "removed") | .filename' 2>/dev/null) || changed=$(pr_files)
+          else
+            changed=$(pr_files)
+          fi
+          files=$(printf '%s\n' "$changed" | grep -E '^src/content/blogs/.+\.mdx?$' | while read -r f; do
+            [ -f "$f" ] && echo "$f"
+          done || true)
+          if [ -z "$files" ]; then
+            echo "レビュー対象の記事はありません"
+            echo "has_files=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          echo "レビュー対象:"
+          echo "$files"
+          echo "has_files=true" >> "$GITHUB_OUTPUT"
+          {
+            echo "list<<__FILES__"
+            echo "$files" | sed 's/^/- /'
+            echo "__FILES__"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Claude でレビュー
+        if: steps.files.outputs.has_files == 'true'
+        uses: anthropics/claude-code-action@v1
+        with:
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          prompt: |
+            REPO: ${{ github.repository }}
+            PR NUMBER: ${{ github.event.pull_request.number }}
+            PR STATE: ${{ github.event.pull_request.draft && 'Draft（執筆中）' || 'Ready for review（公開前の最終チェック）' }}
+            EVENT: ${{ github.event.action }}
+
+            このリポジトリのブログ記事の PR をレビューしてください。
+
+            レビュー対象の記事:
+            ${{ steps.files.outputs.list }}
+
+            手順:
+            1. まず `.claude/skills/blog-review/SKILL.md` を Read し、その基準と出力形式に従ってレビューする
+            2. 対象の記事を Read する。必要に応じて同じフォルダの画像の有無を Glob で、既存記事のタグやカテゴリを Grep で確認する
+            3. `gh pr diff ${{ github.event.pull_request.number }}` で差分を確認し、差分に含まれる行への具体的な指摘は
+               mcp__github_inline_comment__create_inline_comment でインラインコメントとして残す
+            4. 最後に `gh pr comment ${{ github.event.pull_request.number }} --body "<本文>"` でサマリーコメントを 1 件投稿する
+
+            注意:
+            - レビュー対象以外のファイルには指摘しない
+            - ファイルの編集、コミット、push はしない
+            - すべて日本語で書く
+          claude_args: |
+            --allowedTools "Read,Glob,Grep,mcp__github_inline_comment__create_inline_comment,Bash(gh pr comment:*),Bash(gh pr diff:*),Bash(gh pr view:*)"
