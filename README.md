@@ -150,7 +150,26 @@ pnpm blog:new --title "記事タイトル" [--slug my-post] [--category 技術] 
 ```
 
 - 事前に Settings > Actions > General > Workflow permissions の「Allow GitHub Actions to create and approve pull requests」を有効にしてください
-- `GITHUB_TOKEN` で作成した PR では他のワークフローが発火しません。執筆者が自分で push すると通常どおり動きます
+- `GITHUB_TOKEN` で作成した PR では他のワークフローが発火しません。自動レビュー（後述）は執筆者が自分で push したときに動きます
+
+### 記事の自動レビュー
+
+`src/content/blogs/**` を変更する PR では、`blog-review.yml` が次のように動きます。
+
+| タイミング | 動作 |
+| --- | --- |
+| PR を作成したとき（opened） | 挨拶コメントを投稿 |
+| PR に push したとき（synchronize） | PR 内の記事を Claude がレビュー（指摘済みの内容は繰り返さない） |
+| Ready for review にしたとき / 再オープンしたとき | PR 内のすべての記事を Claude がレビュー |
+
+Claude は `.claude/skills/blog-review/SKILL.md` の基準に従って、変更行へのインラインコメントとサマリーコメントを残します。
+手元の Claude Code でも「blog-review スキルでこの記事をレビューして」のように使えます。
+
+事前に次の設定が必要です。
+
+1. [Claude GitHub App](https://github.com/apps/claude) をこのリポジトリにインストールする
+2. 手元で `claude setup-token` を実行してトークンを発行し、Settings > Secrets and variables > Actions の Secrets に `CLAUDE_CODE_OAUTH_TOKEN` として登録する
+   - API キーを使う場合は `ANTHROPIC_API_KEY` を登録し、ワークフローの `claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}` を `anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}` に置き換える
 
 ## Cloudflare R2 の初期設定
 
