@@ -1,5 +1,5 @@
 import { defineCollection, z } from "astro:content";
-import { glob } from "astro/loaders";
+import { file, glob } from "astro/loaders";
 import { BLOG_CONTENT_DIR } from "@/libs/blogImage";
 
 /**
@@ -24,4 +24,16 @@ const blogs = defineCollection({
 	}),
 });
 
-export const collections = { blogs };
+/** About ページの Activities（タイムライン） */
+const activities = defineCollection({
+	loader: file("src/content/activities.yaml"),
+	schema: z.object({
+		title: z.string(),
+		date: z.coerce.date(),
+		type: z.enum(["project", "event", "work", "examination", "other"]).default("other"),
+		link: z.string().url().optional(),
+		linkText: z.string().optional(),
+	}),
+});
+
+export const collections = { blogs, activities };

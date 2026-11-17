@@ -1,7 +1,6 @@
 ---
+import { getCollection } from "astro:content";
 import TimelineItem from "./TimelineItem.astro";
-import { getActivities } from "@/libs/microcms";
-import type { Activity as MicroCMSActivity } from "@/types/activity";
 
 type TimelineItemType = "project" | "event" | "work" | "examination" | "other" | "current";
 
@@ -17,28 +16,12 @@ interface Activity {
 		| undefined;
 }
 
-// microCMSからアクティビティを取得
-const microCMSActivities = await getActivities({
-	orders: "-date",
-});
-
-// microCMSのデータを内部形式に変換
-const activities: Activity[] = microCMSActivities.map((item: MicroCMSActivity) => {
-	const type = (item.type[0] || "other") as TimelineItemType;
-
-	return {
-		title: item.title,
-		date: new Date(item.date),
-		type: type,
-		link:
-			item.link && item.link_text
-				? {
-						url: item.link,
-						text: item.link_text,
-					}
-				: undefined,
-	};
-});
+const activities: Activity[] = (await getCollection("activities")).map(({ data }) => ({
+	title: data.title,
+	date: data.date,
+	type: data.type,
+	link: data.link && data.linkText ? { url: data.link, text: data.linkText } : undefined,
+}));
 
 const sortedActivities = [...activities].sort((a, b) => b.date.getTime() - a.date.getTime());
 

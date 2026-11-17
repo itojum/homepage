@@ -1,0 +1,9 @@
+# About ページの Activities（タイムライン）
+#
+# - id: 一意な ID（任意の文字列）
+#   title: タイトル
+#   date: 2025-04-01
+#   type: project | event | work | examination | other
+#   link: https://example.com   # 任意
+#   linkText: 詳細               # 任意（link とセットで表示）
+[]
