@@ -10,9 +10,7 @@ tags: ["Ruby", "備忘録", "書籍"]
 こんにちは！いとじゅんです。  
 お仕事の関係でメタプログラミングRuby 第2版を読んでいるので、備忘録的なものをまとめました。
 
-[](https://www.oreilly.co.jp//books/9784873117430/)
-
-<script async="" src="https://cdn.iframe.ly/embed.js" charset="utf-8"></script>
+https://www.oreilly.co.jp//books/9784873117430/
 
 まずは第2章ー
 
@@ -100,9 +98,7 @@ Rubyのprivateは二つのルールによって実現されている。
 
 書籍の例だとselfキーワードがついているので動かないというものだが、Ruby 2.7以降はselfキーワードがついていても動くらしい。自分の環境(ruby v4.0.3)では。書籍の例のコードでも動いてくれた。
 
-[](https://qiita.com/pink_bangbi/items/e0bc9b0ed19fad28bdd0)
-
-<script async="" src="https://cdn.iframe.ly/embed.js" charset="utf-8"></script>
+https://qiita.com/pink_bangbi/items/e0bc9b0ed19fad28bdd0
 
 ## Refinementsでご安全に
 
@@ -128,9 +124,7 @@ puts "超かぐや姫！".hello # => "かぐやっほー！！"
 
 なにかを学んだあと、皆さんならどうしますか？私はやはり演習だと思うんですよね。メタプログラミングRubyで学んだものをそのまま使って問題が解けるリポジトリがあるんですよね！！おすすめです。
 
-[](https://github.com/kinoppyd/reading-metaprogramming-ruby)
-
-<script async="" src="https://cdn.iframe.ly/embed.js" charset="utf-8"></script>
+https://github.com/kinoppyd/reading-metaprogramming-ruby
 
 改めて感想ですが、2章だけでもはじめましてな概念が大盛でとても楽しい！！メタプログラミングという魔術の最初の一歩、メラを覚えた気になってきた。
 

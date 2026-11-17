@@ -28,7 +28,7 @@ Ruby Boxに関してはLTでも[@joker1007](https://x.com/joker1007)さんがお
 
 資料はこちら
 
-<iframe src="https://speakerdeck.com/player/9775679efa3d42f1a497faec3b7d337d" style="top: 0; left: 0; width: 100%; height: 100%; position: absolute; border: 0;" allowfullscreen="" scrolling="no"></iframe>
+https://speakerdeck.com/player/9775679efa3d42f1a497faec3b7d337d
 
 ### Funicular: A Browser App Framework Powered by PicoRuby.WASM [@hasumikin](https://x.com/hasumikin)
 
@@ -43,9 +43,7 @@ Lチカは情操教育
 
 資料はこちら
 
-[](https://slide.rabbit-shocker.org/authors/hasumikin/RubyKaigi2026/)
-
-<script async="" src="https://cdn.iframe.ly/embed.js" charset="utf-8"></script>
+https://slide.rabbit-shocker.org/authors/hasumikin/RubyKaigi2026/
 
 ### Ruby Releases Ruby [@hsbt](https://x.com/hsbt)
 
@@ -95,18 +93,13 @@ RubyKaigi 2026のセッションの内容を試してみた発表が多くて行
 
 私もLTをしてきました！！！
 
-> [#rubykaigi](https://twitter.com/hashtag/rubykaigi?src=hash&ref_src=twsrc%5Etfw) [#rubykaigi2026\_smarthr](https://twitter.com/hashtag/rubykaigi2026_smarthr?src=hash&ref_src=twsrc%5Etfw)  
-> VR でスライドをめくっている！？！？！？（しかも函館駅でめっちゃ見られてる [pic.twitter.com/jKVcPXHhgU](https://t.co/jKVcPXHhgU)
-> 
-> — 口座が泣いている転職活動中の旭川から小平市等の各地に飛び立つ地方ITコミュニティ盛り上げ大臣とみお (@tomio2480) [April 25, 2026](https://twitter.com/tomio2480/status/2047849882262847898?ref_src=twsrc%5Etfw)
-
-<script async="" src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+https://x.com/tomio2480/status/2047849882262847898
 
 後から聞いたら私のLTの区間は函館駅だったそうですごい注目を集めていたそうで、誇らしいですね。
 
 資料はこちらです。
 
-<iframe src="https://speakerdeck.com/player/195fecd4eb9d4f1fb622f7cccc544256" style="top: 0; left: 0; width: 100%; height: 100%; position: absolute; border: 0;" allowfullscreen="" scrolling="no"></iframe>
+https://speakerdeck.com/player/195fecd4eb9d4f1fb622f7cccc544256
 
 ## おわりに
 

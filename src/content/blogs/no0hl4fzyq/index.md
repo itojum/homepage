@@ -15,9 +15,7 @@ Rubyで個人開発をしようと思った時に、毎回どこにデプロイ�
 
 今回、UzumibiでDiscord Botを作る上で、以下のドキュメントに助けられました。ありがとうございました。そもそもUzumibiとは？という方は以下のドキュメントがわかりやすくまとめられているのでおすすめです。
 
-[](https://zenn.dev/udzura/books/532f38f73fe4e9)
-
-<script async="" src="https://iframely.net/embed.js" charset="utf-8"></script>
+https://zenn.dev/udzura/books/532f38f73fe4e9
 
 ## 作れたもの
 

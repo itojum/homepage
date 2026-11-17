@@ -11,9 +11,7 @@ tags: ["参加レポート", "Ruby"]
 こんにちは！いとじゅんと申します！  
 先日開催された関西Ruby会議09に参加してきました！新鮮なうちに参加レポートを投下します！！
 
-[](https://regional.rubykaigi.org/kansai09/)
-
-<script async="" src="https://iframely.net/embed.js" charset="utf-8"></script>
+https://regional.rubykaigi.org/kansai09/
 
 ## イベント全体の感想
 
@@ -39,11 +37,7 @@ Keynoteの成瀬ゆいさんとはすじょいさんを始めとした登壇者�
 
 あんなの見せられたら買うしかないじゃない...
 
-> 「Harucom-board Bundle with acrylic panels」を はるかさんのBOOTH で購入しました！ [https://t.co/P5Fz3hv33R](https://t.co/P5Fz3hv33R) [#booth\_pm](https://x.com/hashtag/booth_pm?src=hash&ref_src=twsrc%5Etfw)
-> 
-> — いとじゅん (@itojum1230) [July 19, 2026](https://x.com/itojum1230/status/2078860873519829211?ref_src=twsrc%5Etfw)
-
-<script async="" src="https://platform.x.com/widgets.js" charset="utf-8"></script>
+https://x.com/itojum1230/status/2078860873519829211
 
 ### **Project Naraku 外伝 —— レールロード図で照らすOnigmoのバグ(**[**@aim2bpg**](https://x.com/aim2bpg)**)**
 
@@ -55,7 +49,7 @@ Keynoteの成瀬ゆいさんとはすじょいさんを始めとした登壇者�
 
 私はOnigmoの問題点もNarakuも初見だったので、学びだらけでした！
 
-<iframe src="https://speakerdeck.com/player/57d3aa38330c4e32ae1af97c5876c580" style="top: 0; left: 0; width: 100%; height: 100%; position: absolute; border: 0;" allowfullscreen="" scrolling="no"></iframe>
+https://speakerdeck.com/player/57d3aa38330c4e32ae1af97c5876c580
 
 ### **torikago - Ruby::Boxで照らすモジュラモノリスの実行境界(**[**@se4weed\_dev**](https://x.com/se4weed_dev)**)**
 
@@ -75,11 +69,7 @@ torikagoが活躍できそうなでかいモジュモノしてるRailsアプリ�
 
 デモがうまくいかなくて参加者に投げられたので私はちゃんとやりきりました。えらい。
 
-> デモできたー！ [#kanrk09](https://x.com/hashtag/kanrk09?src=hash&ref_src=twsrc%5Etfw) [pic.twitter.com/Mi7ARsVGTh](https://t.co/Mi7ARsVGTh)
-> 
-> — いとじゅん (@itojum1230) [July 18, 2026](https://x.com/itojum1230/status/2078362310830338463?ref_src=twsrc%5Etfw)
-
-<script async="" src="https://platform.x.com/widgets.js" charset="utf-8"></script>
+https://x.com/itojum1230/status/2078362310830338463
 
 ### Keynote ([@hsjoihs](https://x.com/hsjoihs))
 
@@ -87,7 +77,7 @@ torikagoが活躍できそうなでかいモジュモノしてるRailsアプリ�
 
 定期的にこの資料を見て理解したいという気持ちを込めてここに備忘録的に置かせていただきます...
 
-<iframe src="https://docs.google.com/presentation/d/1ZfueAQyVJsC2pmUYgIGdb_fmnFExYaCRnr9vcCf5uNk/embed" style="top: 0; left: 0; width: 100%; height: 100%; position: absolute; border: 0;" allowfullscreen="" scrolling="no"></iframe>
+https://docs.google.com/presentation/d/1ZfueAQyVJsC2pmUYgIGdb_fmnFExYaCRnr9vcCf5uNk/embed
 
 ## おわりに
 

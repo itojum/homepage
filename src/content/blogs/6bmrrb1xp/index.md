@@ -12,9 +12,7 @@ tags: ["Ruby", "備忘録"]
 
 やっとメタプログラミングRubyを再開したので、まとめてみました。
 
-[](https://www.oreilly.co.jp//books/9784873117430/)
-
-<script async="" src="https://iframely.net/embed.js" charset="utf-8"></script>
+https://www.oreilly.co.jp//books/9784873117430/
 
 ## ブロックさん
 
@@ -256,9 +254,7 @@ ActiveSupportなどで使われているらしいが、正直どこで使うべ�
 
 ここまでやった私は以下のリポジトリの演習問題をやることで、理解したような気がしています。私と同じようにメタプログラミングを学んでいる同志におすすめです。
 
-[](https://github.com/kinoppyd/reading-metaprogramming-ruby)
-
-<script async="" src="https://iframely.net/embed.js" charset="utf-8"></script>
+https://github.com/kinoppyd/reading-metaprogramming-ruby
 
 この章を通して、Rubyのスコープやブロックの取り扱い方を学べました。スコープゲート周りとかはメタプログラミング関係なく覚えておくと業務に役立ちそうですね。
 

@@ -14,9 +14,7 @@ tags: ["Ruby", "参加レポート", "Ruby on Rails"]
 
 この記事では、Kaigi on Rails 2026のセッションや感想などをお届けします！
 
-[](https://kaigionrails.org/2026/)
-
-<script async="" src="https://iframely.net/embed.js" charset="utf-8"></script>
+https://kaigionrails.org/2026/
 
 ![Kaigi on Rails 2026のDAY2の開始直前の様子の写真](./IMG_2545.jpg)
 
@@ -36,7 +34,7 @@ Kaigi on Rails 2026の様子
 
 発表資料はこちらです！
 
-<iframe src="https://speakerdeck.com/player/9c91a64cf8a04f8891637fafb959793d" style="top: 0; left: 0; width: 100%; height: 100%; position: absolute; border: 0;" allowfullscreen="" scrolling="no"></iframe>
+https://speakerdeck.com/player/9c91a64cf8a04f8891637fafb959793d
 
 ### 全ての永続トークンを、生まれる前に消し去りたい！([sylph01](https://github.com/sylph01))
 
@@ -46,7 +44,7 @@ Kaigi on Rails 2026の様子
 
 その資料はこちらになります。
 
-<iframe src="https://speakerdeck.com/player/732df7b1f8794db78e6eb8a2415bbd7c" style="top: 0; left: 0; width: 100%; height: 100%; position: absolute; border: 0;" allowfullscreen="" scrolling="no"></iframe>
+https://speakerdeck.com/player/732df7b1f8794db78e6eb8a2415bbd7c
 
 ### 作れる、でも消せるか？──安全に「枯らして消す」機能削除術([ksbmyk](https://github.com/ksbmyk))
 
@@ -54,7 +52,7 @@ Kaigi on Rails 2026の様子
 
 私も会社では様々なところに影響するような基盤を開発しているので、もしBreaking Changeな変更を入れるときには、このセッションの枯らして消すという知見が大いに活用できるため、とても参考になりました。
 
-<iframe src="https://speakerdeck.com/player/3a30d026b2c54f36a5cf99ee02ab87a8" style="top: 0; left: 0; width: 100%; height: 100%; position: absolute; border: 0;" allowfullscreen="" scrolling="no"></iframe>
+https://speakerdeck.com/player/3a30d026b2c54f36a5cf99ee02ab87a8
 
 ### Web Framework Benchmark Battle 2026, Any%([amatsuda](https://github.com/amatsuda))
 
@@ -62,7 +60,7 @@ Kaigi on Rails 2026の様子
 
 私もMatzのキーノートで言っておられた、Roundhouseを使ってSpinel on Railsは難しいんじゃないかなと思っていたので、ナウな話題でした。Pinesには期待ですね。いろいろな意味で時代の移り変わりを感じるセッションでした。
 
-<iframe src="https://speakerdeck.com/player/50d4012fbddf47dd8cfcbb80b23fdba5" style="top: 0; left: 0; width: 100%; height: 100%; position: absolute; border: 0;" allowfullscreen="" scrolling="no"></iframe>
+https://speakerdeck.com/player/50d4012fbddf47dd8cfcbb80b23fdba5
 
 ## 全体の感想
 

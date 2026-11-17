@@ -15,9 +15,7 @@ tags: ["アニメ"]
 超かぐや姫！の好きなところを叫ぶ記事なので、**ネタバレ成分が多分に含まれています**。  
 もし、超かぐや姫！を履修していない場合はブラウザバック or 以下をどうぞ。
 
-[](https://www.netflix.com/jp/title/81756595)
-
-<script async="" src="https://cdn.iframe.ly/embed.js" charset="utf-8"></script>
+https://www.netflix.com/jp/title/81756595
 
 ## 私が「もやもやが残る作品」にハマる理由
 
@@ -35,13 +33,11 @@ tags: ["アニメ"]
 超かぐや姫！は、事前情報なし(あらすじや予告なども含めて)で見に行ったので、「ボカロ曲出すの？！マジか？！」となっていました。  
 特に、ワールドイズマインの本家MV再現を見たとき、私の心は超かぐや姫に奪われてしまいました。
 
-<iframe src="https://www.youtube.com/embed/rXcPRKriVsI?rel=0" style="top: 0; left: 0; width: 100%; height: 100%; position: absolute; border: 0;" allowfullscreen="" scrolling="no" allow="accelerometer *; clipboard-write *; encrypted-media *; gyroscope *; picture-in-picture *; web-share *;" referrerpolicy="strict-origin"></iframe>
+https://www.youtube.com/watch?v=rXcPRKriVsI
 
 良すぎる。
 
-<iframe src="https://cdn.iframe.ly/api/iframe?url=https%3A%2F%2Fmedia2.giphy.com%2Fmedia%2Fv1.Y2lkPTc5MGI3NjExemJsMWdyYzQ2aHBiZm9uYXYxMG02ZzU4OHZtbzNoNDVrYjhwdmJjZSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw%2FhYOg7CExJZnMgtChsi%2Fgiphy.gif&amp;key=c271a3ec77ff4aa44d5948170dd74161" style="top: 0; left: 0; width: 100%; height: 100%; position: absolute; border: 0;" allowfullscreen="" allow="encrypted-media *;"></iframe>
-
-<script async="" src="https://cdn.iframe.ly/embed.js" charset="utf-8"></script>
+![](https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExemJsMWdyYzQ2aHBiZm9uYXYxMG02ZzU4OHZtbzNoNDVrYjhwdmJjZSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/hYOg7CExJZnMgtChsi/giphy.gif)
 
 ## メタバースという親近感のある要素
 
@@ -50,13 +46,9 @@ tags: ["アニメ"]
 
 とはいえ、超かぐや姫！側はVRChatを意識しているようで、かぐやのライブやツクヨミ感謝祭などのVRChat向け企画が多くあります。
 
-[](https://v-puroland.sanrio.co.jp/contents/kaguya)
+https://v-puroland.sanrio.co.jp/contents/kaguya
 
-<script async="" src="https://cdn.iframe.ly/embed.js" charset="utf-8"></script>
-
-[](https://soreosu.com/projects/cpk-tsukuyomi)
-
-<script async="" src="https://cdn.iframe.ly/embed.js" charset="utf-8"></script>
+https://soreosu.com/projects/cpk-tsukuyomi
 
 VRChat民で良かった...  
 デスクトップでも遊べるとはいえ、やはりHMDをつけて遊ぶ時の没入感には及ばないので、ライブやツクヨミ感謝祭をHMDの没入感で楽しめるのが最高すぎます。
@@ -69,7 +61,7 @@ VRChat民で良かった...
 
 ここ好き
 
-<iframe src="https://giphy.com/embed/sWxNEiHEbNxEDDPF5i" style="top: 0; left: 0; width: 100%; height: 100%; position: absolute; border: 0;" allowfullscreen="" scrolling="no" allow="encrypted-media *;"></iframe>
+![](https://media.giphy.com/media/sWxNEiHEbNxEDDPF5i/giphy.gif)
 
 ## 終わりに
 
@@ -78,6 +70,5 @@ VRChat民で良かった...
 
 最後まで読んでいただきありがとうございました。超かぐや姫！について語り足りないことだらけなので、対面でもメタバースでも良いのでぜひ語り合いましょう。ではまた。
 
-<iframe src="https://cdn.iframe.ly/api/iframe?url=https%3A%2F%2Fmedia0.giphy.com%2Fmedia%2Fv1.Y2lkPTc5MGI3NjExaXZ2Y3I5aWptNDF0cnd1ZjU1Z3kydTBsaTc3dG9oaXc1eWpmNnRjdCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw%2F4qMiPSoSx21VwKkiyn%2Fgiphy.gif&amp;key=c271a3ec77ff4aa44d5948170dd74161" style="top: 0; left: 0; width: 100%; height: 100%; position: absolute; border: 0;" allowfullscreen="" allow="encrypted-media *;"></iframe>
+![](https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExaXZ2Y3I5aWptNDF0cnd1ZjU1Z3kydTBsaTc3dG9oaXc1eWpmNnRjdCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/4qMiPSoSx21VwKkiyn/giphy.gif)
 
-<script async="" src="https://cdn.iframe.ly/embed.js" charset="utf-8"></script>

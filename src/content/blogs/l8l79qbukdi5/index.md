@@ -12,9 +12,7 @@ tags: ["備忘録", "書籍", "Ruby"]
 
 前回に引き続き、メタプログラミングRuby 第2版の備忘録をまとめてみました。
 
-[](https://www.oreilly.co.jp//books/9784873117430/)
-
-<script async="" src="https://cdn.iframe.ly/embed.js" charset="utf-8"></script>
+https://www.oreilly.co.jp//books/9784873117430/
 
 ## メソッドの動的呼び出し
 
@@ -150,9 +148,7 @@ undef\_methodを使うことでメソッドを未定義にすることができ�
 
 この章で学んだ内容をふんだんに含んだ大魔術が書かれたリポジトリがある。それが以下である。
 
-[](https://github.com/rails/rails)
-
-<script async="" src="https://cdn.iframe.ly/embed.js" charset="utf-8"></script>
+https://github.com/rails/rails
 
 皆さんご存じなRailsさんですね。まだ少し読んだだけですが、ActiveRecordとActiveSupportにはメタプログラミングがとんでもなく含まれていて幸せになれる。
 

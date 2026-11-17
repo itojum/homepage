@@ -12,9 +12,7 @@ tags: ["Vercel", "Next.js", "Gemini"]
 
 今回公開したYoteiScanは、「様々な媒体の予定情報を簡単にカレンダーへ登録できるサービス」です。
 
-[](https://yoteiscan.itojum.dev)
-
-<script async="" src="https://cdn.iframe.ly/embed.js" charset="utf-8"></script>
+https://yoteiscan.itojum.dev
 
 ## 使用例
 
@@ -44,9 +42,7 @@ YoteiScanは以下の媒体の予定を解析することができます。
 
 今回公開したYoteiScanは、**フレッシュITあわ～ど**というコンテストに出したAndroidアプリをWebアプリとして再実装したものです。
 
-[](https://freshitaward.wixsite.com/freshitaward2025)
-
-<script async="" src="https://cdn.iframe.ly/embed.js" charset="utf-8"></script>
+https://freshitaward.wixsite.com/freshitaward2025
 
 めちゃくちゃ個人的なのですが、AndroidからiPhoneに機種変更したせいで、元々のYoteiScanが使えなくなってしまいました。そこで、再実装して公開しようというのが背景になります。
 

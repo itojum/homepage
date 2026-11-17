@@ -21,9 +21,7 @@ ChatGPTは現在Plusプランを契約中ですが、最近Goプランが出た�
 
 [https://openai.com/ja-JP/index/introducing-chatgpt-go/](https://openai.com/ja-JP/index/introducing-chatgpt-go/)
 
-[](https://openai.com/ja-JP/index/introducing-chatgpt-go/)
-
-<script async="" src="https://cdn.iframe.ly/embed.js" charset="utf-8"></script>
+https://openai.com/ja-JP/index/introducing-chatgpt-go/
 
 * * *
 

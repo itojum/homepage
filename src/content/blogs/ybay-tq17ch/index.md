@@ -12,9 +12,7 @@ tags: ["参加レポート", "Ruby"]
 
 2026年11月14日(土)に福井県立恐竜博物館で開催された北陸Ruby会議02に参加してきました。
 
-[](https://regional.rubykaigi.org/hokuriku02/)
-
-<script async="" src="https://iframely.net/embed.js" charset="utf-8"></script>
+https://regional.rubykaigi.org/hokuriku02/
 
 テーマは、「発見」。多くの化石が発見されている福井県に準えたテーマとなっていました。各発表者の方が発見や化石要素を取り入れた発表をされていました。
 
@@ -30,11 +28,7 @@ tags: ["参加レポート", "Ruby"]
 
 近かったので東尋坊の夕焼けを見に行きました。音声ガイドを聞いていたのですが、なんかずっと物騒で面白かったです。下のX埋め込みだと肝心の夕焼けが見えてないので、Xに遷移してみてほしい。めっちゃ綺麗なので。
 
-> 東尋坊 めっちゃきれい [pic.twitter.com/YDgKDvrQ5y](https://t.co/YDgKDvrQ5y)
-> 
-> — いとじゅん (@itojum1230) [November 13, 2026](https://x.com/itojum1230/status/2121144750321607020?ref_src=twsrc%5Etfw)
-
-<script async="" src="https://platform.x.com/widgets.js" charset="utf-8"></script>
+https://x.com/itojum1230/status/2121144750321607020
 
 ## 会場：恐竜博物館
 
@@ -56,11 +50,7 @@ tags: ["参加レポート", "Ruby"]
 
 ### [gem install と require のむこうがわ](https://regional.rubykaigi.org/hokuriku02/#SESSION-1) (ydah san)
 
-> 本日、北陸Ruby会議02で発表した「gem install とrequire のむこうがわ」の発表スライドです。Thank you! [https://t.co/t17qzGsnJt](https://t.co/t17qzGsnJt) [#hokurikurk02](https://x.com/hashtag/hokurikurk02?src=hash&ref_src=twsrc%5Etfw)
-> 
-> — Yudai Takada / ydah (@ydah\_) [November 14, 2026](https://x.com/ydah_/status/2121471491988705755?ref_src=twsrc%5Etfw)
-
-<script async="" src="https://platform.x.com/widgets.js" charset="utf-8"></script>
+https://x.com/ydah_/status/2121471491988705755
 
 gem installとrequireが実行されたとき、裏側でどのような処理が行われているかをseccompのuser notificationでシステムコールを実行前に受け取り、Ruby 側で記録して観測するセッションでした。公開Gemを調べると、installの一部が失敗しても成功扱いになるケースや、requireしただけでコマンドを実行するケースが見つかったそうです。
 
@@ -68,13 +58,7 @@ gem installとrequireが実行されたとき、裏側でどのような処理�
 
 ### [あなたはMCPの機能を、まだ知らない。](https://regional.rubykaigi.org/hokuriku02/#SESSION-2)(**内西 功一 san**)
 
-> 北陸Ruby会議02の発表資料を公開しました🦕  
-> 「あなたはMCPの機能を、まだ知らない。」  
-> MCP Apps x MCP Skills × ruby-sdk の話です。[#hokurikurk02](https://x.com/hashtag/hokurikurk02?src=hash&ref_src=twsrc%5Etfw) [https://t.co/CXDGdx0CgI](https://t.co/CXDGdx0CgI)
-> 
-> — しげる。 (@\_4geru) [November 14, 2026](https://x.com/_4geru/status/2121491821130072087?ref_src=twsrc%5Etfw)
-
-<script async="" src="https://platform.x.com/widgets.js" charset="utf-8"></script>
+https://x.com/_4geru/status/2121491821130072087
 
 MCPの中でもまだあまり知られていない、MCP Appsの機能を紹介するセッションでした。関西Ruby会議09で発表しておられた「[Rails で Remote MCP サーバーを作った話](https://speakerdeck.com/4geru/rails-de-remote-mcp-sabawozuo-tutahua-266db767-a8d7-4d27-8fe3-0a31ff3956c2)」に続いて、今回はMCP Appsの基礎からClaudeでガチャが回せるMCP サーバーなどのデモを発表しておられました。MCP Appsを使うと、ツールがGUIを返してチャットの中に表示できることを、TRICKのコードをruby.wasmで動かすデモで見せておられました。
 
@@ -82,13 +66,7 @@ MCPの中でもまだあまり知られていない、MCP Appsの機能を紹介
 
 ### [コード生成時代のAPI定義を支えるRequest Spec移行](https://regional.rubykaigi.org/hokuriku02/#SESSION-3) (**pvcresin san**)
 
-> 本日の発表資料です！  
-> 「コード生成時代のAPI定義を支えるRequest Spec移行」[https://t.co/1gPy78aLfO](https://t.co/1gPy78aLfO)  
-> [#hokurikurk02](https://x.com/hashtag/hokurikurk02?src=hash&ref_src=twsrc%5Etfw)
-> 
-> — pvcresin (@pvcresin) [November 14, 2026](https://x.com/pvcresin/status/2121465669074231672?ref_src=twsrc%5Etfw)
-
-<script async="" src="https://platform.x.com/widgets.js" charset="utf-8"></script>
+https://x.com/pvcresin/status/2121465669074231672
 
 コード生成の時代にAPI定義をどう正しく保つかを、Eightでの取り組みから紹介するセッションでした。コード生成時代というのは、AI生成という意味ではなく、OpenAPIなどによる決定論的なツールによるコード生成です。
 
@@ -98,12 +76,7 @@ EightではモバイルアプリがAPIのクライアントコードをOpenAPI�
 
 ### [diff の範囲だけ実行時トレースすると、コードレビューに役立つのでは？](https://regional.rubykaigi.org/hokuriku02/#SESSION-4)(**笹田耕一 san**)
 
-> 笹田耕一: diff の範囲だけ実行時トレースすると、コードレビューに役立つのでは？,  
-> 北陸Ruby会議02 (2026.11).[https://t.co/kKNijrvJOe](https://t.co/kKNijrvJOe) (2809KB)[https://t.co/RVdhgDQstP](https://t.co/RVdhgDQstP)
-> 
-> — Koichi Sasada (@koichisasada) [November 14, 2026](https://x.com/koichisasada/status/2121483402520219961?ref_src=twsrc%5Etfw)
-
-<script async="" src="https://platform.x.com/widgets.js" charset="utf-8"></script>
+https://x.com/koichisasada/status/2121483402520219961
 
 プログラムの観察方法を、どう動くのか（未来）、どう動いているのか（今）、どう動いたのか（過去）の3つに整理するところから始まり、実行時トレースツールのlumitraceを紹介するセッションでした。
 
@@ -113,7 +86,7 @@ Rubyのコードを実行すると、Prismで生成したノードに情報収�
 
 ### [Paint it Red!](https://regional.rubykaigi.org/hokuriku02/#SESSION-5) (**S.H. san**)
 
-<iframe src="https://speakerdeck.com/player/3d2917af6f52441ca66ccf8d283cf3a3" style="top: 0; left: 0; width: 100%; height: 100%; position: absolute; border: 0;" allowfullscreen="" scrolling="no"></iframe>
+https://speakerdeck.com/player/3d2917af6f52441ca66ccf8d283cf3a3
 
 普段使っているものの裏側を再発見したいという動機から、カーネルからHTTPサーバーまですべてをRubyで実装し、赤く染め上げるというセッションでした。PicoRubyKaigiで発表されていた「[PicoRubyではじめる自作カーネル入門](https://speakerdeck.com/gamelinks007/picoruby-dehajimeru-jisaku-kaneru-nyuumon)」の続編的な発表でした。HTTP サーバーには picoruby-socket を使い、WEBrick なども同梱した Kurenai を作っておられました。最後にはFunicularやテキストエディタまですべてをRubyに染め上げておられました。
 
@@ -121,13 +94,7 @@ Rubyのコードを実行すると、Prismで生成したノードに情報収�
 
 ### [テストだけで見つかる？ Rubyでつくるメソッド発掘器](https://regional.rubykaigi.org/hokuriku02/#SESSION-6)(**井澤ゆきみつ san**)
 
-> 北陸Ruby会議02 で発表したスライドです。ありがとうございました!  
->   
-> テストだけで見つかる？ Rubyでつくるメソッド発掘器[https://t.co/tKidKBnR3h](https://t.co/tKidKBnR3h)[#hokurikurk02](https://x.com/hashtag/hokurikurk02?src=hash&ref_src=twsrc%5Etfw)
-> 
-> — 井澤ゆきみつ (@Yukimitsu\_Izawa) [November 14, 2026](https://x.com/Yukimitsu_Izawa/status/2121494613852930156?ref_src=twsrc%5Etfw)
-
-<script async="" src="https://platform.x.com/widgets.js" charset="utf-8"></script>
+https://x.com/Yukimitsu_Izawa/status/2121494613852930156
 
 `[1, 2, 3].??? == 1` の`???` に入るメソッドを値と返り値から探すメソッド発掘器を紹介するセッションでした。`[2, 1].??? == [1, 2]` では sort や reverse など7つの候補が出るが、入力を変えると sort と sort! の2つまで絞れ、さらに元の配列が変わるかどうかで見分けられる、という流れで発掘を進めておられました。最後には、テストを通るが要求に合わない実装をわざと書いて、その実装で通らないテストを考えるというのを提案しておられました。
 
@@ -135,13 +102,7 @@ Rubyのコードを実行すると、Prismで生成したノードに情報収�
 
 ### [KEYNOTE: Dig it!](https://regional.rubykaigi.org/hokuriku02/#KEYNOTE-1)(**うなすけ san**)
 
-> 書きました。ありがとうございました！！ [#hokurikurk02](https://x.com/hashtag/hokurikurk02?src=hash&ref_src=twsrc%5Etfw)  
->   
-> 北陸Ruby会議02で基調講演をさせていただきました | うなすけとあれこれ[https://t.co/WIYqDooL3h](https://t.co/WIYqDooL3h)
-> 
-> — うなすけ (@yu\_suke1994) [November 15, 2026](https://x.com/yu_suke1994/status/2121921682759991319?ref_src=twsrc%5Etfw)
-
-<script async="" src="https://platform.x.com/widgets.js" charset="utf-8"></script>
+https://x.com/yu_suke1994/status/2121921682759991319
 
 うなすけさんの来歴（クラウドゲーミングからQUIC、RubyKaigi）へつながらう深めの自己紹介から始まる基調講演でした。メインはネットワーク系の基礎知識から始まり、QUICのRFC 8999を読み解いていく内容でした。基礎から丁寧に整理してくださったので、私はネットワークは授業でやった程度だったのですが振り落とされずについていくことができました。
 

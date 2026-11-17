@@ -13,9 +13,7 @@ tags: ["参加レポート", "Ruby"]
   
 2026年9月19日（土）、大須演芸場で開催された名古屋Ruby会議05に参加してきました。
 
-[](https://regional.rubykaigi.org/nagoya05/)
-
-<script async="" src="https://iframely.net/embed.js" charset="utf-8"></script>
+https://regional.rubykaigi.org/nagoya05/
 
 名古屋Ruby会議は、名古屋のRubyコミュニティが主催する地域Ruby会議です。今回の会場である大須演芸場は、普段は落語などの演芸が行われている会場で、登壇者が発表するという、ほかではなかなか味わえない雰囲気のカンファレンスでした。
 
@@ -27,9 +25,7 @@ tags: ["参加レポート", "Ruby"]
 
 ちなみに名古屋Ruby会議に参加するうえでいろいろバタバタしていてその時のことをまとめた別のブログを書きました。よければこちらもどうぞ。
 
-[](https://itojum.dev/blogs/oi0sxrfn70z2)
-
-<script async="" src="https://iframely.net/embed.js" charset="utf-8"></script>
+https://itojum.dev/blogs/oi0sxrfn70z2
 
 ## **特に印象に残ったセッション**
 
@@ -45,9 +41,7 @@ tags: ["参加レポート", "Ruby"]
 
 Urashimaさんが自作されたcapybara-simulatedはこちらです。
 
-[](https://github.com/ursm/capybara-simulated)
-
-<script async="" src="https://iframely.net/embed.js" charset="utf-8"></script>
+https://github.com/ursm/capybara-simulated
 
 ### **型 再考 /** [**黒曜**](https://x.com/kokuyouwind)**さん**
 
@@ -57,7 +51,7 @@ Urashimaさんが自作されたcapybara-simulatedはこちらです。
 
 発表資料はこちらですー！
 
-<iframe src="https://slides.com/kokuyouwind/nagoya-rubykaigi-2026/embed" style="top: 0; left: 0; width: 100%; height: 100%; position: absolute; border: 0;" allowfullscreen="" scrolling="no"></iframe>
+https://slides.com/kokuyouwind/nagoya-rubykaigi-2026/embed
 
   
 
@@ -69,17 +63,13 @@ Urashimaさんが自作されたcapybara-simulatedはこちらです。
 
 書籍とコミュニティのつながりについてのお話を聞いて、応援したくなったので支援してみました。
 
-> 名古屋Ruby会議の参加レポートを書いていて思い立ったので [pic.twitter.com/WGkXmK7Hl7](https://t.co/WGkXmK7Hl7)
-> 
-> — いとじゅん (@itojum1230) [September 23, 2026](https://x.com/itojum1230/status/2102778865320092112?ref_src=twsrc%5Etfw)
-
-<script async="" src="https://platform.x.com/widgets.js" charset="utf-8"></script>
+https://x.com/itojum1230/status/2102778865320092112
 
   
 
 発表資料はこちらですー！
 
-<iframe src="https://speakerdeck.com/player/6e0c3eeb36f54325a7fc0f67f651f4f7" style="top: 0; left: 0; width: 100%; height: 100%; position: absolute; border: 0;" allowfullscreen="" scrolling="no"></iframe>
+https://speakerdeck.com/player/6e0c3eeb36f54325a7fc0f67f651f4f7
 
 ## **全体の感想**
 

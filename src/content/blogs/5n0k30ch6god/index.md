@@ -41,9 +41,7 @@ p5.rbでクリエイティブコーディングを試してみた
 
 Rubyコミュニティへ貢献されている方を表彰する催しがされていました。私がオーガナイザーをしているVRChat.rbに参加してくださっている、すぎうりさんとMakiさんがノミネートされておられ、すぎうりさんはスピーチもされていました。ノミネートされている方々はそれぞれの形でコミュニティに貢献しておられ、私も引き続きRubyのコミュニティにお客さん以上の気持ちで参加していこうと思いました。
 
-[](https://kaja.rubyist.net/)
-
-<script async="" src="https://iframely.net/embed.js" charset="utf-8"></script>
+https://kaja.rubyist.net/
 
 ## そのほか
 
@@ -55,11 +53,7 @@ Rubyコミュニティへ貢献されている方を表彰する催しがされ�
 
 二次会に行こうと思ったら、VRChat.rbから連れてきた学生さんがインシデントを発生させ、巻き込まれていました。マジで面白かった。旅にはインシデントが必要だよな！
 
-> 電車の椅子にカバンの紐挟まれて尾張一宮まで来た人+巻き添え1名 [#sekigahara01](https://x.com/hashtag/sekigahara01?src=hash&ref_src=twsrc%5Etfw) [pic.twitter.com/cAe5FvIQGZ](https://t.co/cAe5FvIQGZ)
-> 
-> — いとじゅん (@itojum1230) [May 30, 2026](https://x.com/itojum1230/status/2060686134267781226?ref_src=twsrc%5Etfw)
-
-<script async="" src="https://platform.x.com/widgets.js" charset="utf-8"></script>
+https://x.com/itojum1230/status/2060686134267781226
 
 Rubyistたちと関ケ原古戦場記念館に行ってました。関ヶ原の戦いの知識がつきましたね。関ヶ原の戦いのムービーを見たのですが、席が揺れたり風が吹いたりしていてアトラクションすぎた。こういう施設に来ることがあまりないので、これからはいろいろ回りたいと思いました。
 

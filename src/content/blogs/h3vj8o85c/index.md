@@ -10,9 +10,7 @@ tags: ["VRChat"]
 こんにちは！いとじゅんです！  
 皆さんは**VRChat**というゲームについて知っていますか？VRChatは、バーチャル空間上で好きなアバターをまとって自由に交流できるVRSNSゲームです。
 
-[](https://hello.vrchat.com)
-
-<script async="" src="https://cdn.iframe.ly/embed.js" charset="utf-8"></script>
+https://hello.vrchat.com
 
 私はそんなVRChatで[VRChat.rb](https://vrc-ta-hub.com/community/85/)のオーガナイザーと [ITエンジニア キャリア相談・雑談集会](https://vrc-ta-hub.com/community/56/)の副主催をしています。そんな私から、メタバースにおける技術・学術系イベントのメリットをお伝えします！
 
@@ -20,9 +18,7 @@ tags: ["VRChat"]
 
 VRChatではユーザーがユーザーが自主的に開催しているイベントが数多くあります。音楽系、交流系、ゲーム系、ラジオ体操系などテーマは多種多様です。技術・学術系イベントはそんなVRChatイベントの一ジャンルであり、以下の技術・学術系イベントHubというサイトに情報が集まっています。  
 
-[](https://vrc-ta-hub.com/)
-
-<script async="" src="https://cdn.iframe.ly/embed.js" charset="utf-8"></script>
+https://vrc-ta-hub.com/
 
 技術系(Web技術、ITインフラ、ソフトウェアアーキテクチャ...etc)や学術系(物理学、数学、通信工学、核融合(!?)...etc)など様々なイベントがあります。おそらく、あなたの興味のあるジャンルのイベントもあるはず...
 
@@ -63,9 +59,7 @@ VRChatではユーザーがユーザーが自主的に開催しているイベ�
 
 これを見てメタバースの技術・学術系イベントに興味を持ったそこのあなた！！VRChat技術・学術系イベントHubから興味のあるイベントを探してぜひ参加してみてね！
 
-[](https://vrc-ta-hub.com/)
-
-<script async="" src="https://cdn.iframe.ly/embed.js" charset="utf-8"></script>
+https://vrc-ta-hub.com/
 
 私が運営をしている[VRChat.rb](https://vrc-ta-hub.com/community/85/)のオーガナイザーと[ITエンジニア キャリア相談・雑談集会](https://vrc-ta-hub.com/community/56/)にも遊びにきてください！！！
 
