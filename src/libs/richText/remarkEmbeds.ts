@@ -86,10 +86,11 @@ const IFRAME_PROVIDERS: Array<(url: URL) => Embed | null> = [
 			title: "Docswell",
 		};
 	},
-	// Google スライド
+	// Google スライド: 通常の /d/<ID> と、「ウェブに公開」した /d/e/<公開ID> の両方に対応する
 	(url) => {
 		const match =
-			url.hostname === "docs.google.com" && url.pathname.match(/^\/presentation\/d\/([\w-]+)/);
+			url.hostname === "docs.google.com" &&
+			url.pathname.match(/^\/presentation\/d\/(e\/[\w-]+|[\w-]+)/);
 		if (!match) return null;
 		return {
 			src: `https://docs.google.com/presentation/d/${match[1]}/embed`,
