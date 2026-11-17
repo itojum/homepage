@@ -1,5 +1,5 @@
 ---
-import SearchComponent from "astro-pagefind/components/Search";
+import SearchComponent from "astro-pagefind/components/Search.astro";
 ---
 
 <div
@@ -28,7 +28,7 @@ import SearchComponent from "astro-pagefind/components/Search";
       </button>
     </div>
     <div class="search-modal__body p-4 overflow-y-auto flex-1 min-h-0">
-      <SearchComponent id="search" className="pagefind-ui" />
+      <SearchComponent className="pagefind-ui" />
     </div>
   </div>
 </div>
@@ -126,15 +126,14 @@ import SearchComponent from "astro-pagefind/components/Search";
   }
 
   .search-modal :global(.pagefind-ui) {
-    --pagefind-ui-primary: var(--accent);
-    --pagefind-ui-text: rgb(var(--gray-dark));
-    --pagefind-ui-background: rgb(var(--surface-soft));
-    --pagefind-ui-border: rgba(var(--border), 90%);
-    --pagefind-ui-tag: rgb(var(--surface-muted));
-    --pagefind-ui-font: 'MPLUS1Code', sans-serif;
+    --pf-text: rgb(var(--gray-dark));
+    --pf-background: rgb(var(--surface-soft));
+    --pf-border: rgba(var(--border), 90%);
+    --pf-hover: rgb(var(--surface-muted));
+    --pf-font: 'MPLUS1Code', sans-serif;
   }
 
-  .search-modal :global(.pagefind-ui__result-link) {
+  .search-modal :global(.pf-searchbox-result-title) {
     color: var(--accent);
   }
 </style>
