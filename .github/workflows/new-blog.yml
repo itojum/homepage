@@ -1,0 +1,125 @@
+name: ブログ執筆用 PR を作成
+
+# Actions タブから手動実行すると、記事の雛形を作ったブランチ blog/<slug> を作成し、
+# main 向けの Draft PR を開く（下書きは PR ブランチで管理し、Draft PR の状態が「下書き」を表す）。
+# 雛形の作成は scripts/new-blog.js（pnpm blog:new と同じ）で行う。
+#
+# 必要な設定
+#   Settings > Actions > General > Workflow permissions で
+#   「Allow GitHub Actions to create and approve pull requests」を有効にすること（無効だと PR 作成に失敗する）
+#
+# 注意
+#   GITHUB_TOKEN で作成した push / PR は他のワークフローを発火させない（無限ループ防止の仕様）。
+#   そのためこの PR の作成時点では blog-review.yml の「opened」は動かない。
+#   執筆者が自分で push すると synchronize として通常どおりレビューが動く。
+
+on:
+  workflow_dispatch:
+    inputs:
+      title:
+        description: 記事タイトル
+        required: true
+        type: string
+      slug:
+        description: スラッグ（URL の /blogs/<slug>）。空なら英小文字 + 数字のランダムな ID を生成
+        required: false
+        type: string
+      category:
+        description: カテゴリ（例：技術、イベント）
+        required: false
+        type: string
+      tags:
+        description: タグ（カンマ区切り。例：Astro,Cloudflare）
+        required: false
+        type: string
+
+jobs:
+  create:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # 入力値はシェルインジェクションを避けるため環境変数経由で渡す
+      INPUT_TITLE: ${{ inputs.title }}
+      INPUT_SLUG: ${{ inputs.slug }}
+      INPUT_CATEGORY: ${{ inputs.category }}
+      INPUT_TAGS: ${{ inputs.tags }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .node-version
+
+      - name: 記事の雛形を作成
+        id: scaffold
+        # 外部パッケージを使わないスクリプトのため依存のインストールは不要
+        run: |
+          node scripts/new-blog.js \
+            --title "$INPUT_TITLE" \
+            --slug "$INPUT_SLUG" \
+            --category "$INPUT_CATEGORY" \
+            --tags "$INPUT_TAGS"
+
+      - name: ブランチを作成して push
+        id: branch
+        env:
+          SLUG: ${{ steps.scaffold.outputs.slug }}
+          POST_PATH: ${{ steps.scaffold.outputs.path }}
+        run: |
+          branch="blog/${SLUG}"
+          if git ls-remote --exit-code --heads origin "$branch" > /dev/null; then
+            echo "::error::ブランチ ${branch} は既に存在します。別の slug を指定してください"
+            exit 1
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git switch -c "$branch"
+          git add "$POST_PATH"
+          git commit -m "feat(blog): 「${INPUT_TITLE}」の雛形を追加"
+          git push origin "$branch"
+          echo "branch=${branch}" >> "$GITHUB_OUTPUT"
+
+      - name: Draft PR を作成
+        env:
+          BRANCH: ${{ steps.branch.outputs.branch }}
+          SLUG: ${{ steps.scaffold.outputs.slug }}
+          POST_PATH: ${{ steps.scaffold.outputs.path }}
+        run: |
+          body=$(cat <<EOF
+          ## 記事
+
+          - ファイル: \`${POST_PATH}\`
+          - 公開時の URL: \`/blogs/${SLUG}\`（下書き中は Cloudflare のプレビューデプロイで確認）
+
+          ## 執筆の流れ
+
+          1. このブランチ（\`${BRANCH}\`）を checkout して記事を書く
+          2. 画像は記事と同じフォルダに置き、相対パスで参照する
+          3. push するたびに Claude が記事をレビューしてコメントします（\`.claude/skills/blog-review/SKILL.md\`）
+          4. 公開するときは frontmatter の \`description\` / \`eyecatch\` / \`tags\` を埋めて Ready for review にする
+
+          > この PR は GitHub Actions（\`new-blog.yml\`）で作成しました。
+          EOF
+          )
+          url=$(gh pr create \
+            --draft \
+            --base main \
+            --head "$BRANCH" \
+            --title "blog: ${INPUT_TITLE}" \
+            --body "$body")
+          echo "作成した PR: ${url}"
+          echo "### [${INPUT_TITLE}](${url})" >> "$GITHUB_STEP_SUMMARY"
+
+          # blog ラベルがあれば付ける（なくても失敗させない）
+          if gh label list --limit 200 --json name --jq '.[].name' | grep -qx blog; then
+            gh pr edit "$url" --add-label blog || echo "::warning::blog ラベルを付けられませんでした"
+          fi
