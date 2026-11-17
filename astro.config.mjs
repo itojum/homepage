@@ -54,7 +54,14 @@ export default defineConfig({
 			],
 		],
 	},
-	integrations: [blogImages(), sitemap(), icon(), tailwind(), pagefind()],
+	integrations: [
+		blogImages(),
+		// 下書きプレビュー（/draft/）はサイトマップに含めない
+		sitemap({ filter: (page) => !new URL(page).pathname.startsWith('/draft/') }),
+		icon(),
+		tailwind(),
+		pagefind(),
+	],
 	vite: {
 		resolve: {
 			alias: {
