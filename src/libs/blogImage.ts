@@ -15,6 +15,12 @@ export const BLOG_CONTENT_DIR = "src/content/blogs";
 /** R2 バケット内のキーのプレフィックス */
 export const BLOG_IMAGE_KEY_PREFIX = "blogs";
 
+/**
+ * frontmatter に eyecatch が無い記事のために自動生成するアイキャッチの配信パス
+ * （src/pages/og/blogs/[...slug].png.ts がビルド時に生成する）
+ */
+export const generatedEyecatchPath = (id: string): string => `/og/blogs/${id}.png`;
+
 /** R2 へのアップロード時に WebP へ変換する画像の拡張子 */
 const CONVERTIBLE_IMAGE_EXTENSION = /\.(png|jpe?g|gif)$/i;
 

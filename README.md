@@ -87,7 +87,6 @@ updatedAt: 2026-11-20      # 任意
 eyecatch: ./eyecatch.png   # 任意
 category: 技術             # 任意
 tags: [Astro, Cloudflare]  # 任意
-draft: false               # true にすると一覧に出さず /draft/blogs/<slug> のみ生成
 ---
 
 本文
@@ -99,7 +98,9 @@ console.log("hello");
 ```
 ````
 
+- 下書きはブランチ / PR 上で管理し、`main` にマージした時点で公開されます（下書き用のフラグはありません）
 - 画像を使わない記事は `src/content/blogs/<slug>.md` でも構いません
+- `eyecatch` を省略すると、タイトルと公開日を入れたアイキャッチ画像がビルド時に自動生成されます（`/og/blogs/<slug>.png`。生成処理は `src/libs/eyecatch.ts`）
 - ビルド時に相対パスの画像は `${IMAGE_BASE_URL}/blogs/<slug>/<ファイル名>` に書き換えられます
 - 画像ファイルは `develop` / `main` に push されると GitHub Actions（`sync-blog-images.yml`）が WebP に変換して R2 にアップロードします
   - PNG / JPEG / GIF は `.webp` に変換され、記事内の参照（`./screenshot.png` など）もビルド時に `.webp` の URL に書き換わります。手元での変換は不要です
@@ -140,16 +141,3 @@ About ページの Activities は `src/content/activities.yaml` で管理して�
    - Secrets: `CLOUDFLARE_ACCOUNT_ID` / `R2_ACCESS_KEY_ID` / `R2_SECRET_ACCESS_KEY`
    - Variables: `R2_BUCKET`（バケット名）
 4. Cloudflare Workers のビルド環境変数に `IMAGE_BASE_URL` を設定する
-
-## microCMS からの移行
-
-一度だけ、手元で次のコマンドを実行して既存の記事とアクティビティを取り込みます。
-
-```bash
-MICROCMS_SERVICE_DOMAIN="your-service-domain" MICROCMS_API_KEY="your-api-key" pnpm migrate:microcms
-```
-
-- 記事は Markdown に変換され、microCMS 上の画像は各記事フォルダにダウンロードされます
-- 公開中の記事のみが対象です。下書きは手動で移行してください
-- 既存のファイルはスキップします。上書きする場合は `--force` を付けます
-- 変換結果を `pnpm dev` で確認し、崩れた箇所を手直ししてからコミットしてください
