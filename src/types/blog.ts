@@ -1,41 +1,17 @@
-/** microCMS の画像オブジェクト */
+/** アイキャッチ画像 */
 export type Eyecatch = {
 	url: string;
-	height: number;
-	width: number;
 };
 
-/** microCMS のカテゴリ（共通の日付フィールド付き） */
-export type Category = {
-	id: string;
-	createdAt: string;
-	updatedAt: string;
-	publishedAt: string;
-	revisedAt: string;
-	name: string;
-};
-
-/** microCMS のタグ（共通の日付フィールド付き） */
-export type Tag = {
-	id: string;
-	createdAt: string;
-	updatedAt: string;
-	publishedAt: string;
-	revisedAt: string;
-	name: string;
-};
-
-/** ブログ記事（microCMS API レスポンス形式） */
+/** ブログ記事（表示用） */
 export type Blog = {
 	id: string;
-	createdAt: string;
-	updatedAt: string;
-	publishedAt: string;
-	revisedAt: string;
 	title: string;
 	description: string;
-	content: string;
-	eyecatch: Eyecatch;
-	category: Category | null;
-	tags: Tag[];
+	eyecatch: Eyecatch | null;
+	category: string | null;
+	tags: string[];
+	publishedAt: Date;
+	updatedAt: Date | null;
+	draft: boolean;
 };
