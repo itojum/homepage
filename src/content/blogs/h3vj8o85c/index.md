@@ -2,7 +2,7 @@
 title: "メタバースにおける技術・学術系イベントのメリット"
 description: "VRChat上で盛んに行われている「技術・学術系イベント」。なぜこれほどコミュニティが盛り上がっているのか？リアルイベントや従来のオンラインイベントと比較しながら、メタバース空間がもたらすメリットや交流の強みについて紹介します。"
 publishedAt: 2026-05-06T14:11:05.835Z
-eyecatch: "./eyecatch.png"
+eyecatch: "./eyecatch.webp"
 category: "コミュニティ"
 tags: ["VRChat"]
 ---
