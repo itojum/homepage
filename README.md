@@ -132,6 +132,25 @@ https://github.com/itojum/homepage
 
 About ページの Activities は `src/content/activities.yaml` で管理しています。
 
+### 記事の自動レビュー
+
+`src/content/blogs/**` を変更する PR では、`blog-review.yml` が次のように動きます。
+
+| タイミング | 動作 |
+| --- | --- |
+| PR を作成したとき（opened） | 挨拶コメントを投稿 |
+| PR に push したとき（synchronize） | push で変更された記事を Claude がレビュー |
+| Ready for review にしたとき / 再オープンしたとき | PR 内のすべての記事を Claude がレビュー |
+
+Claude は `.claude/skills/blog-review/SKILL.md` の基準に従って、変更行へのインラインコメントとサマリーコメントを残します。
+手元の Claude Code でも「blog-review スキルでこの記事をレビューして」のように使えます。
+
+事前に次の設定が必要です。
+
+1. [Claude GitHub App](https://github.com/apps/claude) をこのリポジトリにインストールする
+2. 手元で `claude setup-token` を実行してトークンを発行し、Settings > Secrets and variables > Actions の Secrets に `CLAUDE_CODE_OAUTH_TOKEN` として登録する
+   - API キーを使う場合は `ANTHROPIC_API_KEY` を登録し、ワークフローの `claude_code_oauth_token` を `anthropic_api_key` に置き換える
+
 ## Cloudflare R2 の初期設定
 
 1. Cloudflare ダッシュボードで R2 バケットを作成し、カスタムドメイン（例: `images.example.com`）を接続して公開する
