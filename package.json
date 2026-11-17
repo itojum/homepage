@@ -11,8 +11,7 @@
 		"format": "biome format --write .",
 		"check": "biome check .",
 		"migrate:microcms": "node scripts/migrate-from-microcms.js",
-		"images:optimize": "node scripts/optimize-blog-images.js",
-		"images:check": "node scripts/optimize-blog-images.js --check"
+		"images:build": "node scripts/build-blog-images.js"
 	},
 	"dependencies": {
 		"@astrojs/mdx": "^4.3.14",
