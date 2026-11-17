@@ -19,8 +19,6 @@ const blogs = defineCollection({
 		eyecatch: z.string().optional(),
 		category: z.string().optional(),
 		tags: z.array(z.string()).default([]),
-		/** true の場合は一覧・RSS に出さず、/draft/blogs/<slug> にのみ生成する */
-		draft: z.boolean().default(false),
 	}),
 });
 
