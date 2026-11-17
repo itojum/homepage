@@ -104,6 +104,28 @@ console.log("hello");
 - 画像ファイルは `develop` / `main` に push されると GitHub Actions（`sync-blog-images.yml`）が R2 にアップロードします
 - 同期はファイルサイズで差分判定するため、画像を差し替えるときはファイル名を変えてください
 
+### 埋め込み・リンクカード
+
+URL を前後に空行を入れて 1 行だけ書くと、ビルド時に埋め込みへ変換されます。
+
+```markdown
+https://x.com/itojum1230/status/2071073466460291214
+
+https://speakerdeck.com/player/ccdb86861be04395a318dbb7940ee2d0
+
+https://github.com/itojum/homepage
+```
+
+| URL | 表示 |
+| --- | --- |
+| X (Twitter) のポスト | 埋め込みポスト |
+| YouTube | 動画プレイヤー |
+| Speaker Deck（`https://speakerdeck.com/player/<ID>`） | スライド。ID は共有メニューの Embed から取得 |
+| Docswell / Google スライド / slides.com | スライド |
+| その他 | OGP を取得したリンクカード（取得できない場合は URL のみのカード） |
+
+文中のリンクやリスト内の URL は通常のリンクのままです。
+
 About ページの Activities は `src/content/activities.yaml` で管理しています。
 
 ## Cloudflare R2 の初期設定
