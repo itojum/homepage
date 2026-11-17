@@ -56,8 +56,7 @@ export default defineConfig({
 	},
 	integrations: [
 		blogImages(),
-		// 下書きプレビュー（/draft/）はサイトマップに含めない
-		sitemap({ filter: (page) => !new URL(page).pathname.startsWith('/draft/') }),
+		sitemap(),
 		icon(),
 		tailwind(),
 		pagefind(),
