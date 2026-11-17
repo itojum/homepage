@@ -27,6 +27,3 @@ jobs:
 
       - name: Lint
         run: pnpm lint
-
-      - name: ブログ画像の最適化チェック
-        run: pnpm images:check

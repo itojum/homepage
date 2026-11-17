@@ -1,6 +1,6 @@
 name: ブログ画像を R2 に同期
 
-# src/content/blogs 配下の画像を Cloudflare R2 の blogs/ 以下へアップロードする。
+# src/content/blogs 配下の画像を WebP に変換し、Cloudflare R2 の blogs/ 以下へアップロードする。
 # develop へのマージ時点でアップロードしておくことで、週次デプロイ（main）時には画像が揃っている。
 #
 # 必要な設定（Settings > Secrets and variables > Actions）
@@ -52,20 +52,30 @@ jobs:
             exit 1
           fi
 
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 11.0.3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .node-version
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile --ignore-scripts
+
+      - name: 画像を WebP に変換
+        # 本文画像は横幅 1440px にそろえ、PNG / JPEG / GIF は .webp にして .blog-images/ に書き出す
+        run: pnpm images:build .blog-images
+
       - name: R2 に同期
-        # Git チェックアウト直後はタイムスタンプが全て新しくなるため、サイズ差分のみで判定する。
+        # 変換結果は毎回同じになるため、サイズ差分のみで判定する。
         # 同じサイズのまま画像を差し替える場合は反映されないので、差し替え時はファイル名を変えること。
         run: |
-          aws s3 sync src/content/blogs "s3://${R2_BUCKET}/blogs" \
+          aws s3 sync .blog-images "s3://${R2_BUCKET}/blogs" \
             --endpoint-url "https://${CLOUDFLARE_ACCOUNT_ID}.r2.cloudflarestorage.com" \
             --size-only \
             --no-progress \
-            --exclude "*" \
-            --include "*.png" --include "*.PNG" \
-            --include "*.jpg" --include "*.JPG" \
-            --include "*.jpeg" --include "*.JPEG" \
-            --include "*.gif" --include "*.GIF" \
-            --include "*.webp" --include "*.WEBP" \
-            --include "*.avif" --include "*.AVIF" \
-            --include "*.svg" --include "*.SVG" \
             --cache-control "public, max-age=604800"
