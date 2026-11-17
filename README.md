@@ -100,6 +100,7 @@ console.log("hello");
 ````
 
 - 画像を使わない記事は `src/content/blogs/<slug>.md` でも構いません
+- `eyecatch` を省略すると、タイトルと公開日を入れたアイキャッチ画像がビルド時に自動生成されます（`/og/blogs/<slug>.png`。生成処理は `src/libs/eyecatch.ts`）
 - ビルド時に相対パスの画像は `${IMAGE_BASE_URL}/blogs/<slug>/<ファイル名>` に書き換えられます
 - 画像ファイルは `develop` / `main` に push されると GitHub Actions（`sync-blog-images.yml`）が WebP に変換して R2 にアップロードします
   - PNG / JPEG / GIF は `.webp` に変換され、記事内の参照（`./screenshot.png` など）もビルド時に `.webp` の URL に書き換わります。手元での変換は不要です
