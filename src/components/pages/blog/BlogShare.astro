@@ -3,19 +3,33 @@ import { Icon } from "astro-icon/components";
 
 interface Props {
 	title: string;
+	/** 共有する URL。省略時は現在のページの URL（.html を除いたもの）を使う */
+	url?: string;
 }
 
-const { title } = Astro.props;
+const { title, url } = Astro.props;
 
-const pageUrl = Astro.url.href;
+// build.format: "file" では Astro.url が /blogs/foo.html になるため、canonical と同じ形に揃える
+const pageUrl =
+	url ??
+	new URL(
+		Astro.url.pathname.replace(/\.html$/, "").replace(/\/index$/, "/"),
+		Astro.site ?? Astro.url.origin,
+	).href;
 const shareText = `${title}`;
 
 const xShareUrl = `https://x.com/intent/tweet?text=${encodeURIComponent(
 	shareText,
 )}&url=${encodeURIComponent(pageUrl)}`;
+
+// 外部スクリプト（b.st-hatena.com/js/bookmark_button.js）は Brave Shields や
+// Firefox のトラッキング防止でブロックされるため、通常のリンクで共有する
+const hatenaShareUrl = `https://b.hatena.ne.jp/add?mode=confirm&url=${encodeURIComponent(
+	pageUrl,
+)}&title=${encodeURIComponent(title)}`;
 ---
 
-<div class="share">
+<div class="share" data-share-root>
   <p class="share-label">この記事をシェアする</p>
   <div class="share-buttons">
     <a
@@ -24,26 +38,37 @@ const xShareUrl = `https://x.com/intent/tweet?text=${encodeURIComponent(
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Xで共有"
+      title="Xで共有"
     >
       <Icon name="ri:twitter-x-line" size={20} />
     </a>
 
     <a
-      href="https://b.hatena.ne.jp/entry/"
-      class="hatena-bookmark-button"
-      data-hatena-bookmark-layout="touch"
-      data-hatena-bookmark-url={pageUrl}
-      data-hatena-bookmark-title={title}
-      title="このエントリーをはてなブックマークに追加"
+      href={hatenaShareUrl}
+      class="share-button share-button-hatena"
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="はてなブックマークに追加"
+      title="はてなブックマークに追加"
     >
-      <img
-        src="https://b.st-hatena.com/images/v4/public/entry-button/button-only@2x.png"
-        alt="このエントリーをはてなブックマークに追加"
-        width="48"
-        height="48"
-        style="border: none;"
-      />
+      <span class="hatena-mark" aria-hidden="true">B!</span>
     </a>
+
+    <button
+      type="button"
+      class="share-button share-button-copy"
+      data-share-button="copy"
+      data-share-url={pageUrl}
+      aria-label="リンクをコピー"
+      title="リンクをコピー"
+    >
+      <span class="copy-icon copy-icon-default">
+        <Icon name="ri:link" size={20} />
+      </span>
+      <span class="copy-icon copy-icon-done" hidden>
+        <Icon name="ri:check-line" size={20} />
+      </span>
+    </button>
 
     <button
       type="button"
@@ -53,47 +78,107 @@ const xShareUrl = `https://x.com/intent/tweet?text=${encodeURIComponent(
       data-share-text={shareText}
       data-share-url={pageUrl}
       aria-label="このページを共有"
+      title="このページを共有"
+      hidden
     >
       <Icon name="ri:share-line" size={18} />
     </button>
   </div>
+  <p class="share-status" data-share-status role="status" aria-live="polite"></p>
 </div>
 
 <script is:inline>
   (function () {
-    const button = document.querySelector('[data-share-button="native"]');
-    if (!button) return;
+    document.querySelectorAll("[data-share-root]").forEach(function (root) {
+      var status = root.querySelector("[data-share-status]");
+      var setStatus = function (message) {
+        if (status) status.textContent = message;
+      };
 
-    if (!navigator || !navigator.share) {
-      button.hidden = true;
-      return;
-    }
-
-    button.hidden = false;
-
-    button.addEventListener("click", function () {
-      const dataset = button.dataset;
-
-      navigator
-        .share({
-          title: dataset.shareTitle || document.title,
-          text: dataset.shareText || "",
-          url: dataset.shareUrl || location.href,
-        })
-        .catch(function () {
-          // キャンセルなどは無視
+      // ネイティブ共有: navigator.share がある環境でのみ表示する
+      // （Firefox デスクトップなどは未対応のため非表示のまま）
+      var nativeButton = root.querySelector('[data-share-button="native"]');
+      if (nativeButton && typeof navigator.share === "function") {
+        nativeButton.hidden = false;
+        nativeButton.addEventListener("click", function () {
+          var dataset = nativeButton.dataset;
+          navigator
+            .share({
+              title: dataset.shareTitle || document.title,
+              text: dataset.shareText || "",
+              url: dataset.shareUrl || location.href,
+            })
+            .catch(function () {
+              // キャンセル（AbortError）などは無視
+            });
         });
+      }
+
+      // リンクをコピー: Clipboard API → execCommand → prompt の順にフォールバック
+      var copyButton = root.querySelector('[data-share-button="copy"]');
+      if (!copyButton) return;
+
+      var legacyCopy = function (text) {
+        var textarea = document.createElement("textarea");
+        textarea.value = text;
+        textarea.setAttribute("readonly", "");
+        textarea.style.position = "fixed";
+        textarea.style.top = "-9999px";
+        document.body.appendChild(textarea);
+        textarea.select();
+        var ok = false;
+        try {
+          ok = document.execCommand("copy");
+        } catch (_) {
+          ok = false;
+        }
+        document.body.removeChild(textarea);
+        return ok;
+      };
+
+      var copyText = function (text) {
+        if (navigator.clipboard && window.isSecureContext) {
+          return navigator.clipboard.writeText(text).then(
+            function () {
+              return true;
+            },
+            function () {
+              return legacyCopy(text);
+            },
+          );
+        }
+        return Promise.resolve(legacyCopy(text));
+      };
+
+      var defaultIcon = copyButton.querySelector(".copy-icon-default");
+      var doneIcon = copyButton.querySelector(".copy-icon-done");
+      var resetTimer;
+
+      copyButton.addEventListener("click", function () {
+        var text = copyButton.dataset.shareUrl || location.href;
+        copyText(text).then(function (ok) {
+          if (!ok) {
+            window.prompt("このURLをコピーしてください", text);
+            return;
+          }
+          if (defaultIcon && doneIcon) {
+            defaultIcon.hidden = true;
+            doneIcon.hidden = false;
+          }
+          setStatus("リンクをコピーしました");
+          clearTimeout(resetTimer);
+          resetTimer = setTimeout(function () {
+            if (defaultIcon && doneIcon) {
+              defaultIcon.hidden = false;
+              doneIcon.hidden = true;
+            }
+            setStatus("");
+          }, 2000);
+        });
+      });
     });
   })();
 </script>
-
-<script
-  is:inline
-  type="text/javascript"
-  src="https://b.st-hatena.com/js/bookmark_button.js"
-  charset="utf-8"
-  async
-></script>
 
 <style>
   .share {
@@ -116,6 +201,16 @@ const xShareUrl = `https://x.com/intent/tweet?text=${encodeURIComponent(
 
   .share-button {
     @apply flex items-center justify-center w-[42px] h-[42px] rounded-md border border-[rgb(var(--border))] bg-transparent;
+    cursor: pointer;
+  }
+
+  .share-button[hidden],
+  .copy-icon[hidden] {
+    display: none;
+  }
+
+  .copy-icon {
+    display: flex;
   }
 
   .share-button-x {
@@ -126,11 +221,36 @@ const xShareUrl = `https://x.com/intent/tweet?text=${encodeURIComponent(
     background: #292929;
   }
 
+  .share-button-hatena {
+    background: #00a4de;
+    color: #fff;
+    border-color: #00a4de;
+  }
+  .share-button-hatena:hover {
+    background: #0090c3;
+  }
+  .hatena-mark {
+    font-family: Verdana, Arial, sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1;
+  }
+
+  .share-button-copy,
   .share-button-native {
     background: #ffffff;
     color: #000;
   }
+  .share-button-copy:hover,
   .share-button-native:hover {
     background: #ebebeb;
+  }
+
+  .share-status {
+    min-height: 1.25em;
+    margin: 0.5rem 0 0;
+    font-size: 0.8rem;
+    color: rgb(var(--gray));
   }
 </style>
