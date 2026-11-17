@@ -1,0 +1,15 @@
+---
+import SlidesPage from "@/components/pages/slides/SlidesPage.astro";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { getSlides } from "@/libs/slide";
+
+const slides = await getSlides();
+---
+
+<BaseLayout
+  title="Slides"
+  description="itojum（いとじゅん）の登壇資料・スライド一覧。"
+  path="/slides"
+>
+  <SlidesPage slides={slides} />
+</BaseLayout>
