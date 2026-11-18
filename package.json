@@ -10,7 +10,8 @@
 		"lint": "biome lint .",
 		"format": "biome format --write .",
 		"check": "biome check .",
-		"images:build": "node scripts/build-blog-images.js"
+		"images:build": "node scripts/build-blog-images.js",
+		"blog:new": "node scripts/new-blog.js"
 	},
 	"dependencies": {
 		"@astrojs/rss": "^4.0.19",

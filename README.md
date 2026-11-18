@@ -133,6 +133,25 @@ https://github.com/itojum/homepage
 
 About ページの Activities は `src/content/activities.yaml` で管理しています。
 
+### 記事の雛形を作る
+
+GitHub の Actions タブで「ブログ執筆用 PR を作成」（`new-blog.yml`）を Run workflow すると、次の処理を自動で行います。
+
+1. `src/content/blogs/<slug>/index.md` に雛形（`publishedAt` は日本時間の今日）を作成
+2. ブランチ `blog/<slug>` を作成して push
+3. `main` 向けの Draft PR を作成（`blog` ラベルがあれば付与）。記事は PR ブランチ上で下書きし、本文は Cloudflare のプレビューデプロイで確認します。新しく追加した画像は `main` にマージされるまで R2 に同期されずプレビューには表示されないため、画像は `pnpm dev` で確認してください
+
+入力は `title`（必須）と `slug` / `category` / `tags`（任意。`tags` はカンマ区切り）です。`slug` を空にすると英小文字 + 数字のランダムな ID になります。
+
+手元で雛形だけ作る場合は次のコマンドを使います。
+
+```bash
+pnpm blog:new --title "記事タイトル" [--slug my-post] [--category 技術] [--tags "Astro,Cloudflare"]
+```
+
+- 事前に Settings > Actions > General > Workflow permissions の「Allow GitHub Actions to create and approve pull requests」を有効にしてください
+- `GITHUB_TOKEN` で作成した PR では他のワークフローが発火しません。自動レビュー（後述）は執筆者が自分で push したときに動きます
+
 ### 記事の自動レビュー
 
 `src/content/blogs/**` を変更する PR では、`blog-review.yml` が次のように動きます。
