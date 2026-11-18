@@ -33,7 +33,8 @@ const { latestBlogs, links } = Astro.props;
     align-items: start;
   }
 
-  @media (max-width: 760px) {
+  /* 左のコマンド窓（200px）がある間はリンクの窓が狭くなるため、早めに 1 カラムにする */
+  @media (max-width: 1000px) {
     .two {
       grid-template-columns: minmax(0, 1fr);
     }
