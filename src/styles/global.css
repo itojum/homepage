@@ -104,8 +104,9 @@
 		border-bottom-width: 2px;
 	}
 
+	/* 装飾用の金色（--cursor）はライトでコントラストが足りないため、フォーカス枠には --link を使う */
 	:focus-visible {
-		outline: 2px dashed var(--cursor);
+		outline: 2px dashed var(--link);
 		outline-offset: 3px;
 	}
 
