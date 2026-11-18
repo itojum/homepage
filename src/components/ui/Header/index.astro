@@ -1,51 +1,65 @@
 ---
-import Logo from "./Logo.astro";
-import NavLinks from "./NavLinks.astro";
-import Actions from "./Actions.astro";
-import MobileNav from "./MobileNav.astro";
+import { SITE_TITLE } from "@/consts";
 import Search from "../Search.astro";
+import SearchAction from "./SearchAction.astro";
+import ThemeToggle from "./ThemeToggle.astro";
+
+// "itojum.dev" の "." だけをブランド色にする
+const [name, ...rest] = SITE_TITLE.split(".");
+const domain = rest.join(".");
 ---
 
-<header>
-  <nav>
-    <Logo />
-    <div class="header-content">
-      <NavLinks />
-      <Actions />
-      <MobileNav />
-    </div>
-  </nav>
+<header class="top">
+  <a class="logo" href="/" aria-label={`${SITE_TITLE} ホーム`}>
+    {name}{domain && <><b>.</b>{domain}</>}
+  </a>
+  <div class="actions">
+    <SearchAction />
+    <ThemeToggle />
+  </div>
   <Search />
 </header>
+
 <style>
-  header {
-    @apply m-0 px-4;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 50;
-    background-color: rgba(var(--surface-overlay), 92%);
-    border-bottom: 1px solid rgba(var(--border), 80%);
-    backdrop-filter: blur(12px);
-    box-shadow: var(--header-shadow);
+  .top {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 0 4px;
+    font-family: var(--font-dot);
+    font-size: 15px;
   }
 
-  nav {
-    @apply flex items-center justify-between py-2;
-    position: relative;
+  .logo {
+    font-size: 20px;
+    letter-spacing: 0.06em;
+    color: var(--ink);
+    border-bottom: 0;
+    user-select: none;
   }
 
-  h1 {
-    @apply m-0 text-[1em];
+  .logo b {
+    font-weight: 400;
+    color: var(--main);
   }
 
-  h1 a,
-  h1 a.active {
-    @apply flex items-center gap-2 no-underline;
+  .actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-left: auto;
   }
 
-  .header-content {
-    @apply flex items-center gap-4 ml-auto;
+  .actions :global(button) {
+    font: inherit;
+    color: var(--ink);
+    background: none;
+    border: 0;
+    padding: 4px 6px;
+    cursor: pointer;
+  }
+
+  .actions :global(button:hover) {
+    color: var(--link);
   }
 </style>

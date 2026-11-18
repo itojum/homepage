@@ -9,27 +9,59 @@ interface Props {
 const { slide } = Astro.props;
 ---
 
-<li class="slide-card">
-  <a href={slide.url} class="slide-card-link" target="_blank" rel="noopener noreferrer">
-    <div class="slide-card-image-wrap">
-      {slide.thumbnailUrl ? (
-        <img src={slide.thumbnailUrl} alt="" loading="lazy" />
-      ) : (
-        <div class="slide-card-image-placeholder" aria-hidden="true">
-          🖥️
-        </div>
-      )}
-    </div>
-    <div class="slide-card-body">
-      {slide.publishedAt && (
-        <div class="slide-card-meta">
-          <FormattedDate date={slide.publishedAt} />
-        </div>
-      )}
-      <h2 class="slide-card-title">{slide.title}</h2>
-      {slide.description && (
-        <p class="slide-card-description">{slide.description}</p>
-      )}
-    </div>
+<li>
+  <a href={slide.url} class="card" target="_blank" rel="noopener noreferrer">
+    <span class="thumb">
+      {slide.thumbnailUrl && <img src={slide.thumbnailUrl} alt="" loading="lazy" decoding="async" />}
+    </span>
+    {slide.publishedAt && (
+      <span class="date dot-label"><FormattedDate date={slide.publishedAt} /></span>
+    )}
+    <span class="title">{slide.title}</span>
   </a>
 </li>
+
+<style>
+  .card {
+    display: grid;
+    gap: 4px;
+    padding: 8px;
+    color: var(--ink);
+    border-bottom: 0;
+  }
+
+  .card:hover {
+    background: var(--win-2);
+  }
+
+  .card:hover .title {
+    color: var(--link);
+  }
+
+  .thumb {
+    display: block;
+    aspect-ratio: 16 / 9;
+    max-width: 100%;
+    overflow: hidden;
+    margin-bottom: 6px;
+    background: var(--win-2);
+    box-shadow: 0 0 0 2px var(--edge);
+  }
+
+  .thumb img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .date {
+    font-size: 13px;
+    color: var(--ink-2);
+  }
+
+  .title {
+    font-weight: 500;
+    line-height: 1.6;
+  }
+</style>

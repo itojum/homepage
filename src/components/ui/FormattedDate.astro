@@ -1,17 +1,12 @@
 ---
+import { formatDotDate } from "@/libs/date";
+
 interface Props {
 	date: Date;
+	class?: string;
 }
 
-const { date } = Astro.props;
+const { date, class: className } = Astro.props;
 ---
 
-<time datetime={date.toISOString()}>
-	{
-		date.toLocaleDateString('ja-JP', {
-			year: 'numeric',
-			month: 'short',
-			day: 'numeric',
-		})
-	}
-</time>
+<time datetime={date.toISOString()} class={className}>{formatDotDate(date)}</time>

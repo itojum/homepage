@@ -1,6 +1,4 @@
 ---
-import "./Pagination.css";
-
 interface Props {
 	currentPage: number;
 	totalPages: number;
@@ -8,62 +6,103 @@ interface Props {
 	basePath: string;
 	/** nav の aria-label */
 	label: string;
+	/** 全件数と 1 ページの件数を渡すと「11〜18 件目 ／ 全 18 件」を表示する（1 ページだけのときも表示する） */
+	totalItems?: number;
+	perPage?: number;
 }
 
-const { currentPage, totalPages, basePath, label } = Astro.props;
+const { currentPage, totalPages, basePath, label, totalItems, perPage } = Astro.props;
 
-const createPageHref = (page: number) => {
-	if (page === 1) return `${basePath}/`;
-	return `${basePath}/page/${page}/`;
-};
+const createPageHref = (page: number) =>
+	page === 1 ? `${basePath}/` : `${basePath}/page/${page}/`;
 
 const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
+const hasPrev = currentPage > 1;
+const hasNext = currentPage < totalPages;
+
+const range =
+	totalItems !== undefined && perPage !== undefined
+		? {
+				from: (currentPage - 1) * perPage + 1,
+				to: Math.min(currentPage * perPage, totalItems),
+			}
+		: null;
 ---
 
-{totalPages > 1 && (
-  <nav class="pagination" aria-label={label}>
-    <a
-      href={currentPage > 1 ? createPageHref(currentPage - 1) : undefined}
-      class:list={[
-        "pagination__control",
-        "pagination__control--prev",
-        { "is-disabled": currentPage === 1 },
-      ]}
-      aria-disabled={currentPage === 1}
-    >
-      前へ
-    </a>
-
-    <ul class="pagination__list">
-      {pages.map((page) => (
-        <li
-          class:list={[
-            "pagination__item",
-            { "is-active": page === currentPage },
-          ]}
-        >
-          <a
-            href={createPageHref(page)}
-            aria-current={page === currentPage ? "page" : undefined}
-            class="pagination__link"
-          >
+{(totalPages > 1 || (range !== null && (totalItems ?? 0) > 0)) && (
+  <nav class="pager" aria-label={label}>
+    {totalPages > 1 && (
+      <>
+        {hasPrev ? (
+          <a href={createPageHref(currentPage - 1)} rel="prev">◀ まえ</a>
+        ) : (
+          <span class="off" aria-hidden="true">◀ まえ</span>
+        )}
+        {pages.map((page) => (
+          <a href={createPageHref(page)} aria-current={page === currentPage ? "page" : undefined}>
             {page}
           </a>
-        </li>
-      ))}
-    </ul>
-
-    <a
-      href={currentPage < totalPages ? createPageHref(currentPage + 1) : undefined}
-      class:list={[
-        "pagination__control",
-        "pagination__control--next",
-        { "is-disabled": currentPage === totalPages },
-      ]}
-      aria-disabled={currentPage === totalPages}
-    >
-      次へ
-    </a>
+        ))}
+        {hasNext ? (
+          <a href={createPageHref(currentPage + 1)} rel="next">つぎ ▶</a>
+        ) : (
+          <span class="off" aria-hidden="true">つぎ ▶</span>
+        )}
+      </>
+    )}
+    {range && (
+      <span class="count">
+        {range.from}〜{range.to} 件目 ／ 全 {totalItems} 件
+      </span>
+    )}
   </nav>
 )}
 
+<style>
+  .pager {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 6px 18px;
+    margin-top: 18px;
+    padding-top: 14px;
+    border-top: 1px dashed var(--ink-2);
+    font-family: var(--font-dot);
+    font-size: 16px;
+  }
+
+  a,
+  .off {
+    position: relative;
+    padding: 2px 4px 2px 18px;
+    color: var(--ink);
+    border-bottom: 0;
+  }
+
+  a:hover {
+    color: var(--link);
+  }
+
+  a[aria-current="page"]::before {
+    content: "";
+    position: absolute;
+    left: 2px;
+    top: 50%;
+    margin-top: -5px;
+    border: 5px solid transparent;
+    border-left: 8px solid var(--cursor);
+  }
+
+  .off {
+    color: var(--ink-2);
+    opacity: 0.45;
+  }
+
+  .count {
+    flex-basis: 100%;
+    text-align: center;
+    font-size: 13px;
+    color: var(--ink-2);
+  }
+</style>

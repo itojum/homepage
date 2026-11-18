@@ -4,7 +4,7 @@ import { LINKS, SITE_DESCRIPTION, SITE_TITLE } from "@/consts";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { getBlogs } from "@/libs/blog";
 
-const latestBlogs = (await getBlogs()).slice(0, 3);
+const latestBlogs = (await getBlogs()).slice(0, 4);
 ---
 
 <BaseLayout

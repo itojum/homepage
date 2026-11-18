@@ -2,96 +2,84 @@
 @tailwind components;
 @tailwind utilities;
 
+/*
+ * デザイン: 16bit RPG の「メニュー画面」
+ * - 画面の地（--bg）の上に、段々角の「窓」（.win）を置いて情報を組む
+ * - #509efe（--main）は窓の内側の罫線・カーソル行・リンク下線に使う
+ * - ▶ カーソル（--cursor）だけが金色。それ以外の差し色は About の活動種別のみ
+ */
 @layer base {
-	html,
-	body {
-		height: 100%;
-	}
-
-	html {
-		background-color: rgb(var(--bg-page));
-	}
-
 	:root {
 		--main: #509efe;
 		--accent: #2382ff;
 		--accent-dark: #005dd8;
-		--bg-page: 247, 250, 255;
-		--surface: 255, 255, 255;
-		--surface-soft: 246, 249, 255;
-		--surface-muted: 236, 241, 249;
-		--surface-overlay: 255, 255, 255;
-		--border: 219, 226, 238;
-		--border-strong: 179, 192, 215;
-		--overlay: 12, 17, 27;
-		--black: 15, 18, 25;
-		--gray: 96, 115, 159;
-		--gray-light: 229, 233, 240;
-		--gray-dark: 34, 41, 57;
-		--gray-gradient: rgba(var(--gray-light), 50%), rgb(var(--bg-page));
-		--header-shadow: 0 2px 8px rgba(var(--black), 7%);
-		--card-shadow: 0 1px 2px rgba(var(--gray), 8%);
-		--card-shadow-hover: 0 8px 24px rgba(var(--gray), 12%), 0 2px 8px rgba(80, 158, 254, 8%);
-		--timeline-line: 216, 223, 236;
-		--timeline-node-border: 187, 197, 218;
-		--timeline-node-bg: 255, 255, 255;
-		--timeline-node-ring: 255, 255, 255;
-		--chip-bg: 234, 240, 248;
-		--chip-text: 54, 66, 93;
-		--box-shadow:
-			0 2px 6px rgba(var(--gray), 25%), 0 8px 24px rgba(var(--gray), 33%),
-			0 16px 32px rgba(var(--gray), 33%);
+
+		--bg: #d9e6f8;
+		--win: #fbfdff;
+		--win-2: #edf3fc;
+		--edge: #142447;
+		--ink: #121a30;
+		--ink-2: #4a5878;
+		--link: #005dd8;
+		--cursor: #d99a00;
+		--overlay: rgba(10, 18, 40, 0.55);
+
+		--kind-event: #17774a;
+		--kind-work: #c0365f;
+		--kind-exam: #7a4fd0;
+		--kind-project: #8f5600;
+
+		--font-dot: "DotGothic16", "MPLUS1Code", monospace;
+		--font-body: "MPLUS1Code", "Hiragino Kaku Gothic ProN", "Noto Sans JP", monospace;
+
 		color-scheme: light;
 	}
 
 	:root.dark {
 		--accent: #67b0ff;
 		--accent-dark: #a3d0ff;
-		--bg-page: 8, 12, 19;
-		--surface: 18, 24, 36;
-		--surface-soft: 23, 31, 46;
-		--surface-muted: 39, 50, 71;
-		--surface-overlay: 13, 19, 30;
-		--border: 60, 73, 99;
-		--border-strong: 90, 108, 140;
-		--overlay: 3, 6, 11;
-		--black: 236, 243, 255;
-		--gray: 151, 166, 195;
-		--gray-light: 67, 80, 106;
-		--gray-dark: 215, 225, 244;
-		--gray-gradient: rgba(14, 20, 30, 95%), rgb(8, 12, 19);
-		--header-shadow: 0 2px 12px rgba(0, 0, 0, 35%);
-		--card-shadow: 0 1px 2px rgba(0, 0, 0, 45%);
-		--card-shadow-hover: 0 10px 28px rgba(0, 0, 0, 45%), 0 3px 12px rgba(80, 158, 254, 20%);
-		--timeline-line: 73, 87, 116;
-		--timeline-node-border: 106, 121, 153;
-		--timeline-node-bg: 17, 24, 36;
-		--timeline-node-ring: 11, 16, 25;
-		--chip-bg: 45, 58, 82;
-		--chip-text: 208, 219, 242;
-		--box-shadow:
-			0 2px 8px rgba(0, 0, 0, 35%), 0 10px 26px rgba(0, 0, 0, 45%), 0 16px 34px rgba(0, 0, 0, 40%);
+
+		--bg: #050a1a;
+		--win: #0f2a6b;
+		--win-2: #0b2059;
+		--edge: #e9f0ff;
+		--ink: #eef3ff;
+		--ink-2: #a9bde6;
+		--link: #9fcbff;
+		--cursor: #ffd451;
+		--overlay: rgba(0, 3, 12, 0.7);
+
+		--kind-event: #58d39a;
+		--kind-work: #ff86a6;
+		--kind-exam: #c4a8ff;
+		--kind-project: #ffc46b;
+
 		color-scheme: dark;
 	}
 
 	@font-face {
 		font-family: "MPLUS1Code";
 		src: url("/fonts/MPLUS1Code-VariableFont_wght.ttf") format("truetype");
-		font-weight: 400;
+		font-weight: 100 700;
 		font-style: normal;
 		font-display: swap;
 	}
 
-	body {
-		@apply m-0 p-0 text-left break-words text-[rgb(var(--gray-dark))] text-[20px] leading-[1.7] flex flex-col min-h-screen;
-		font-family: "MPLUS1Code", sans-serif;
-		background-image: linear-gradient(var(--gray-gradient));
-		background-repeat: no-repeat;
-		background-size: 100% 600px;
+	html {
+		background-color: var(--bg);
 	}
 
-	main {
-		@apply w-[720px] max-w-[calc(100%-2em)] mx-auto py-12 px-4 flex-1;
+	body {
+		margin: 0;
+		min-height: 100vh;
+		background-color: var(--bg);
+		color: var(--ink);
+		font-family: var(--font-body);
+		font-size: 16px;
+		line-height: 1.9;
+		letter-spacing: 0.02em;
+		overflow-wrap: anywhere;
+		-webkit-font-smoothing: antialiased;
 	}
 
 	h1,
@@ -100,102 +88,86 @@
 	h4,
 	h5,
 	h6 {
-		@apply mb-2 text-[rgb(var(--black))] leading-tight;
-	}
-
-	h1 {
-		@apply text-[2.5em] font-normal;
-	}
-
-	h2 {
-		@apply text-[2.25em] font-medium;
-	}
-
-	h3 {
-		@apply text-[2em] font-black;
-	}
-
-	h4 {
-		@apply text-[1.375em] text-[rgb(var(--gray))];
-	}
-
-	h5 {
-		@apply text-[1.125em] text-[rgb(var(--gray))];
-	}
-
-	strong,
-	b {
-		@apply font-bold;
+		margin: 0;
+		color: var(--ink);
+		line-height: 1.5;
+		font-weight: 700;
 	}
 
 	a {
-		@apply text-[var(--accent)];
+		color: var(--link);
+		text-decoration: none;
+		border-bottom: 1px solid var(--main);
 	}
 
 	a:hover {
-		@apply text-[var(--accent-dark)];
+		border-bottom-width: 2px;
+	}
+
+	/* 装飾用の金色（--cursor）はライトでコントラストが足りないため、フォーカス枠には --link を使う */
+	:focus-visible {
+		outline: 2px dashed var(--link);
+		outline-offset: 3px;
 	}
 
 	p {
-		@apply mb-4;
-	}
-
-	.prose p {
-		@apply mb-8;
-	}
-
-	textarea {
-		@apply w-full text-base;
-	}
-
-	input {
-		@apply text-base;
-	}
-
-	table {
-		@apply w-full;
+		margin: 0;
 	}
 
 	img {
-		@apply max-w-full h-auto rounded-lg;
+		max-width: 100%;
+		height: auto;
 	}
 
 	code {
-		@apply px-1 py-0.5 rounded bg-[rgb(var(--surface-muted))];
+		font-family: var(--font-body);
+		font-size: 0.9em;
+		background: var(--win-2);
+		padding: 1px 5px;
 	}
 
 	pre {
-		@apply p-6 rounded-lg overflow-x-auto;
+		overflow-x: auto;
 	}
 
 	pre > code {
-		@apply block w-max min-w-full bg-transparent p-0 rounded-none;
-		font-family: "MPLUS1Code", monospace;
+		display: block;
+		width: max-content;
+		min-width: 100%;
+		background: transparent;
+		padding: 0;
+		font-size: inherit;
 	}
 
-	[data-rehype-pretty-code-figure] {
-		@apply my-6 rounded-lg overflow-hidden border;
-		border-color: rgb(var(--border));
+	/* rehype-pretty-code（Shiki のライト/ダーク 2 テーマ） */
+	figure[data-rehype-pretty-code-figure] {
+		margin: 1.6em 0;
+		box-shadow: 0 0 0 3px var(--edge);
 	}
 
 	[data-rehype-pretty-code-title] {
-		@apply m-0 flex items-center justify-between px-4 py-2 text-xs;
-		background-color: rgb(var(--surface-soft));
-		color: rgb(var(--gray-dark));
-		border-bottom: 1px solid rgb(var(--border));
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		margin: 0;
+		padding: 4px 14px;
+		font-family: var(--font-dot);
+		font-size: 13px;
+		background: var(--main);
+		color: #0a1430;
 	}
 
 	[data-rehype-pretty-code-title]::after {
 		content: attr(data-language);
-		@apply text-[11px] leading-tight px-2 py-1 rounded-full;
 		text-transform: uppercase;
-		letter-spacing: 0.04em;
-		color: rgb(var(--gray));
-		background-color: rgb(var(--surface));
+		letter-spacing: 0.06em;
 	}
 
 	[data-rehype-pretty-code-figure] pre {
-		@apply m-0 rounded-none;
+		margin: 0;
+		padding: 16px 18px;
+		font-size: 13.5px;
+		line-height: 1.75;
 	}
 
 	pre[data-theme*=" "],
@@ -210,21 +182,123 @@
 		background-color: var(--shiki-dark-bg);
 	}
 
-	blockquote {
-		@apply m-0 pl-5 text-[1.333em] border-l-4;
-	}
-
 	hr {
-		@apply border-0 border-t border-[rgb(var(--border))] my-8;
+		border: 0;
+		border-top: 1px dashed var(--ink-2);
+		margin: 2em 0;
+	}
+}
+
+@layer components {
+	/*
+	 * 窓: 段々角の外枠（--edge 3px）＋内側に --main の 1px 罫。影は付けない。
+	 * 外側を --edge で塗って段々に切り抜き、::before で内側の地を 3px 内に重ねる。
+	 */
+	.win {
+		--win-pad: 22px 24px;
+		position: relative;
+		min-width: 0;
+		padding: var(--win-pad);
+		background: var(--edge);
+		clip-path: polygon(
+			0 6px,
+			3px 6px,
+			3px 3px,
+			6px 3px,
+			6px 0,
+			calc(100% - 6px) 0,
+			calc(100% - 6px) 3px,
+			calc(100% - 3px) 3px,
+			calc(100% - 3px) 6px,
+			100% 6px,
+			100% calc(100% - 6px),
+			calc(100% - 3px) calc(100% - 6px),
+			calc(100% - 3px) calc(100% - 3px),
+			calc(100% - 6px) calc(100% - 3px),
+			calc(100% - 6px) 100%,
+			6px 100%,
+			6px calc(100% - 3px),
+			3px calc(100% - 3px),
+			3px calc(100% - 6px),
+			0 calc(100% - 6px)
+		);
 	}
 
-	@media (max-width: 720px) {
-		body {
-			@apply text-[18px];
-		}
+	.win::before {
+		content: "";
+		position: absolute;
+		inset: 3px;
+		background: var(--win);
+		clip-path: polygon(
+			0 3px,
+			3px 3px,
+			3px 0,
+			calc(100% - 3px) 0,
+			calc(100% - 3px) 3px,
+			100% 3px,
+			100% calc(100% - 3px),
+			calc(100% - 3px) calc(100% - 3px),
+			calc(100% - 3px) 100%,
+			3px 100%,
+			3px calc(100% - 3px),
+			0 calc(100% - 3px)
+		);
+		box-shadow:
+			inset 0 0 0 2px var(--win),
+			inset 0 0 0 3px var(--main);
+	}
 
-		main {
-			@apply p-4;
+	.win > * {
+		position: relative;
+	}
+
+	/* 窓の見出し（ドットフォントの小さなラベル） */
+	.win-title {
+		margin: -6px 0 12px;
+		font-family: var(--font-dot);
+		font-size: 15px;
+		font-weight: 400;
+		letter-spacing: 0.08em;
+		color: var(--ink-2);
+	}
+
+	/* ▶ カーソル付きのリスト行（ホバー・フォーカスでカーソルが出る） */
+	.cursor-row {
+		position: relative;
+		display: block;
+		border-bottom: 0;
+		color: var(--ink);
+		padding: 7px 8px 7px 24px;
+	}
+
+	.cursor-row::before {
+		content: "";
+		position: absolute;
+		left: 6px;
+		top: 15px;
+		border: 5px solid transparent;
+		border-left: 8px solid var(--cursor);
+		opacity: 0;
+	}
+
+	.cursor-row:hover {
+		background: var(--win-2);
+		border-bottom: 0;
+	}
+
+	.cursor-row:hover::before,
+	.cursor-row:focus-visible::before {
+		opacity: 1;
+	}
+
+	.dot-label {
+		font-family: var(--font-dot);
+		font-variant-numeric: tabular-nums;
+	}
+
+	@media (max-width: 760px) {
+		.win {
+			--win-pad: 18px;
 		}
 	}
 }

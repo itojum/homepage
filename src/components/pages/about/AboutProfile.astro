@@ -1,33 +1,78 @@
 ---
 import { Image } from "astro:assets";
 import iconImage from "@/assets/icon.jpg";
+
+const profile = [
+	{ label: "なまえ", value: "itojum ／ いとじゅん" },
+	{ label: "しょくぎょう", value: "Product Engineer" },
+	{ label: "たんじょうび", value: "12月30日" },
+	{ label: "しゅっしん", value: "鳥取 ／ 島根" },
+];
 ---
 
-<div class="sm:flex items-end gap-4">
+<section class="win status" aria-labelledby="profile-title">
   <Image
     src={iconImage}
-    class="icon-image"
-    alt="いとじゅんのicon"
-    width={1000}
-    height={1000}
+    class="face"
+    alt="いとじゅんのアイコン"
+    width={448}
+    height={448}
+    loading="eager"
   />
-  <ul>
-    <li>Name: itojum / いとじゅん</li>
-    <li>Job: Product Engineer</li>
-    <li>Birthday: December 30th</li>
-    <li>From: Tottori/Shimane, Japan</li>
-  </ul>
-</div>
+  <div>
+    <h1 id="profile-title" class="win-title">プロフィール</h1>
+    <dl class="table">
+      {profile.map((row) => (
+        <>
+          <dt class="dot-label">{row.label}</dt>
+          <dd>{row.value}</dd>
+        </>
+      ))}
+    </dl>
+  </div>
+</section>
 
 <style>
-  .icon-image {
+  .status {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: 26px;
+    align-items: start;
+  }
+
+  .face {
+    display: block;
+    width: 224px;
+    height: 224px;
     object-fit: cover;
-    object-position: center;
-    border-radius: 9999px;
-    box-shadow: var(--box-shadow);
-    width: 200px;
-    height: 200px;
-    max-width: 80vw;
-    max-height: 80vw;
+    background: var(--win-2);
+    box-shadow: 0 0 0 3px var(--edge);
+  }
+
+  .table {
+    display: grid;
+    grid-template-columns: 7em minmax(0, 1fr);
+    gap: 4px 14px;
+    margin: 0;
+    font-size: 15px;
+  }
+
+  dt {
+    color: var(--ink-2);
+  }
+
+  dd {
+    margin: 0;
+  }
+
+  @media (max-width: 760px) {
+    .status {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .face {
+      width: 144px;
+      height: 144px;
+    }
   }
 </style>

@@ -23,5 +23,11 @@ const totalPages = Math.ceil(allSlides.length / SLIDES_PER_PAGE);
   description={`itojum（いとじゅん）の登壇資料・スライド一覧の${currentPage}ページ目。`}
   path={`/slides/page/${currentPage}`}
 >
-  <SlidesPage slides={slides} currentPage={currentPage} totalPages={totalPages} />
+  <SlidesPage
+    slides={slides}
+    currentPage={currentPage}
+    totalPages={totalPages}
+    totalItems={allSlides.length}
+    perPage={SLIDES_PER_PAGE}
+  />
 </BaseLayout>

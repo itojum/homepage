@@ -1,5 +1,4 @@
 ---
-import { Icon } from "astro-icon/components";
 
 interface Props {
 	title: string;
@@ -30,61 +29,25 @@ const hatenaShareUrl = `https://b.hatena.ne.jp/add?mode=confirm&url=${encodeURIC
 ---
 
 <div class="share" data-share-root>
-  <p class="share-label">この記事をシェアする</p>
-  <div class="share-buttons">
-    <a
-      href={xShareUrl}
-      class="share-button share-button-x"
-      target="_blank"
-      rel="noopener noreferrer"
-      aria-label="Xで共有"
-      title="Xで共有"
-    >
-      <Icon name="ri:twitter-x-line" size={20} />
-    </a>
-
-    <a
-      href={hatenaShareUrl}
-      class="share-button share-button-hatena"
-      target="_blank"
-      rel="noopener noreferrer"
-      aria-label="はてなブックマークに追加"
-      title="はてなブックマークに追加"
-    >
-      <span class="hatena-mark" aria-hidden="true">B!</span>
-    </a>
-
-    <button
-      type="button"
-      class="share-button share-button-copy"
-      data-share-button="copy"
-      data-share-url={pageUrl}
-      aria-label="リンクをコピー"
-      title="リンクをコピー"
-    >
-      <span class="copy-icon copy-icon-default">
-        <Icon name="ri:link" size={20} />
-      </span>
-      <span class="copy-icon copy-icon-done" hidden>
-        <Icon name="ri:check-line" size={20} />
-      </span>
-    </button>
-
-    <button
-      type="button"
-      class="share-button share-button-native"
-      data-share-button="native"
-      data-share-title={title}
-      data-share-text={shareText}
-      data-share-url={pageUrl}
-      aria-label="このページを共有"
-      title="このページを共有"
-      hidden
-    >
-      <Icon name="ri:share-line" size={18} />
-    </button>
-  </div>
-  <p class="share-status" data-share-status role="status" aria-live="polite"></p>
+  <span class="share-label">シェア</span>
+  <a href={xShareUrl} class="share-button" target="_blank" rel="noopener noreferrer">X でポスト</a>
+  <a href={hatenaShareUrl} class="share-button" target="_blank" rel="noopener noreferrer">はてなブックマーク</a>
+  <button type="button" class="share-button" data-share-button="copy" data-share-url={pageUrl}>
+    <span class="copy-icon-default">リンクをコピー</span>
+    <span class="copy-icon-done" hidden>コピーしました</span>
+  </button>
+  <button
+    type="button"
+    class="share-button"
+    data-share-button="native"
+    data-share-title={title}
+    data-share-text={shareText}
+    data-share-url={pageUrl}
+    hidden
+  >
+    ほかのアプリで共有
+  </button>
+  <p class="share-status sr-only" data-share-status role="status" aria-live="polite"></p>
 </div>
 
 <script is:inline>
@@ -182,75 +145,34 @@ const hatenaShareUrl = `https://b.hatena.ne.jp/add?mode=confirm&url=${encodeURIC
 
 <style>
   .share {
-    margin-top: 2.5rem;
-    padding-top: 1.75rem;
-    border-top: 1px solid rgba(var(--border), 80%);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px 22px;
+    font-family: var(--font-dot);
+    font-size: 15px;
   }
 
   .share-label {
-    margin: 0 0 0.75rem;
-    font-size: 0.9rem;
-    color: rgb(var(--gray));
-  }
-
-  .share-buttons {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.75rem;
+    color: var(--ink-2);
   }
 
   .share-button {
-    @apply flex items-center justify-center w-[42px] h-[42px] rounded-md border border-[rgb(var(--border))] bg-transparent;
+    font: inherit;
+    color: var(--link);
+    background: none;
+    border: 0;
+    border-bottom: 1px solid var(--main);
+    padding: 0;
     cursor: pointer;
   }
 
+  .share-button:hover {
+    border-bottom-width: 2px;
+  }
+
   .share-button[hidden],
-  .copy-icon[hidden] {
+  .share-button [hidden] {
     display: none;
-  }
-
-  .copy-icon {
-    display: flex;
-  }
-
-  .share-button-x {
-    background: #000;
-    color: #fff;
-  }
-  .share-button-x:hover {
-    background: #292929;
-  }
-
-  .share-button-hatena {
-    background: #00a4de;
-    color: #fff;
-    border-color: #00a4de;
-  }
-  .share-button-hatena:hover {
-    background: #0090c3;
-  }
-  .hatena-mark {
-    font-family: Verdana, Arial, sans-serif;
-    font-size: 1rem;
-    font-weight: 700;
-    letter-spacing: -0.02em;
-    line-height: 1;
-  }
-
-  .share-button-copy,
-  .share-button-native {
-    background: #ffffff;
-    color: #000;
-  }
-  .share-button-copy:hover,
-  .share-button-native:hover {
-    background: #ebebeb;
-  }
-
-  .share-status {
-    min-height: 1.25em;
-    margin: 0.5rem 0 0;
-    font-size: 0.8rem;
-    color: rgb(var(--gray));
   }
 </style>

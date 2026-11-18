@@ -1,73 +1,94 @@
 ---
-interface Props {
-	title: string;
-	description: string;
-}
-
-const { title, description } = Astro.props;
 ---
 
-<h1 class="title" data-pagefind-meta="title">{title}</h1>
-<p class="summary" data-pagefind-meta="description">
-  {description}
-</p>
 <div class="post"><slot /></div>
 
 <style>
-  .title {
-    padding-bottom: 0.5em;
-    line-height: 1.2;
-    color: rgb(var(--black));
-    font-size: 3rem;
-  }
-  .summary {
-    margin: 0.5em 0;
-    font-size: 1rem;
-    color: rgb(var(--gray));
-  }
   .post {
-    line-height: 1.7;
+    max-width: 38em;
+    margin: 0 auto;
+    padding: 14px 8px 4px;
+    font-size: 16px;
+    line-height: 2.05;
   }
   .post :global(h2) {
-    margin: 1.5em 0 0.5em;
-    font-size: 2rem;
+    margin: 2.4em 0 0.6em;
+    padding-bottom: 6px;
+    font-size: 21px;
+    line-height: 1.5;
+    border-bottom: 3px double var(--main);
   }
   .post :global(h3) {
-    margin: 1.25em 0 0.5em;
-    font-size: 1.5rem;
+    margin: 2em 0 0.4em;
+    font-size: 17px;
+  }
+  .post :global(h3)::before {
+    content: "▶ ";
+    font-size: 0.8em;
+    color: var(--cursor);
+  }
+  .post :global(h4) {
+    margin: 1.6em 0 0.4em;
+    font-size: 16px;
   }
   .post :global(p) {
-    margin: 0.75em 0;
+    margin: 0 0 1.2em;
   }
   .post :global(ul),
   .post :global(ol) {
-    margin: 0.75em 0;
-    padding-left: 1.5em;
+    margin: 0 0 1.2em;
+    padding-left: 1.4em;
   }
   .post :global(ul) {
-    list-style: disc;
+    list-style: none;
+  }
+  .post :global(ul > li)::before {
+    content: "・";
+    margin-left: -1em;
+    color: var(--main);
   }
   .post :global(ol) {
     list-style: decimal;
   }
   .post :global(li) {
-    margin: 0.25em 0;
-  }
-  .post :global(a) {
-    color: var(--accent);
-    text-decoration: underline;
+    margin: 0.2em 0;
   }
   .post :global(img) {
-    @apply rounded-md shadow-md;
-    margin: 0.75em 0;
+    display: block;
+    margin: 1.4em 0 0.6em;
+    box-shadow: 0 0 0 3px var(--edge);
   }
-  .post :global(figcaption) {
-    font-size: 0.8em;
-    color: rgb(var(--gray));
+  .post :global(figure) {
+    margin: 1.8em 0;
+  }
+  .post :global(figcaption:not([data-rehype-pretty-code-title])) {
+    font-size: 13px;
+    color: var(--ink-2);
   }
   .post :global(blockquote) {
-    color: rgb(var(--gray));
-    font-size: 0.9em;
+    margin: 1.6em 0;
+    padding: 4px 0 4px 18px;
+    border-left: 4px solid var(--main);
+    color: var(--ink-2);
+  }
+  .post :global(blockquote p:last-child) {
+    margin-bottom: 0;
+  }
+  .post :global(table) {
+    display: block;
+    max-width: 100%;
+    overflow-x: auto;
+    margin: 0 0 1.2em;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+  .post :global(th),
+  .post :global(td) {
+    padding: 6px 10px;
+    border: 1px solid var(--ink-2);
+  }
+  .post :global(th) {
+    background: var(--win-2);
   }
   .post :global(.twitter-tweet) {
     margin: 1.5em auto;
@@ -85,7 +106,6 @@ const { title, description } = Astro.props;
     width: 100%;
     height: 100%;
     border: 0;
-    border-radius: 8px;
   }
 
   /* リンクカード */
@@ -93,14 +113,15 @@ const { title, description } = Astro.props;
     display: flex;
     margin: 1.5em 0;
     overflow: hidden;
-    border: 1px solid rgba(var(--border), 90%);
-    border-radius: 8px;
+    border: 2px solid var(--edge);
     color: inherit;
     text-decoration: none;
-    transition: background-color 0.2s;
+  }
+  .post :global(a.link-card:hover) {
+    border-bottom-width: 2px;
   }
   .post :global(.link-card:hover) {
-    background-color: rgba(var(--border), 25%);
+    background-color: var(--win-2);
   }
   .post :global(.link-card__body) {
     display: flex;
@@ -112,7 +133,7 @@ const { title, description } = Astro.props;
   }
   .post :global(.link-card__title) {
     overflow: hidden;
-    color: rgb(var(--black));
+    color: var(--ink);
     font-weight: 600;
     line-height: 1.4;
     text-overflow: ellipsis;
@@ -121,7 +142,7 @@ const { title, description } = Astro.props;
   .post :global(.link-card__description) {
     display: -webkit-box;
     overflow: hidden;
-    color: rgb(var(--gray));
+    color: var(--ink-2);
     font-size: 0.85em;
     line-height: 1.5;
     -webkit-box-orient: vertical;
@@ -129,7 +150,7 @@ const { title, description } = Astro.props;
   }
   .post :global(.link-card__site) {
     margin-top: auto;
-    color: rgb(var(--gray));
+    color: var(--ink-2);
     font-size: 0.8em;
   }
   .post :global(.link-card__image) {
@@ -144,6 +165,13 @@ const { title, description } = Astro.props;
   @media (max-width: 560px) {
     .post :global(.link-card__description) {
       display: none;
+    }
+  }
+
+  @media (max-width: 760px) {
+    .post {
+      padding: 14px 0 0;
+      font-size: 15.5px;
     }
   }
 </style>

@@ -9,7 +9,7 @@ import SearchComponent from "astro-pagefind/components/Search.astro";
 >
   <div class="search-modal__backdrop" data-search-close></div>
   <div
-    class="search-modal__dialog"
+    class="search-modal__dialog win"
     role="dialog"
     aria-modal="true"
     aria-labelledby="search-modal-title"
@@ -24,10 +24,10 @@ import SearchComponent from "astro-pagefind/components/Search.astro";
         aria-label="検索モーダルを閉じる"
         data-search-close
       >
-        ✕
+        とじる
       </button>
     </div>
-    <div class="search-modal__body p-4 overflow-y-auto flex-1 min-h-0">
+    <div class="search-modal__body">
       <SearchComponent className="pagefind-ui" />
     </div>
   </div>
@@ -82,11 +82,15 @@ import SearchComponent from "astro-pagefind/components/Search.astro";
 
 <style>
   .search-modal {
-    @apply fixed inset-0 flex items-start justify-center;
-    background: rgba(var(--overlay), 45%);
-    display: none;
+    position: fixed;
+    inset: 0;
     z-index: 60;
-    padding-top: 5rem;
+    display: none;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 5rem max(16px, env(safe-area-inset-right, 0px)) 0
+      max(16px, env(safe-area-inset-left, 0px));
+    background: var(--overlay);
   }
 
   .search-modal.is-open {
@@ -94,46 +98,71 @@ import SearchComponent from "astro-pagefind/components/Search.astro";
   }
 
   .search-modal__backdrop {
-    @apply absolute inset-0;
+    position: absolute;
+    inset: 0;
   }
 
   .search-modal__dialog {
-    @apply relative flex flex-col w-full h-[80vh] max-w-3xl mx-4 rounded-xl;
-    background: rgb(var(--surface));
-    border: 1px solid rgba(var(--border), 90%);
-    box-shadow: var(--box-shadow);
-    color: rgb(var(--gray-dark));
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 48rem;
+    height: 80vh;
+    color: var(--ink);
     z-index: 1;
   }
 
   .search-modal__header {
-    @apply flex items-center justify-between px-4 py-3 border-b;
-    border-color: rgba(var(--border), 90%);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 10px;
+    border-bottom: 1px dashed var(--ink-2);
   }
 
   .search-modal__title {
-    @apply m-0 text-base font-semibold text-[rgb(var(--gray-dark))];
+    margin: 0;
+    font-family: var(--font-dot);
+    font-size: 15px;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    color: var(--ink-2);
   }
 
   .search-modal__close {
-    @apply inline-flex items-center justify-center w-8 h-8 rounded-full border text-[rgb(var(--gray-dark))] cursor-pointer;
-    border-color: rgba(var(--border), 90%);
-    background: rgb(var(--surface-soft));
+    font-family: var(--font-dot);
+    font-size: 15px;
+    color: var(--ink);
+    background: none;
+    border: 0;
+    padding: 2px 4px;
+    cursor: pointer;
   }
 
   .search-modal__close:hover {
-    background: rgb(var(--surface-muted));
+    color: var(--link);
+  }
+
+  .search-modal__body {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    padding-top: 14px;
   }
 
   .search-modal :global(.pagefind-ui) {
-    --pf-text: rgb(var(--gray-dark));
-    --pf-background: rgb(var(--surface-soft));
-    --pf-border: rgba(var(--border), 90%);
-    --pf-hover: rgb(var(--surface-muted));
-    --pf-font: 'MPLUS1Code', sans-serif;
+    --pf-text: var(--ink);
+    --pf-text-secondary: var(--ink-2);
+    --pf-background: var(--win);
+    --pf-border: var(--edge);
+    --pf-border-width: 2px;
+    --pf-border-radius: 0;
+    --pf-hover: var(--win-2);
+    --pf-font: "MPLUS1Code", sans-serif;
   }
 
+  .search-modal :global(.pagefind-ui a),
   .search-modal :global(.pf-searchbox-result-title) {
-    color: var(--accent);
+    color: var(--link);
   }
 </style>

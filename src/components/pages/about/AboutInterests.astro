@@ -1,28 +1,50 @@
----
----
-
-<div class="flex sm:flex-row flex-col gap-4">
-  <div class="w-1/2">
-    <h2>Interests</h2>
-    <ul class="list-disc list-inside">
+<div class="cols">
+  <section class="win" aria-labelledby="interests-title">
+    <h2 id="interests-title" class="win-title">興味</h2>
+    <ul class="plain">
       <li>Web開発</li>
       <li>AIエージェント</li>
       <li>技術系イベント</li>
     </ul>
-  </div>
-  <div class="w-1/2">
-    <h2>Hobbies</h2>
-    <ul class="list-disc list-inside">
+  </section>
+  <section class="win" aria-labelledby="hobbies-title">
+    <h2 id="hobbies-title" class="win-title">趣味</h2>
+    <ul class="plain">
       <li>VRChat</li>
       <li>Minecraft</li>
     </ul>
-    <p class="interest-note">増やしたい...</p>
-  </div>
+    <p class="note">増やしたい...</p>
+  </section>
 </div>
 
 <style>
-  .interest-note {
-    @apply text-sm text-right;
-    color: rgb(var(--gray));
+  .cols {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  .plain {
+    margin: 0;
+    padding-left: 1.2em;
+    list-style: none;
+  }
+
+  .plain li::before {
+    content: "・";
+    margin-left: -1em;
+    color: var(--main);
+  }
+
+  .note {
+    margin-top: 6px;
+    font-size: 12px;
+    color: var(--ink-2);
+  }
+
+  @media (max-width: 760px) {
+    .cols {
+      grid-template-columns: minmax(0, 1fr);
+    }
   }
 </style>

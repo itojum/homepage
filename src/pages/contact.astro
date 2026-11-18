@@ -9,54 +9,39 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
   path="/contact"
   noIndex={true}
 >
-  <section class="space-y-6">
-    <header class="space-y-2">
-      <h1>Contact</h1>
-      <p class="text-[rgb(var(--gray))] text-base">
-        ご用件のある方は以下のXアカウントまたはメールアドレスからご連絡ください。
-      </p>
-    </header>
-
-    <div class="grid gap-4 md:grid-cols-2">
-      <div class="contact-card">
-        <p
-          class="text-xs font-semibold uppercase tracking-wide text-[rgb(var(--gray))]"
-        >
-          X
-        </p>
-        <p class="mt-1 text-lg font-medium text-[rgb(var(--black))]">
-          <a
-            href={X_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            class="hover:underline"
-          >
-            @itojum1230
-          </a>
-        </p>
-      </div>
-
-      <div class="contact-card">
-        <p
-          class="text-xs font-semibold uppercase tracking-wide text-[rgb(var(--gray))]"
-        >
-          Email
-        </p>
-        <p class="mt-1 text-lg font-medium text-[rgb(var(--black))]">
-          <a href={`mailto:${EMAIL_ADDRESS}`} class="hover:underline">
-            {EMAIL_ADDRESS}
-          </a>
-        </p>
-      </div>
-    </div>
+  <section class="win">
+    <h1 class="win-title">れんらく</h1>
+    <p class="lead">ご用件のある方は、以下の X アカウントまたはメールアドレスからご連絡ください。</p>
+    <dl class="table">
+      <dt class="dot-label">X</dt>
+      <dd>
+        <a href={X_URL} target="_blank" rel="noopener noreferrer">@itojum1230</a>
+      </dd>
+      <dt class="dot-label">Email</dt>
+      <dd>
+        <a href={`mailto:${EMAIL_ADDRESS}`}>{EMAIL_ADDRESS}</a>
+      </dd>
+    </dl>
   </section>
 </BaseLayout>
 
 <style>
-  .contact-card {
-    @apply rounded-xl border p-4;
-    border-color: rgba(var(--border), 90%);
-    background: rgba(var(--surface), 72%);
-    box-shadow: var(--card-shadow);
+  .lead {
+    margin-bottom: 14px;
+  }
+
+  .table {
+    display: grid;
+    grid-template-columns: 6em minmax(0, 1fr);
+    gap: 6px 14px;
+    margin: 0;
+  }
+
+  dt {
+    color: var(--ink-2);
+  }
+
+  dd {
+    margin: 0;
   }
 </style>
