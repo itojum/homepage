@@ -1,72 +1,112 @@
 ---
 import { getCollection } from "astro:content";
-import TimelineItem from "./TimelineItem.astro";
+import { formatDotMonth } from "@/libs/date";
 
-type TimelineItemType = "project" | "event" | "work" | "examination" | "other" | "current";
+type ActivityType = "project" | "event" | "work" | "examination" | "other";
 
-interface Activity {
-	title: string;
-	date: Date;
-	type: TimelineItemType;
-	link:
-		| {
-				url: string;
-				text: string;
-		  }
-		| undefined;
-}
-
-const activities: Activity[] = (await getCollection("activities")).map(({ data }) => ({
-	title: data.title,
-	date: data.date,
-	type: data.type,
-	link: data.link && data.linkText ? { url: data.link, text: data.linkText } : undefined,
-}));
-
-const sortedActivities = [...activities].sort((a, b) => b.date.getTime() - a.date.getTime());
-
-const nowItem: Activity = {
-	title: "現在",
-	date: new Date(),
-	type: "current",
-	link: undefined,
+const kindLabels: Record<ActivityType, string> = {
+	project: "PROJECT",
+	event: "EVENT",
+	work: "WORK",
+	examination: "EXAM",
+	other: "OTHER",
 };
 
-const timelineItems = [nowItem, ...sortedActivities];
+const activities = (await getCollection("activities"))
+	.map(({ data }) => ({
+		title: data.title,
+		date: data.date,
+		type: data.type as ActivityType,
+		link: data.link && data.linkText ? { url: data.link, text: data.linkText } : undefined,
+	}))
+	.sort((a, b) => b.date.getTime() - a.date.getTime());
 ---
 
-<h2>Activities</h2>
-<div class="activities-timeline">
-  <ul class="activities-timeline__list">
-    <span
-      class="activities-timeline__line"
-      aria-hidden="true"></span>
-    {
-      timelineItems.map((activity, index) => (
-        <TimelineItem activity={activity} isFirst={index === 0} />
-      ))
-    }
-  </ul>
-</div>
+<section class="win" aria-labelledby="activities-title">
+  <h2 id="activities-title" class="win-title">活動 ― {activities.length} 件</h2>
+  <ol class="timeline">
+    {activities.map((activity) => (
+      <li>
+        <time class="date dot-label" datetime={activity.date.toISOString()}>
+          {formatDotMonth(activity.date)}
+        </time>
+        <span class={`kind dot-label kind--${activity.type}`}>{kindLabels[activity.type]}</span>
+        <span class="body">
+          {activity.title}
+          {activity.link && (
+            <a class="link" href={activity.link.url} target="_blank" rel="noopener noreferrer">
+              {activity.link.text}
+            </a>
+          )}
+        </span>
+      </li>
+    ))}
+  </ol>
+</section>
 
 <style>
-  .activities-timeline {
-    margin-top: 1.5rem;
-  }
-
-  .activities-timeline__list {
-    position: relative;
-    padding-left: 0;
+  .timeline {
+    display: grid;
+    margin: 0;
+    padding: 0;
     list-style: none;
   }
 
-  .activities-timeline__line {
-    position: absolute;
-    left: 0.75rem;
-    top: 0.5rem;
-    bottom: 0.5rem;
-    width: 0.125rem;
-    background-color: rgb(var(--timeline-line));
-    border-radius: 9999px;
+  li {
+    display: grid;
+    grid-template-columns: 6em 4.6em minmax(0, 1fr);
+    gap: 0 12px;
+    padding: 9px 0;
+    border-bottom: 1px solid var(--win-2);
+  }
+
+  .date {
+    font-size: 14px;
+    color: var(--ink-2);
+  }
+
+  .kind {
+    font-size: 13px;
+  }
+
+  .kind--event {
+    color: var(--kind-event);
+  }
+
+  .kind--work {
+    color: var(--kind-work);
+  }
+
+  .kind--examination {
+    color: var(--kind-exam);
+  }
+
+  .kind--project {
+    color: var(--kind-project);
+  }
+
+  .kind--other {
+    color: var(--ink-2);
+  }
+
+  .link {
+    display: block;
+    width: fit-content;
+    font-size: 12.5px;
+    border-bottom: 0;
+  }
+
+  .link:hover {
+    text-decoration: underline;
+  }
+
+  @media (max-width: 760px) {
+    li {
+      grid-template-columns: 5.4em minmax(0, 1fr);
+    }
+
+    .body {
+      grid-column: 1 / -1;
+    }
   }
 </style>
