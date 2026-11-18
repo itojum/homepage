@@ -187,17 +187,6 @@
 		border-top: 1px dashed var(--ink-2);
 		margin: 2em 0;
 	}
-
-	@media (prefers-reduced-motion: reduce) {
-		*,
-		*::before,
-		*::after {
-			/* biome-ignore lint/complexity/noImportantStyles: 動きを減らす設定は各コンポーネントのアニメーションより優先する */
-			animation: none !important;
-			/* biome-ignore lint/complexity/noImportantStyles: 同上 */
-			transition: none !important;
-		}
-	}
 }
 
 @layer components {

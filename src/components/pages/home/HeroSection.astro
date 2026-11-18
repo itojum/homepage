@@ -19,29 +19,12 @@ const intro =
     <h1 id="hero-name" class="speaker">
       いとじゅん<small>itojum ／ product engineer / junior developer</small>
     </h1>
-    <p class="say" data-typewriter>{intro}</p>
+    <p class="say">{intro}</p>
     <p class="go">
       <a href="/about">プロフィールを見る</a><span class="next" aria-hidden="true">▼</span>
     </p>
   </div>
 </section>
-
-<script is:inline>
-  // メッセージ窓のタイプライター表示（動きを減らす設定では何もしない）
-  (() => {
-    const el = document.querySelector("[data-typewriter]");
-    if (!el || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    const text = el.textContent ?? "";
-    el.style.minHeight = `${el.offsetHeight}px`;
-    el.setAttribute("aria-label", text);
-    let i = 0;
-    el.textContent = "";
-    const timer = setInterval(() => {
-      el.textContent = text.slice(0, ++i);
-      if (i >= text.length) clearInterval(timer);
-    }, 28);
-  })();
-</script>
 
 <style>
   .msg {
@@ -91,13 +74,6 @@ const intro =
     margin-left: 4px;
     font-size: 12px;
     color: var(--cursor);
-    animation: bob 0.8s steps(2) infinite;
-  }
-
-  @keyframes bob {
-    50% {
-      transform: translateY(3px);
-    }
   }
 
   @media (max-width: 760px) {
