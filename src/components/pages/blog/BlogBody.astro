@@ -61,7 +61,7 @@
   .post :global(figure) {
     margin: 1.8em 0;
   }
-  .post :global(figcaption) {
+  .post :global(figcaption:not([data-rehype-pretty-code-title])) {
     font-size: 13px;
     color: var(--ink-2);
   }
