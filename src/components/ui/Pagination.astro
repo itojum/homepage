@@ -13,7 +13,8 @@ interface Props {
 
 const { currentPage, totalPages, basePath, label, totalItems, perPage } = Astro.props;
 
-const createPageHref = (page: number) => (page === 1 ? `${basePath}/` : `${basePath}/page/${page}/`);
+const createPageHref = (page: number) =>
+	page === 1 ? `${basePath}/` : `${basePath}/page/${page}/`;
 
 const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
 const hasPrev = currentPage > 1;
