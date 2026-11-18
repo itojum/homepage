@@ -1,5 +1,4 @@
 ---
-import { Icon } from "astro-icon/components";
 import BlogBody from "@/components/pages/blog/BlogBody.astro";
 import BlogMeta from "@/components/pages/blog/BlogMeta.astro";
 import BlogShare from "@/components/pages/blog/BlogShare.astro";
@@ -16,25 +15,32 @@ interface Props {
 const { blog, relatedBlogs } = Astro.props;
 ---
 
-<a href="/blogs" class="flex items-center text-sm text-gray-500 mb-4">
-  <Icon name="ri:arrow-left-line" size={18} />
-  一覧へ戻る
-</a>
-
-<article data-pagefind-body>
+<article class="win" data-pagefind-body>
   <BlogMeta blog={blog} />
   <BlogThumbnail eyecatch={blog.eyecatch} />
-  <BlogBody title={blog.title} description={blog.description}>
+  <BlogBody>
     <slot />
   </BlogBody>
-  <BlogShare title={`${blog.title} | ${SITE_TITLE}`} />
 </article>
+
+<div class="win share-win">
+  <BlogShare title={`${blog.title} | ${SITE_TITLE}`} />
+  <a href="/blogs/" class="back dot-label">◀ 一覧へ戻る</a>
+</div>
 
 <RelatedBlogSection relatedBlogs={relatedBlogs} />
 
 <style>
-  main {
-    max-width: 720px;
-    color: rgb(var(--gray-dark));
+  .share-win {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px 22px;
+    --win-pad: 16px 24px;
+  }
+
+  .back {
+    margin-left: auto;
+    font-size: 15px;
   }
 </style>
