@@ -6,7 +6,7 @@ interface Props {
 	basePath: string;
 	/** nav の aria-label */
 	label: string;
-	/** 全件数と 1 ページの件数を渡すと「11〜18 件目 ／ 全 18 件」を表示する */
+	/** 全件数と 1 ページの件数を渡すと「11〜18 件目 ／ 全 18 件」を表示する（1 ページだけのときも表示する） */
 	totalItems?: number;
 	perPage?: number;
 }
@@ -29,22 +29,26 @@ const range =
 		: null;
 ---
 
-{totalPages > 1 && (
+{(totalPages > 1 || (range && totalItems)) && (
   <nav class="pager" aria-label={label}>
-    {hasPrev ? (
-      <a href={createPageHref(currentPage - 1)} rel="prev">◀ まえ</a>
-    ) : (
-      <span class="off" aria-hidden="true">◀ まえ</span>
-    )}
-    {pages.map((page) => (
-      <a href={createPageHref(page)} aria-current={page === currentPage ? "page" : undefined}>
-        {page}
-      </a>
-    ))}
-    {hasNext ? (
-      <a href={createPageHref(currentPage + 1)} rel="next">つぎ ▶</a>
-    ) : (
-      <span class="off" aria-hidden="true">つぎ ▶</span>
+    {totalPages > 1 && (
+      <>
+        {hasPrev ? (
+          <a href={createPageHref(currentPage - 1)} rel="prev">◀ まえ</a>
+        ) : (
+          <span class="off" aria-hidden="true">◀ まえ</span>
+        )}
+        {pages.map((page) => (
+          <a href={createPageHref(page)} aria-current={page === currentPage ? "page" : undefined}>
+            {page}
+          </a>
+        ))}
+        {hasNext ? (
+          <a href={createPageHref(currentPage + 1)} rel="next">つぎ ▶</a>
+        ) : (
+          <span class="off" aria-hidden="true">つぎ ▶</span>
+        )}
+      </>
     )}
     {range && (
       <span class="count">
