@@ -15,7 +15,11 @@ const firstSegment = Astro.url.pathname.replace(/\.html$/, "").match(/[^/]+/)?.[
 const isCurrent = (href: string) => href === `/${firstSegment}`;
 
 const blogs = await getBlogs();
-const latest = blogs[0]?.publishedAt;
+// 公開日と更新日のうち最も新しい日付を「最終更新」とする
+const latest = blogs
+	.flatMap((blog) => [blog.publishedAt, blog.updatedAt])
+	.filter((date): date is Date => date !== null)
+	.reduce<Date | undefined>((max, date) => (!max || date > max ? date : max), undefined);
 ---
 
 <nav class="win cmd" aria-label="メニュー">
