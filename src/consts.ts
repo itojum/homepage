@@ -5,6 +5,8 @@ export const SITE_DESCRIPTION =
 export const EMAIL_ADDRESS = "me@itojum.dev";
 
 export const X_URL = "https://x.com/itojum1230";
+/** X のユーザー名（twitter:site / twitter:creator 用。X_URL から導出） */
+export const X_HANDLE = `@${X_URL.replace(/\/+$/, "").split("/").pop()}`;
 export const X_URL_HOBBY = "https://x.com/itojum2030";
 export const GITHUB_URL = "https://github.com/itojum";
 

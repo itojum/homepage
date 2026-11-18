@@ -1,23 +1,21 @@
 ---
 import "@/styles/global.css";
-import { SITE_TITLE } from "@/consts";
 import SEO from "@/components/ui/SEO.astro";
+import { SITE_TITLE } from "@/consts";
+import type { ArticleMeta } from "@/types/seo";
 
 interface Props {
 	title?: string;
 	description?: string;
 	image?: string;
+	imageAlt?: string;
 	path?: string;
 	noIndex?: boolean;
+	article?: ArticleMeta;
 }
 
-// build.format: "file" では Astro.url が /blogs/foo.html になるため、.html を除いた URL を canonical にする
-const canonicalURL = new URL(
-	Astro.url.pathname.replace(/\.html$/, "").replace(/\/index$/, "/"),
-	Astro.site || Astro.url.origin,
-);
-
-const { title, description, image, path, noIndex } = Astro.props;
+const { title, description, image, imageAlt, path, noIndex, article } =
+	Astro.props;
 ---
 
 <!-- Global Metadata -->
@@ -61,14 +59,13 @@ const { title, description, image, path, noIndex } = Astro.props;
   crossorigin
 />
 
-<!-- Canonical URL -->
-<link rel="canonical" href={canonicalURL} />
-
-<!-- SEO Meta Tags -->
+<!-- SEO Meta Tags（canonical / OGP / X カード / JSON-LD） -->
 <SEO
 	title={title}
 	description={description}
 	ogImage={image}
+	ogImageAlt={imageAlt}
 	path={path}
 	noIndex={noIndex}
+	article={article}
 />

@@ -2,16 +2,20 @@
 import BaseHead from "@/components/ui/BaseHead.astro";
 import Footer from "@/components/ui/Footer.astro";
 import Header from "@/components/ui/Header/index.astro";
+import type { ArticleMeta } from "@/types/seo";
 
 interface Props {
 	title?: string;
 	description?: string;
 	image?: string;
+	imageAlt?: string;
 	path?: string;
 	noIndex?: boolean;
+	article?: ArticleMeta;
 }
 
-const { title, description, image, noIndex } = Astro.props;
+const { title, description, image, imageAlt, path, noIndex, article } =
+	Astro.props;
 ---
 
 <!doctype html>
@@ -21,7 +25,10 @@ const { title, description, image, noIndex } = Astro.props;
       title={title}
       description={description}
       image={image}
+      imageAlt={imageAlt}
+      path={path}
       noIndex={noIndex}
+      article={article}
     />
     <slot name="head" />
   </head>

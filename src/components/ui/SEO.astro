@@ -1,32 +1,103 @@
 ---
-import { SITE_TITLE, SITE_DESCRIPTION } from "@/consts";
 import iconImage from "@/assets/icon.jpg";
+import { LINKS, SITE_DESCRIPTION, SITE_TITLE, X_HANDLE } from "@/consts";
+import type { ArticleMeta } from "@/types/seo";
 
 interface Props {
 	title?: string;
 	description?: string;
+	/** OGP 画像。相対パス・ルート相対パスでもサイトの URL を基準に絶対 URL へ変換する */
 	ogImage?: string;
+	/** OGP 画像の代替テキスト（og:image:alt / twitter:image:alt） */
+	ogImageAlt?: string;
+	/** ページのパス（例: /blogs/foo）。省略時は現在のリクエストのパスを使う */
 	path?: string;
 	noIndex?: boolean;
+	/** 記事ページの場合に指定する。og:type が article になり、JSON-LD に BlogPosting を出力する */
+	article?: ArticleMeta;
 }
 
 const {
 	title = SITE_TITLE,
 	description = SITE_DESCRIPTION,
 	ogImage,
+	ogImageAlt,
 	path,
 	noIndex = false,
+	article,
 } = Astro.props;
 
 const base = Astro.site ?? Astro.url.origin;
-const pageUrl = path != null ? new URL(path, base) : Astro.url;
-const titleText =
-	title === SITE_TITLE ? title : `${title} | ${SITE_TITLE}`;
+const siteUrl = new URL("/", base).href;
+// canonical と og:url を必ず同じ URL にするため、ここで一元的に算出する
+// path 未指定時は現在の URL を使う。build.format: "file" では /blogs/foo.html になるため .html を除く
+const pageUrl = new URL(
+	path ?? Astro.url.pathname.replace(/\.html$/, "").replace(/\/index$/, "/"),
+	base,
+).href;
+const titleText = title === SITE_TITLE ? title : `${title} | ${SITE_TITLE}`;
 
-const resolvedOgImage =
-	ogImage?.startsWith("/")
-		? new URL(ogImage, base).href
-		: ogImage ?? new URL(iconImage.src, base).href;
+const hasCustomImage = Boolean(ogImage);
+const resolvedOgImage = new URL(ogImage || iconImage.src, base).href;
+const resolvedOgImageAlt =
+	ogImageAlt ?? (hasCustomImage ? title : `${SITE_TITLE} のアイコン`);
+// アイキャッチがない場合は正方形のアイコンになるため、大きな画像カードにはしない
+const twitterCard = hasCustomImage ? "summary_large_image" : "summary";
+
+const publishedTime = article?.publishedTime.toISOString();
+const modifiedTime = article
+	? (article.modifiedTime ?? article.publishedTime).toISOString()
+	: undefined;
+
+const person = {
+	"@type": "Person",
+	"@id": `${siteUrl}#person`,
+	name: "itojum",
+	alternateName: "いとじゅん",
+	url: siteUrl,
+	image: new URL(iconImage.src, base).href,
+	sameAs: LINKS.map((link) => link.url),
+};
+
+const jsonLd = article
+	? {
+			"@context": "https://schema.org",
+			"@type": "BlogPosting",
+			headline: title,
+			description,
+			url: pageUrl,
+			mainEntityOfPage: { "@type": "WebPage", "@id": pageUrl },
+			image: [resolvedOgImage],
+			datePublished: publishedTime,
+			dateModified: modifiedTime,
+			inLanguage: "ja",
+			author: person,
+			publisher: person,
+			...(article.section ? { articleSection: article.section } : {}),
+			...(article.tags?.length ? { keywords: article.tags } : {}),
+		}
+	: new URL(pageUrl).pathname === "/"
+		? {
+				"@context": "https://schema.org",
+				"@graph": [
+					{
+						"@type": "WebSite",
+						"@id": `${siteUrl}#website`,
+						url: siteUrl,
+						name: SITE_TITLE,
+						description,
+						inLanguage: "ja",
+						publisher: { "@id": person["@id"] },
+					},
+					person,
+				],
+			}
+		: null;
+
+// </script> などで JSON-LD が途切れないよう < をエスケープする
+const jsonLdText = jsonLd
+	? JSON.stringify(jsonLd).replace(/</g, "\\u003c")
+	: null;
 ---
 
 <!-- 検索エンジン用 -->
@@ -34,17 +105,53 @@ const resolvedOgImage =
 <meta name="title" content={titleText} />
 <meta name="description" content={description} />
 {noIndex && <meta name="robots" content="noindex, nofollow" />}
+<link rel="canonical" href={pageUrl} />
 
-<!-- Open Graph / Facebook -->
-<meta property="og:type" content="website" />
+<!-- Open Graph -->
+<meta property="og:site_name" content={SITE_TITLE} />
+<meta property="og:locale" content="ja_JP" />
+<meta property="og:type" content={article ? "article" : "website"} />
 <meta property="og:url" content={pageUrl} />
 <meta property="og:title" content={titleText} />
 <meta property="og:description" content={description} />
-{resolvedOgImage && <meta property="og:image" content={resolvedOgImage} />}
+<meta property="og:image" content={resolvedOgImage} />
+<meta property="og:image:alt" content={resolvedOgImageAlt} />
+{
+  !hasCustomImage && (
+    <>
+      <meta property="og:image:width" content={String(iconImage.width)} />
+      <meta property="og:image:height" content={String(iconImage.height)} />
+    </>
+  )
+}
+{
+  article && (
+    <>
+      <meta property="article:published_time" content={publishedTime} />
+      <meta property="article:modified_time" content={modifiedTime} />
+      <meta property="article:author" content={new URL("/about", base).href} />
+      {article.section && (
+        <meta property="article:section" content={article.section} />
+      )}
+      {article.tags?.map((tag) => (
+        <meta property="article:tag" content={tag} />
+      ))}
+    </>
+  )
+}
 
 <!-- X (Twitter) -->
-<meta property="twitter:card" content="summary_large_image" />
-<meta property="twitter:url" content={pageUrl} />
-<meta property="twitter:title" content={titleText} />
-<meta property="twitter:description" content={description} />
-{resolvedOgImage && <meta property="twitter:image" content={resolvedOgImage} />}
+<meta name="twitter:card" content={twitterCard} />
+<meta name="twitter:site" content={X_HANDLE} />
+<meta name="twitter:creator" content={X_HANDLE} />
+<meta name="twitter:title" content={titleText} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={resolvedOgImage} />
+<meta name="twitter:image:alt" content={resolvedOgImageAlt} />
+
+<!-- 構造化データ -->
+{
+  jsonLdText && (
+    <script type="application/ld+json" is:inline set:html={jsonLdText} />
+  )
+}
