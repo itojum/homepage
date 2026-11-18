@@ -1,0 +1,27 @@
+---
+import SlidesPage from "@/components/pages/slides/SlidesPage.astro";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { getSlides, SLIDES_PER_PAGE } from "@/libs/slide";
+
+export async function getStaticPaths() {
+	const allSlides = await getSlides();
+	const totalPages = Math.ceil(allSlides.length / SLIDES_PER_PAGE);
+	// 1 ページ目は /slides で表示するため 2 ページ目以降のみ生成する
+	return Array.from({ length: Math.max(totalPages - 1, 0) }, (_, i) => ({
+		params: { page: String(i + 2) },
+	}));
+}
+
+const currentPage = Number(Astro.params.page);
+const allSlides = await getSlides();
+const slides = allSlides.slice((currentPage - 1) * SLIDES_PER_PAGE, currentPage * SLIDES_PER_PAGE);
+const totalPages = Math.ceil(allSlides.length / SLIDES_PER_PAGE);
+---
+
+<BaseLayout
+  title={`Slides - ${currentPage}ページ目`}
+  description={`itojum（いとじゅん）の登壇資料・スライド一覧の${currentPage}ページ目。`}
+  path={`/slides/page/${currentPage}`}
+>
+  <SlidesPage slides={slides} currentPage={currentPage} totalPages={totalPages} />
+</BaseLayout>

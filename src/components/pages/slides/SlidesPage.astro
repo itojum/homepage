@@ -1,0 +1,51 @@
+---
+import Pagination from "@/components/ui/Pagination.astro";
+import { SPEAKERDECK_URL } from "@/consts";
+import type { Slide } from "@/types/slide";
+import SlideCard from "./SlideCard.astro";
+import "./SlidesPage.css";
+
+interface Props {
+	/** 現在のページに表示するスライド */
+	slides: Slide[];
+	currentPage: number;
+	totalPages: number;
+}
+
+const { slides, currentPage, totalPages } = Astro.props;
+---
+
+<section class="slides-page">
+  <header class="page-header">
+    <h1 class="page-title">Slides</h1>
+    <p class="page-subtitle">登壇資料一覧</p>
+  </header>
+
+  {slides.length > 0 ? (
+    <>
+      <ul class="slide-card-list">
+        {slides.map((slide) => <SlideCard slide={slide} />)}
+      </ul>
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        basePath="/slides"
+        label="スライド一覧のページネーション"
+      />
+      <p class="slides-more">
+        <a href={SPEAKERDECK_URL} target="_blank" rel="noopener noreferrer">
+          Speaker Deck で見る →
+        </a>
+      </p>
+    </>
+  ) : (
+    <div class="slides-empty">
+      <p>スライド一覧を読み込めませんでした。</p>
+      <p>
+        <a href={SPEAKERDECK_URL} target="_blank" rel="noopener noreferrer">
+          Speaker Deck で見る →
+        </a>
+      </p>
+    </div>
+  )}
+</section>
