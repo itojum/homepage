@@ -1,10 +1,8 @@
 ---
 import type { Blog } from "@/types/blog";
 import HeroSection from "./HeroSection.astro";
-import RecentBlogsSection from "./RecentBlogsSection.astro";
 import LinksSection from "./LinksSection.astro";
-import SpecialThanks from "./SpecialThanks.astro";
-import "./HomePage.css";
+import RecentBlogsSection from "./RecentBlogsSection.astro";
 
 interface LinkItem {
 	service: string;
@@ -22,9 +20,22 @@ const { latestBlogs, links } = Astro.props;
 ---
 
 <HeroSection />
-<hr />
-<RecentBlogsSection blogs={latestBlogs} />
-<hr />
-<LinksSection links={links} />
-<hr />
-<SpecialThanks />
+<div class="two">
+  <LinksSection links={links} />
+  <RecentBlogsSection blogs={latestBlogs} />
+</div>
+
+<style>
+  .two {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr);
+    gap: 16px;
+    align-items: start;
+  }
+
+  @media (max-width: 760px) {
+    .two {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+</style>

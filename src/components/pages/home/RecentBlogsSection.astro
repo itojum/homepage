@@ -1,7 +1,6 @@
 ---
+import BlogListItem from "@/components/pages/blogs/BlogListItem.astro";
 import type { Blog } from "@/types/blog";
-import BlogCardList from "@/components/pages/blogs/BlogCardList.astro";
-import "./RecentBlogsSection.css";
 
 interface Props {
 	blogs: Blog[];
@@ -10,8 +9,25 @@ interface Props {
 const { blogs } = Astro.props;
 ---
 
-<section class="recent-blogs">
-  <h2 class="section-title">最新記事</h2>
-  <BlogCardList blogs={blogs} />
-  <a href="/blogs/" class="home-link">すべての記事を見る</a>
+<section class="win" aria-labelledby="recent-title">
+  <h2 id="recent-title" class="win-title">最近の記事</h2>
+  <ul class="list">
+    {blogs.map((blog) => <BlogListItem blog={blog} />)}
+  </ul>
+  <p class="more"><a href="/blogs/">すべての記事</a></p>
 </section>
+
+<style>
+  .list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .more {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 8px;
+    font-family: var(--font-dot);
+  }
+</style>
