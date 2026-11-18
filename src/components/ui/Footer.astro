@@ -1,39 +1,28 @@
 ---
-import { X_URL, GITHUB_URL } from "@/consts";
-import { Icon } from "astro-icon/components";
-const today = new Date();
+import { GITHUB_URL, X_URL } from "@/consts";
+
+const year = new Date().getFullYear();
 ---
 
 <footer>
-  &copy; {today.getFullYear()} itojum. All rights reserved.
-  <div class="social-links">
-    <a href={X_URL} target="_blank">
-      <span class="sr-only">Follow itojum1230 on X</span>
-      <Icon name="ri:twitter-x-line" size={32} />
-    </a>
-    <a href={GITHUB_URL} target="_blank">
-      <span class="sr-only">Go to itojum's GitHub repo</span>
-      <Icon name="ri:github-fill" size={32} />
-    </a>
-  </div>
+  <span>© {year} itojum</span>
+  <a href={X_URL} target="_blank" rel="noopener noreferrer">X</a>
+  <a href={GITHUB_URL} target="_blank" rel="noopener noreferrer">GitHub</a>
+  <a href="/rss.xml">RSS</a>
 </footer>
+
 <style>
   footer {
-    @apply py-8 px-4 pb-24 flex items-center justify-between;
-    background: linear-gradient(var(--gray-gradient)) no-repeat;
-    color: rgb(var(--gray));
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 18px;
+    padding: 8px 4px;
+    font-family: var(--font-dot);
+    font-size: 13px;
+    color: var(--ink-2);
   }
 
-  .social-links {
-    @apply flex justify-center gap-4 mt-4;
-  }
-
-  .social-links a {
-    @apply no-underline;
-    color: rgb(var(--gray));
-  }
-
-  .social-links a:hover {
-    color: rgb(var(--gray-dark));
+  a {
+    color: var(--ink-2);
   }
 </style>

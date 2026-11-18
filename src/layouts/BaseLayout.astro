@@ -1,5 +1,6 @@
 ---
 import BaseHead from "@/components/ui/BaseHead.astro";
+import CommandMenu from "@/components/ui/CommandMenu.astro";
 import Footer from "@/components/ui/Footer.astro";
 import Header from "@/components/ui/Header/index.astro";
 import type { ArticleMeta } from "@/types/seo";
@@ -33,16 +34,46 @@ const { title, description, image, imageAlt, path, noIndex, article } =
     <slot name="head" />
   </head>
   <body>
-    <Header />
-    <main>
-      <slot />
-    </main>
-    <Footer />
+    <div class="screen">
+      <Header />
+      <div class="layout">
+        <CommandMenu />
+        <main>
+          <slot />
+        </main>
+      </div>
+      <Footer />
+    </div>
   </body>
 </html>
 
 <style>
+  .screen {
+    display: grid;
+    gap: 16px;
+    max-width: 1040px;
+    margin: 0 auto;
+    padding: 20px max(16px, env(safe-area-inset-right, 0px)) 40px
+      max(16px, env(safe-area-inset-left, 0px));
+  }
+
+  /* 左にコマンド窓、右に内容の窓（実機のメニュー画面と同じ配置） */
+  .layout {
+    display: grid;
+    grid-template-columns: 200px minmax(0, 1fr);
+    gap: 16px;
+    align-items: start;
+  }
+
   main {
-    @apply py-24;
+    display: grid;
+    gap: 16px;
+    min-width: 0;
+  }
+
+  @media (max-width: 760px) {
+    .layout {
+      grid-template-columns: minmax(0, 1fr);
+    }
   }
 </style>

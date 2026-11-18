@@ -1,0 +1,121 @@
+---
+import { getBlogs } from "@/libs/blog";
+import { formatDotDate } from "@/libs/date";
+
+const items = [
+	{ href: "/", label: "ホーム" },
+	{ href: "/about", label: "プロフィール" },
+	{ href: "/blogs", label: "ブログ" },
+	{ href: "/slides", label: "スライド" },
+	{ href: "/contact", label: "れんらく" },
+];
+
+// build.format: "file" では /blogs/foo.html になるため拡張子を外して先頭のセグメントで判定する
+const firstSegment = Astro.url.pathname.replace(/\.html$/, "").match(/[^/]+/)?.[0] ?? "";
+const isCurrent = (href: string) => href === `/${firstSegment}`;
+
+const blogs = await getBlogs();
+const latest = blogs[0]?.publishedAt;
+---
+
+<nav class="win cmd" aria-label="メニュー">
+  <ul>
+    {items.map((item) => (
+      <li>
+        <a href={item.href} aria-current={isCurrent(item.href) ? "page" : undefined}>
+          {item.label}
+        </a>
+      </li>
+    ))}
+  </ul>
+  <p class="meta">
+    記事 {blogs.length}
+    {latest && <><br />最終更新 {formatDotDate(latest)}</>}
+  </p>
+</nav>
+
+<style>
+  .cmd {
+    position: sticky;
+    top: 16px;
+    --win-pad: 18px 14px;
+  }
+
+  ul {
+    display: grid;
+    gap: 2px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-family: var(--font-dot);
+    font-size: 17px;
+  }
+
+  a {
+    position: relative;
+    display: block;
+    padding: 3px 4px 3px 24px;
+    color: var(--ink);
+    border-bottom: 0;
+  }
+
+  a::before {
+    content: "";
+    position: absolute;
+    left: 4px;
+    top: 50%;
+    margin-top: -6px;
+    border: 6px solid transparent;
+    border-left: 9px solid var(--cursor);
+    opacity: 0;
+  }
+
+  a:hover::before,
+  a:focus-visible::before,
+  a[aria-current="page"]::before {
+    opacity: 1;
+  }
+
+  a[aria-current="page"]::before {
+    animation: blink 1s steps(2) infinite;
+  }
+
+  @keyframes blink {
+    50% {
+      opacity: 0;
+    }
+  }
+
+  .meta {
+    margin-top: 14px;
+    padding-top: 10px;
+    border-top: 1px dashed var(--ink-2);
+    font-family: var(--font-dot);
+    font-size: 12px;
+    line-height: 1.7;
+    color: var(--ink-2);
+  }
+
+  @media (max-width: 760px) {
+    .cmd {
+      position: relative;
+      top: 0;
+      --win-pad: 12px 14px;
+    }
+
+    ul {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0 4px;
+      font-size: 16px;
+    }
+
+    a {
+      padding: 2px 6px 2px 20px;
+    }
+
+    .meta {
+      display: none;
+    }
+  }
+</style>
