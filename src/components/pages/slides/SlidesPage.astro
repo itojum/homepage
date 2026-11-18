@@ -3,27 +3,24 @@ import Pagination from "@/components/ui/Pagination.astro";
 import { SPEAKERDECK_URL } from "@/consts";
 import type { Slide } from "@/types/slide";
 import SlideCard from "./SlideCard.astro";
-import "./SlidesPage.css";
 
 interface Props {
 	/** 現在のページに表示するスライド */
 	slides: Slide[];
 	currentPage: number;
 	totalPages: number;
+	totalItems?: number;
+	perPage?: number;
 }
 
-const { slides, currentPage, totalPages } = Astro.props;
+const { slides, currentPage, totalPages, totalItems, perPage } = Astro.props;
 ---
 
-<section class="slides-page">
-  <header class="page-header">
-    <h1 class="page-title">Slides</h1>
-    <p class="page-subtitle">登壇資料一覧</p>
-  </header>
-
+<section class="win">
+  <h1 class="win-title">スライド</h1>
   {slides.length > 0 ? (
     <>
-      <ul class="slide-card-list">
+      <ul class="grid">
         {slides.map((slide) => <SlideCard slide={slide} />)}
       </ul>
       <Pagination
@@ -31,21 +28,42 @@ const { slides, currentPage, totalPages } = Astro.props;
         totalPages={totalPages}
         basePath="/slides"
         label="スライド一覧のページネーション"
+        totalItems={totalItems}
+        perPage={perPage}
       />
-      <p class="slides-more">
-        <a href={SPEAKERDECK_URL} target="_blank" rel="noopener noreferrer">
-          Speaker Deck で見る →
-        </a>
-      </p>
     </>
   ) : (
-    <div class="slides-empty">
-      <p>スライド一覧を読み込めませんでした。</p>
-      <p>
-        <a href={SPEAKERDECK_URL} target="_blank" rel="noopener noreferrer">
-          Speaker Deck で見る →
-        </a>
-      </p>
-    </div>
+    <p class="empty">スライド一覧を読み込めませんでした。</p>
   )}
+  <p class="more">
+    <a href={SPEAKERDECK_URL} target="_blank" rel="noopener noreferrer">Speaker Deck で見る</a>
+  </p>
 </section>
+
+<style>
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px 16px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .empty {
+    color: var(--ink-2);
+  }
+
+  .more {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 14px;
+    font-family: var(--font-dot);
+  }
+
+  @media (max-width: 760px) {
+    .grid {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+</style>
