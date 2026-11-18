@@ -29,7 +29,7 @@ const range =
 		: null;
 ---
 
-{(totalPages > 1 || (range && totalItems)) && (
+{(totalPages > 1 || (range !== null && (totalItems ?? 0) > 0)) && (
   <nav class="pager" aria-label={label}>
     {totalPages > 1 && (
       <>
