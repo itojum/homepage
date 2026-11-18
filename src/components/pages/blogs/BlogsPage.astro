@@ -1,26 +1,41 @@
 ---
-import type { Blog } from "@/types/blog";
-import BlogPageHeader from "./BlogPageHeader.astro";
-import BlogCardList from "./BlogCardList.astro";
 import Pagination from "@/components/ui/Pagination.astro";
-import "./BlogPage.css";
+import type { Blog } from "@/types/blog";
+import BlogListItem from "./BlogListItem.astro";
 
 interface Props {
 	blogs: Blog[];
 	currentPage: number;
 	totalPages: number;
+	/** 全記事数（通し番号と件数表示に使う） */
+	totalItems: number;
+	perPage: number;
 }
 
-const { blogs, currentPage, totalPages } = Astro.props;
+const { blogs, currentPage, totalPages, totalItems, perPage } = Astro.props;
+const offset = (currentPage - 1) * perPage;
 ---
 
-<section class="blog-page">
-  <BlogPageHeader title="Blog" subtitle="記事一覧" />
-  <BlogCardList blogs={blogs} />
+<section class="win">
+  <h1 class="win-title">ブログ</h1>
+  <ul class="list">
+    {blogs.map((blog, i) => <BlogListItem blog={blog} number={totalItems - offset - i} />)}
+  </ul>
   <Pagination
     currentPage={currentPage}
     totalPages={totalPages}
     basePath="/blogs"
     label="ブログのページネーション"
+    totalItems={totalItems}
+    perPage={perPage}
   />
 </section>
+
+<style>
+  .list {
+    display: grid;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+</style>
