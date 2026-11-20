@@ -10,10 +10,15 @@ interface Props {
 
 const { blog, number } = Astro.props;
 const withThumb = number !== undefined;
+const isExternal = blog.source !== "blog";
 ---
 
 <li>
-  <a href={`/blogs/${blog.id}/`} class:list={["cursor-row", "item", { "item--thumb": withThumb }]}>
+  <a
+    href={blog.url}
+    class:list={["cursor-row", "item", { "item--thumb": withThumb }]}
+    {...(isExternal && { target: "_blank", rel: "noopener" })}
+  >
     {withThumb && (
       <span class="thumb">
         {blog.eyecatch?.url && <img src={blog.eyecatch.url} alt="" loading="lazy" decoding="async" />}
@@ -24,7 +29,11 @@ const withThumb = number !== undefined;
         {withThumb && <span class="no">No.{String(number).padStart(2, "0")}</span>}
         <FormattedDate date={blog.publishedAt} />
       </span>
-      <span class="title">{blog.title}</span>
+      <span class="title">
+        {blog.source === "qiita" && <span class="src">Qiita</span>}
+        {blog.title}
+        {isExternal && <span class="sr-only">（新しいタブで開く）</span>}
+      </span>
       {blog.tags.length > 0 && <span class="tags">{blog.tags.join(" ／ ")}</span>}
     </span>
   </a>
@@ -75,6 +84,15 @@ const withThumb = number !== undefined;
 
   .item--thumb .title {
     font-size: 16px;
+  }
+
+  .src {
+    margin-right: 2px;
+    padding: 0 5px;
+    vertical-align: 0.1em;
+    font-size: 11px;
+    color: #fff;
+    background: #55c500;
   }
 
   .no {

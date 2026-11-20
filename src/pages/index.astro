@@ -2,9 +2,9 @@
 import HomePage from "@/components/pages/home/HomePage.astro";
 import { LINKS, SITE_DESCRIPTION, SITE_TITLE } from "@/consts";
 import BaseLayout from "@/layouts/BaseLayout.astro";
-import { getBlogs } from "@/libs/blog";
+import { getListedBlogs } from "@/libs/blog";
 
-const latestBlogs = (await getBlogs()).slice(0, 4);
+const latestBlogs = (await getListedBlogs()).slice(0, 4);
 ---
 
 <BaseLayout
