@@ -1,6 +1,8 @@
 import { defineCollection, z } from "astro:content";
 import { file, glob } from "astro/loaders";
+import { QIITA_USER_ID } from "@/consts";
 import { BLOG_CONTENT_DIR } from "@/libs/blogImage";
+import { qiitaLoader, qiitaSchema } from "@/libs/qiita";
 
 /**
  * ブログ記事
@@ -34,4 +36,10 @@ const activities = defineCollection({
 	}),
 });
 
-export const collections = { blogs, activities };
+/** Qiita の記事（ビルド時に Qiita API から取得。一覧には載せるが本文はリンク先の Qiita で読む） */
+const qiita = defineCollection({
+	loader: qiitaLoader({ userId: QIITA_USER_ID, token: import.meta.env.QIITA_TOKEN || undefined }),
+	schema: qiitaSchema,
+});
+
+export const collections = { blogs, activities, qiita };
