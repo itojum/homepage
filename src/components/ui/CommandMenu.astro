@@ -1,5 +1,5 @@
 ---
-import { getBlogs } from "@/libs/blog";
+import { getListedBlogs } from "@/libs/blog";
 import { formatDotDate } from "@/libs/date";
 
 const items = [
@@ -14,7 +14,7 @@ const items = [
 const firstSegment = Astro.url.pathname.replace(/\.html$/, "").match(/[^/]+/)?.[0] ?? "";
 const isCurrent = (href: string) => href === `/${firstSegment}`;
 
-const blogs = await getBlogs();
+const blogs = await getListedBlogs();
 // 公開日と更新日のうち最も新しい日付を「最終更新」とする
 const latest = blogs
 	.flatMap((blog) => [blog.publishedAt, blog.updatedAt])

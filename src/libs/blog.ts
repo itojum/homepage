@@ -1,5 +1,5 @@
 /**
- * ブログ記事の取得（src/content/blogs の Content Collection）
+ * ブログ記事の取得（src/content/blogs の Content Collection と Qiita の記事）
  */
 import { type CollectionEntry, getCollection } from "astro:content";
 import { generatedEyecatchPath, resolveBlogImageUrl } from "@/libs/blogImage";
@@ -23,6 +23,8 @@ export const toBlog = (entry: BlogEntry): Blog => {
 
 	return {
 		id: entry.id,
+		source: "blog",
+		url: `/blogs/${entry.id}/`,
 		title: data.title,
 		description: data.description,
 		eyecatch: { url: eyecatchUrl },
@@ -45,6 +47,35 @@ export const getPublishedBlogEntries = async (): Promise<BlogEntry[]> => {
 /** 公開済み記事を新しい順に取得 */
 export const getBlogs = async (): Promise<Blog[]> => {
 	return (await getPublishedBlogEntries()).map(toBlog);
+};
+
+/** Qiita の記事を表示用の Blog に変換 */
+const qiitaToBlog = (entry: CollectionEntry<"qiita">): Blog => {
+	const { data } = entry;
+	return {
+		id: `qiita-${entry.id}`,
+		source: "qiita",
+		url: data.url,
+		title: data.title,
+		description: data.description,
+		eyecatch: data.ogImage ? { url: data.ogImage } : null,
+		category: null,
+		tags: data.tags,
+		publishedAt: data.publishedAt,
+		updatedAt: data.updatedAt,
+	};
+};
+
+/**
+ * 一覧に載せる記事（このサイトの記事 + Qiita の記事）を新しい順に取得
+ *
+ * RSS・関連記事など、このサイトの記事だけを扱う箇所では getBlogs を使う。
+ */
+export const getListedBlogs = async (): Promise<Blog[]> => {
+	const qiita = (await getCollection("qiita")).map(qiitaToBlog);
+	return [...(await getBlogs()), ...qiita].sort(
+		(a, b) => b.publishedAt.getTime() - a.publishedAt.getTime(),
+	);
 };
 
 /** 関連記事を最大 limit 件取得（カテゴリまたはタグが一致するもの優先、不足分は新しい記事で補填） */

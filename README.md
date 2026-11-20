@@ -29,6 +29,10 @@ IMAGE_BASE_URL="https://images.example.com"
 `pnpm dev` ではローカルの画像を表示するため未設定でも動作します。
 Cloudflare Workers のビルド設定にも同じ値を環境変数として設定してください。
 
+Qiita の記事（`src/consts.ts` の `QIITA_USER_ID`）はビルド時に Qiita API から取得してブログ一覧に載せています。
+`QIITA_TOKEN`（`read_qiita` スコープのアクセストークン）は任意ですが、未設定だと API のレート制限が IP ごとに 60 回/時 と厳しいため、Cloudflare Workers のビルド設定には設定しておくのがおすすめです。
+Qiita に新しく投稿した記事はサイトを再ビルドするまで反映されません。
+
 ## セットアップ
 
 ### 1. 依存パッケージのインストール

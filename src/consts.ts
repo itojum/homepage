@@ -10,6 +10,8 @@ export const X_HANDLE = `@${X_URL.replace(/\/+$/, "").split("/").pop()}`;
 export const X_URL_HOBBY = "https://x.com/itojum2030";
 export const GITHUB_URL = "https://github.com/itojum";
 export const SPEAKERDECK_URL = "https://speakerdeck.com/itojum";
+/** ブログ一覧に記事を載せる Qiita のユーザー ID */
+export const QIITA_USER_ID = "itojum";
 
 export const LINKS = [
 	{
